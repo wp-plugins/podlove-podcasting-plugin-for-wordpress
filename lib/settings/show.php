@@ -7,7 +7,7 @@ class Show {
 	
 	public function __construct( $handle ) {
 		
-		self::$pagehook = add_submenu_page(
+		Show::$pagehook = add_submenu_page(
 			/* $parent_slug*/ $handle,
 			/* $page_title */ 'Shows',
 			/* $menu_title */ 'Shows',
@@ -16,6 +16,13 @@ class Show {
 			/* $function   */ array( $this, 'page' )
 		);
 		add_action( 'admin_init', array( $this, 'process_form' ) );
+
+		add_action( 'load-' . Show::$pagehook, function () {
+			wp_enqueue_script( 'postbox' );
+			add_screen_option( 'layout_columns', array(
+				'max' => 1, 'default' => 1
+			) );
+		} );
 
 		// init so we can process creation and deletion of feeds
 		new \Podlove\Settings\Feed();
@@ -186,6 +193,23 @@ class Show {
 					break;
 			}
 			?>
+
+			<!-- Stuff for opening / closing metaboxes -->
+			<script type="text/javascript">
+			jQuery( document ).ready( function( $ ){
+				// close postboxes that should be closed
+				$( '.if-js-closed' ).removeClass( 'if-js-closed' ).addClass( 'closed' );
+				// postboxes setup
+				postboxes.add_postbox_toggles( '<?php echo Show::$pagehook; ?>' );
+			} );
+			</script>
+
+			<form style='display: none' method='get' action=''>
+				<?php
+				wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false );
+				wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+				?>
+			</form>
 		</div>	
 		<?php
 	}
@@ -312,7 +336,7 @@ class Show {
 			) );
 
 			$wrapper->string( 'media_file_base_uri', array(
-				'label'       => \Podlove\t( 'Media File Base URI' ),
+				'label'       => \Podlove\t( 'Media File Base URL' ),
 				'description' => \Podlove\t( 'Example: http://cdn.example.com/pod/' ),
 				'html' => array( 'class' => 'regular-text' )
 			) );
@@ -332,7 +356,7 @@ class Show {
 				
 					add_meta_box(
 						/* $id            */ 'podlove_media_locations',
-						/* $title         */ __( 'Configure Media Locations' ),
+						/* $title         */ __( 'Configure Media Files' ),
 						/* $callback      */ '\Podlove\Settings\Show::nested_feed_media_locations_callback',
 						/* $page          */ \Podlove\Settings\Show::$pagehook,
 						/* $context       */ 'media_locations',
@@ -360,13 +384,6 @@ class Show {
 			<tr>
 				<td colspan="2" class="metabox-holder">
 					<?php 
-					do_meta_boxes( \Podlove\Settings\Show::$pagehook, 'webplayer', array() );
-					?>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" class="metabox-holder">
-					<?php 
 					do_meta_boxes( \Podlove\Settings\Show::$pagehook, 'media_locations', array() );
 					?>
 				</td>
@@ -382,6 +399,13 @@ class Show {
 						</a>
 					</span>
 					<?php endif; ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="metabox-holder">
+					<?php 
+					do_meta_boxes( \Podlove\Settings\Show::$pagehook, 'webplayer', array() );
+					?>
 				</td>
 			</tr>
 			<tr>
@@ -417,6 +441,7 @@ class Show {
 		$formats = array(
 			'audio' => array(
 				'mp3' => \Podlove\t( 'MP3 Audio' ),
+				'mp4' => \Podlove\t( 'MP4 Audio' ),
 				'ogg' => \Podlove\t( 'OGG Audio' )
 			),
 			'video' => array(
@@ -452,7 +477,7 @@ class Show {
 						<td>
 							<div>
 								<select name="<?php echo $name; ?>" id="<?php echo $id; ?>">
-									<option value="0" <?php selected( 0, $value ); ?> ><?php echo \Podlove\t( '-- Select Media Location --' ); ?></option>
+									<option value="0" <?php selected( 0, $value ); ?> ><?php echo \Podlove\t( 'Unused' ); ?></option>
 									<?php foreach ($media_locations as $media_location): ?>
 										<?php if ( $media_location->media_format() ): ?>
 											<option value="<?php echo $media_location->id; ?>" <?php selected( $media_location->id, $value ); ?>><?php echo $media_location->media_format()->title() ?> (<?php echo \Podlove\t( 'Suffix' ) ?>: <?php echo $media_location->suffix ?>)</option>
@@ -473,7 +498,6 @@ class Show {
 		$wrapper         = $args[ 'args' ][ 1 ];
 		?>
 		<a name="media_locations"></a>
-		<table style="width: 100%">
 			<?php
 			$raw_formats = \Podlove\Model\MediaFormat::all();
 			$formats = array();
@@ -482,6 +506,9 @@ class Show {
 			}
 
 			foreach ( $media_locations as $media_location ) {
+				?>
+				<table style="width: 100%">
+				<?php
 				$wrapper->fields_for( $media_location, array( 'context' => 'podlove_media_location' ), function ( $media_location_form ) use ( $formats ) {
 					$f = new \Podlove\Form\Input\TableWrapper( $media_location_form );
 
@@ -501,7 +528,7 @@ class Show {
 
 					$f->string( 'url_template', array(
 						'label'       => \Podlove\t( 'URL Template' ),
-						'description' => sprintf( \Podlove\t( 'Read %sdocumentation%s for help.' ), '<a href="#" target="_blank">', '</a>' ),
+						'description' => sprintf( \Podlove\t( 'Preview: %s Read %sdocumentation%s for help.' ), '<span class="url_template_preview"></span><br/>', '<a href="#" target="_blank">', '</a>' ),
 						'html' => array( 'class' => 'large-text' )
 					) );
 
@@ -516,10 +543,10 @@ class Show {
 						</span>
 					</td>
 				</tr>
+				</table>
 				<?php
 			}
 			?>
-		</table>
 		<?php
 	}
 
