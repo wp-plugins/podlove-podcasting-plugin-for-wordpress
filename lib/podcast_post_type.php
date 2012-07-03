@@ -141,6 +141,7 @@ class Podcast_Post_Type {
 			) );
 		} );
 
+		new \Podlove\Settings\Settings( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Format( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Show( self::SETTINGS_PAGE_HANDLE );
 	}
@@ -223,6 +224,12 @@ class Podcast_Post_Type {
 
 	function validate_podcast_files() {
 		$shows = \Podlove\Model\Show::all();
+
+		if ( ! in_array( 'curl', get_loaded_extensions() ) ) {
+			?>
+			<div class="error"><p><strong>ERROR: </strong>You need curl for Podlove to run properly.</p></div>
+			<?php
+		}
 
 		?>
 		<a href="#" id="validate_everything">
