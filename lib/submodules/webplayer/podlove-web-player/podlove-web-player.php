@@ -1,15 +1,15 @@
 <?php
 /**
  * @package PodloveWebPlayer
- * @version 0.9
+ * @version 1.0
  */
 
 /*
 Plugin Name: Podlove Web Player
 Plugin URI: http://podlove.org/podlove-web-player/
 Description:
-Author: Gerrit van Aaken
-Version: 0.9
+Author: Gerrit van Aaken and others
+Version: 1.0
 Author URI: http://praegnanz.de
 License: GPLv3, MIT
 */
@@ -203,7 +203,7 @@ function mejs_add_scripts() {
     if (!is_admin()) {
         // the scripts
         wp_enqueue_script('podlove-scripts', MEDIAELEMENTJS_DIR . 'mediaelement-and-player.min.js', array('jquery'), '2.7.1', false);
-        wp_enqueue_script("audiojs-scripts", AUDIOJS_DIR ."audio.min.js");
+        //wp_enqueue_script("audiojs-scripts", AUDIOJS_DIR ."audio.min.js");
         wp_enqueue_script('podlove-chapters', plugin_dir_url(__FILE__) . 'podlove-chapters.js', array('jquery'), '2.7.1', false);
     }
 }
@@ -434,16 +434,14 @@ function podlove_media_shortcode($tagName, $atts) {
     <div class="mediaelementjs_player_container">
     <{$tagName} id="wp_mep_{$podlovePlayerIndex}" controls="controls" {$attributes_string} class="mejs-player {$skin_class}" data-mejsoptions='{$options_string}'>
         {$sources_string}
-        <object width="{$width}" height="{$height}" type="application/x-shockwave-flash" data="{$dir}flashmediaelement.swf">
-            <param name="movie" value="{$dir}flashmediaelement.swf" />
-            <param name="flashvars" value="controls=true&amp;file={$flash_src}" />
-        </object>
     </{$tagName}>
     </div>
+    <!--
     <div class="audiojs_player_container" style="display: none">
         <audio src="{$flash_src}" preload="none"/>
     </div>
     <script type="text/javascript">
+    /*
         jQuery(document).ready(function ($) {
             // firefox, msie and opera get the fallback player
             var user_agent = navigator.userAgent.toLowerCase()
@@ -457,7 +455,9 @@ function podlove_media_shortcode($tagName, $atts) {
                     });
             }
         });
+*/
      </script>
+     -->
 _end_;
 
     // Chapters Table and Behaviour
