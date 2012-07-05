@@ -3,7 +3,7 @@
 Plugin Name: Podlove Podcasting Plugin for WordPress
 Plugin URI: http://wordpress.org/extend/plugins/podlove-podcasting-plugin-for-wordpress/
 Description: The one and only next generation podcast feed generator. Seriously. It's magical and sparkles a lot.
-Version: 1.1.9-alpha
+Version: 1.1.10-alpha
 Author: eteubert
 Author URI: ericteubert@googlemail.com
 License: MIT
@@ -22,4 +22,5 @@ require_once 'lib/helper.php';
 require_once 'lib/version.php';
 require_once 'lib/feeds.php';
 require_once 'lib/shortcodes.php';
+require_once 'lib/no_enclosure_autodiscovery.php';
 require_once 'plugin.php';
