@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PodloveWebPlayer
- * @version 1.0.7
+ * @version 1.0.8
  */
 
 /*
@@ -9,7 +9,7 @@ Plugin Name: Podlove Web Player
 Plugin URI: http://podlove.org/podlove-web-player/
 Description: Video and audio plugin for WordPress built on the MediaElement.js HTML5 media player library.
 Author: Gerrit van Aaken and others
-Version: 1.0.7
+Version: 1.0.8
 Author URI: http://praegnanz.de
 License: GPLv3, MIT
 */
@@ -203,7 +203,7 @@ if (!get_option('pwp_script_on_demand')) {
 			// the scripts
 			wp_enqueue_script('mediaelementjs-scripts', PODLOVEWEBPLAYER_DIR . 'mediaelement-and-player.min.js', array('jquery'), '2.9.1', false);
 			wp_enqueue_script('ba-hashchange', plugin_dir_url(__FILE__) . 'libs/jquery.ba-hashchange.min.js', array('jquery'), '1.3.0', false);
-			wp_enqueue_script('podlove-web-player', plugin_dir_url(__FILE__) . 'podlove-web-player.js', array('jquery', 'mediaelementjs-scripts'), '1.0.7', false);
+			wp_enqueue_script('podlove-web-player', plugin_dir_url(__FILE__) . 'podlove-web-player.js', array('jquery', 'mediaelementjs-scripts'), '1.0.8', false);
 		}
 	}
 	add_action('wp_print_scripts', 'podlove_pwp_add_scripts');
@@ -368,15 +368,27 @@ function podlove_pwp_media_shortcode($tagName, $atts) {
 		$skin_class  = 'mejs-' . $skin;
 	}
 
-	// BUILD HTML
+	//prepare player embed string
 	$attributes_string = !empty($attributes) ? implode(' ', $attributes) : '';
 	$sources_string = !empty($sources) ? implode("\n\t\t", $sources) : '';
 	$options_string = !empty($options) ? '{' . implode(',', $options) . '}' : '';
 	$options_string = str_replace('"', '\'', $options_string);
 
+	//prepare player dimensions
+	if ($tagName == "audio") {
+		$widthunit = "px";
+		if (empty($width)) { $width = "auto"; $widthunit = ""; }
+		$heightunit = "px";
+		if (empty($height)) { $height = "30"; }
+		$dimensions = 'style="width: '.$width.$widthunit.'; height:'.$height.$heightunit.'"';
+	} else {
+		$dimensions = 'width="'.$width.'" height="'.$height.'"';
+	}
+
+	//build actual html player code
 	$mediahtml = <<<_end_
 	<div class="mediaelementjs_player_container">
-	<{$tagName} style="width:{$width}px;height:{$height}px" id="wp_pwp_{$podlovePlayerIndex}" controls="controls" {$attributes_string} class="{$skin_class}" data-mejsoptions="{$options_string}">
+	<{$tagName} id="wp_pwp_{$podlovePlayerIndex}" {$dimensions} controls {$attributes_string} class="{$skin_class}" data-mejsoptions="{$options_string}">
 		{$sources_string}
 	</{$tagName}>
 _end_;
