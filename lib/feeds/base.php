@@ -85,7 +85,11 @@ function override_feed_head( $hook, $show, $feed, $format ) {
 		);
 		echo apply_filters( 'podlove_feed_itunes_owner', $owner );
 		
-		$coverimage = sprintf( '<itunes:image href="%s" />', $show->cover_image );
+		if ( $show->cover_image ) {
+			$coverimage = sprintf( '<itunes:image href="%s" />', $show->cover_image );
+		} else {
+			$coverimage = '';
+		}
 		echo apply_filters( 'podlove_feed_itunes_image', $coverimage );
 
 		$subtitle = sprintf( '<itunes:subtitle>%s</itunes:subtitle>', $show->subtitle );
@@ -97,7 +101,7 @@ function override_feed_head( $hook, $show, $feed, $format ) {
 		$block = sprintf( '<itunes:block>%s</itunes:block>', ( $feed->enable ) ? 'no' : 'yes' );
 		echo apply_filters( 'podlove_feed_itunes_block', $block );
 
-		$explicit = sprintf( '<itunes:explicit>%s</itunes:explicit>', ( $show->explicit ) ? 'yes' : 'no' );
+        $explicit = sprintf( '<itunes:explicit>%s</itunes:explicit>', ( $show->explicit == 2) ? 'clean' : ( ( $show->explicit ) ? 'yes' : 'no' ) );
 		echo apply_filters( 'podlove_feed_itunes_explicit', $explicit );
 	} );
 }
@@ -115,6 +119,11 @@ function override_feed_entry( $hook, $show, $feed, $format ) {
 		$enclosure_file_size = $file->size;
 		$file_slug           = $release->slug;
 		$cover_art_url       = $release->cover_art;
+
+		// fall back to show cover image
+		if ( ! $cover_art_url ) {
+			$cover_art_url = $show->cover_image;
+		}
 
 		$enclosure_url = $release->enclosure_url( $show, $feed->media_location(), $format );
 		
