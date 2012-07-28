@@ -16,15 +16,15 @@ EOT;
 	public function load() {
 
 		$this->register_option( 'title_template', 'string', array(
-			'label'       => \Podlove\t( 'Title Template' ),
-			'description' => \Podlove\t( 'Placeholders: %show_slug%, %episode_number%, %episode_title%' ),
+			'label'       => __( 'Title Template', 'podlove' ),
+			'description' => __( 'Placeholders: %show_slug%, %episode_number%, %episode_title%', 'podlove' ),
 			'default'     => '%show_slug%%episode_number% %episode_title%',
 			'html'        => array( 'class' => 'regular-text' )
 		) );
 
 		$this->register_option( 'leading_zeros', 'select', array(
-			'label'       => \Podlove\t( 'Number Digits' ),
-			'description' => \Podlove\t( 'Add leading zeroes to episode number. Example: 003 instead of 3.' ),
+			'label'       => __( 'Number Digits', 'podlove' ),
+			'description' => __( 'Add leading zeroes to episode number. Example: 003 instead of 3.', 'podlove' ),
 			'default'     => 3,
 			'options'     => array( 'no' => 'no', 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5 )
 		) );
@@ -40,7 +40,7 @@ EOT;
 			'podlove_module_episode_assistant',
 			$this->get_module_url() . '/js/episode_assistant.js',
 			array( 'jquery', 'jquery-ui-core', 'jquery-ui-button', 'jquery-ui-dialog' ),
-			'1.1' 
+			'1.2' 
 		);
 
 		// see http://www.arashkarimzadeh.com/jquery/7-editable-jquery-plugin.html
@@ -142,7 +142,7 @@ EOT;
 					</p>
 					<p class="post_info result">
 						<strong>Post Title</strong>
-						<span class="post_title" data-template="<?php echo $this->get_module_option( 'title_template', '%show_slug%%number% %episode_title%' ) ?>">Loading ...</span>
+						<span class="post_title" data-template="<?php echo $this->get_module_option( 'title_template', '%show_slug%%episode_number% %episode_title%' ) ?>">Loading ...</span>
 					</p>
 				</div>
 			</p>
