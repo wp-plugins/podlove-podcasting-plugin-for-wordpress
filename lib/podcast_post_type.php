@@ -99,21 +99,21 @@ class Podcast_Post_Type {
 				'podlove_admin_episode',
 				\Podlove\PLUGIN_URL . '/js/admin/episode.js',
 				array( 'jquery' ),
-				'1.0' 
+				'1.1' 
 			);
 
 			wp_register_script(
 				'podlove_admin_dashboard_validation',
 				\Podlove\PLUGIN_URL . '/js/admin/dashboard_validation.js',
 				array( 'jquery' ),
-				'1.0' 
+				'1.1' 
 			);
 
 			wp_register_script(
 				'podlove_admin_media_location_settings',
 				\Podlove\PLUGIN_URL . '/js/admin/media_location_settings.js',
 				array( 'jquery' ),
-				'1.0' 
+				'1.1' 
 			);
 
 			wp_register_script(
@@ -413,10 +413,8 @@ class Podcast_Post_Type {
 						$value['html']['rows'] = $rows;
 					}
 
-					call_user_func_array(
-						array( $wrapper, isset( $value['type'] ) ? $value['type'] : 'string' ),
-						array( $key, $value )
-					);
+					$input_type = isset( $value['type'] ) ? $value['type'] : 'string';
+					$wrapper->$input_type( $key, $value );
 				}
 
 			} );
