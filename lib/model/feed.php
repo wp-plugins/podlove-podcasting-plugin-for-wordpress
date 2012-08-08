@@ -45,6 +45,41 @@ class Feed extends Base {
 	}
 
 	/**
+	 * Get title for browser feed discovery.
+	 *
+	 * This title is used by clients to show the user the subscribe option he
+	 * has. Therefore, the most obvious thing to do is to display the show
+	 * title and the file extension in paranthesis.
+	 *
+	 * Fallback to internal feed name.
+	 * 
+	 * @return string
+	 */
+	public function title_for_discovery() {
+		$show = $this->show();
+
+		if ( ! $show )
+			return $this->name;
+
+		$media_location = $this->media_location();
+
+		if ( ! $media_location )
+			return $this->name;
+
+		$media_format   = $media_location->media_format();
+
+		if ( ! $media_format )
+			return $this->name;
+
+		$file_extension = $media_format->extension;
+
+		$title = sprintf( '%s (%s)', $show->name, $file_extension );
+		$title = apply_filters( 'podlove_feed_title_for_discovery', $title, $this->title, $file_extension, $this->id );
+
+		return $title;
+	}
+
+	/**
 	 * Find the related show model.
 	 *
 	 * @return \Podlove\Model\Show|NULL
@@ -93,11 +128,13 @@ class Feed extends Base {
 		return array_map( function ( $v ) { return $v->post_id; }, $episodes );
 	}
 
-	/**
-	 * For now, we support just atom.
-	 */
 	public function get_content_type() {
-		return "application/atom+xml";
+
+		if ( $this->format === 'rss' )
+			return 'application/rss+xml';
+		else
+			return "application/atom+xml";	
+
 	}
 
 	public function find_by_show_id_and_media_location_id( $show_id, $media_location_id ) {
