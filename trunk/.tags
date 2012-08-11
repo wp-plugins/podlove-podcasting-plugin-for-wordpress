@@ -1,0 +1,1017 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+$.fn	lib/modules/podlove_web_player/player/podlove-web-player/libs/jquery.ba-hashchange.js	/^  };$/;"	f
+$.fn	lib/modules/podlove_web_player/player/podlove-web-player/libs/jquery.ba-hashchange.min.js	/^(function($,e,b){var c="hashchange",h=document,f,g=$.event.special,i=h.documentMode,d="on"+c in e&&(i===b||i>7);function a(j){j=j||location.href;return"#"+j.replace(\/^[^#]*#?(.*)$\/,"$1")}$.fn[c]=function(j){return j?this.bind(c,j):this.trigger(c)};$.fn[c].delay=50;g[c]=$.extend(g[c],{setup:function(){if(d){return false}$(f.start)},teardown:function(){if(d){return false}$(f.stop)}});f=(function(){var j={},p,m=a(),k=function(q){return q},l=k,o=k;j.start=function(){p||n()};j.stop=function(){p&&clearTimeout(p);p=b};function n(){var r=a(),q=o(m);if(r!==m){l(m=r,q);$(e).trigger(c)}else{if(q!==m){location.href=location.href.replace(\/#.*\/,"")+q}}p=setTimeout(n,$.fn[c].delay)}$.browser.msie&&!d&&(function(){var q,r;j.start=function(){if(!q){r=$.fn[c].src;r=r&&r+a();q=$('<iframe tabindex="-1" title="empty"\/>').hide().one("load",function(){r||l(a());n()}).attr("src",r||"javascript:0").insertAfter("body")[0].contentWindow;h.onpropertychange=function(){try{if(event.propertyName==="title"){q.document.title=h.title}}catch(s){}}}};j.stop=k;o=function(){return a(q.location.href)};l=function(v,s){var u=q.document,t=$.fn[c].domain;if(v!==s){u.title=h.title;u.open();t&&u.write('<script>document.domain="'+t+'"<\\\/script>');u.close();q.location.hash=v}}})();return j})()})(jQuery,this);/;"	f
+Atom	lib/feeds/atom.php	/^class Atom {$/;"	c
+Base	lib/model/base.php	/^abstract class Base$/;"	c
+Base	lib/modules/base.php	/^abstract class Base {$/;"	c
+Builder	lib/form/builder.php	/^class Builder {$/;"	c
+Builder	lib/form/input/builder.php	/^class Builder {$/;"	c
+Episode	lib/model/episode.php	/^class Episode extends Base {$/;"	c
+Feed	lib/model/feed.php	/^class Feed extends Base {$/;"	c
+Feed	lib/settings/feed.php	/^class Feed {$/;"	c
+Feed_List_Table	lib/feed_list_table.php	/^class Feed_List_Table extends \\WP_List_Table {$/;"	c
+Format	lib/settings/format.php	/^class Format {$/;"	c
+Format_List_Table	lib/format_list_table.php	/^class Format_List_Table extends \\WP_List_Table {$/;"	c
+MediaFeatures.isBustedAndroid.canPlayType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^j=this.formatType(e,j.getAttribute("type"));g.push({type:j,url:e})}}if(!d&&g.length>0&&g[0].url!==null&&this.getTypeFromFile(g[0].url).indexOf("audio")>-1)h.isVideo=false;if(mejs.MediaFeatures.isBustedAndroid)a.canPlayType=function(m){return m.match(\/video\\\/(mp4|m4v)\/gi)!==null?"maybe":""};if(c&&(b.mode==="auto"||b.mode==="native")){if(!d){f=document.createElement(h.isVideo?"video":"audio");a.parentNode.insertBefore(f,a);a.style.display="none";h.htmlMediaElement=a=f}for(f=0;f<g.length;f++)if(a.canPlayType(g[f].type).replace(\/no\/,$/;"	f
+MediaFeatures.isBustedAndroid.canPlayType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^j=this.formatType(e,j.getAttribute("type"));g.push({type:j,url:e})}}if(!d&&g.length>0&&g[0].url!==null&&this.getTypeFromFile(g[0].url).indexOf("audio")>-1)h.isVideo=false;if(mejs.MediaFeatures.isBustedAndroid)a.canPlayType=function(m){return m.match(\/video\\\/(mp4|m4v)\/gi)!==null?"maybe":""};if(c&&(b.mode==="auto"||b.mode==="native")){if(!d){f=document.createElement(h.isVideo?"video":"audio");a.parentNode.insertBefore(f,a);a.style.display="none";h.htmlMediaElement=a=f}for(f=0;f<g.length;f++)if(a.canPlayType(g[f].type).replace(\/no\/,$/;"	f
+MediaFile	lib/model/media_file.php	/^class MediaFile extends Base {$/;"	c
+MediaFormat	lib/model/media_format.php	/^class MediaFormat extends Base {$/;"	c
+MediaLocation	lib/model/media_location.php	/^class MediaLocation extends Base {$/;"	c
+MediaLocation	lib/settings/media_location.php	/^class MediaLocation {$/;"	c
+MepDefaults.defaultVideoHeight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		defaultVideoWidth: 480,$/;"	p
+MepDefaults.defaultVideoHeight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^		defaultVideoWidth: 480,$/;"	p
+MepDefaults.defaultVideoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		poster: '',$/;"	p
+MepDefaults.defaultVideoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^		poster: '',$/;"	p
+MepDefaults.poster	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	mejs.MepDefaults = {$/;"	p
+MepDefaults.poster	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	mejs.MepDefaults = {$/;"	p
+MepDefaults.videoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		defaultVideoHeight: 270,$/;"	p
+MepDefaults.videoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^		defaultVideoHeight: 270,$/;"	p
+PODLOVE.web_player	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	}$/;"	f
+PODLOVE.web_player.addBehavior	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	};$/;"	f
+PODLOVEWEBPLAYER_DIR	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^define('PODLOVEWEBPLAYER_DIR', plugin_dir_url(__FILE__) . 'mediaelement\/');$/;"	d
+PODLOVE_MEDIA_PLAYER	lib/modules/podlove_web_player/podlove_web_player.php	/^			define( 'PODLOVE_MEDIA_PLAYER', 'external' );$/;"	d
+PODLOVE_MEDIA_PLAYER	lib/modules/podlove_web_player/podlove_web_player.php	/^			define( 'PODLOVE_MEDIA_PLAYER', 'internal' );$/;"	d
+Podcast_Post_Type	lib/podcast_post_type.php	/^class Podcast_Post_Type {$/;"	c
+Podlove_Web_Player	lib/modules/podlove_web_player/podlove_web_player.php	/^class Podlove_Web_Player extends \\Podlove\\Modules\\Base {$/;"	c
+RSS	lib/feeds/rss.php	/^class RSS {$/;"	c
+Release	lib/model/release.php	/^class Release extends Base {$/;"	c
+Settings	lib/settings/settings.php	/^class Settings {$/;"	c
+Show	lib/model/show.php	/^class Show extends Base {$/;"	c
+Show	lib/settings/show.php	/^class Show {$/;"	c
+Show_List_Table	lib/show_list_table.php	/^class Show_List_Table extends \\WP_List_Table {$/;"	c
+TableWrapper	lib/form/input/table_wrapper.php	/^class TableWrapper extends Wrapper {$/;"	c
+Wrapper	lib/form/input/wrapper.php	/^abstract class Wrapper {$/;"	c
+__NAMESPACE__	bootstrap/constants.php	/^	define( __NAMESPACE__ . '\\PLUGIN_DIR' , substr( $dir, 0, strrpos( $dir, '\/' ) + 1 ) );$/;"	d
+__NAMESPACE__	bootstrap/constants.php	/^	define( __NAMESPACE__ . '\\PLUGIN_DIR' , substr( $dir, 0, strrpos( $dir, '\\\\' ) + 1 ) );$/;"	d
+__NAMESPACE__	bootstrap/constants.php	/^define( __NAMESPACE__ . '\\PLUGIN_FILE', PLUGIN_DIR . PLUGIN_FILE_NAME );$/;"	d
+__NAMESPACE__	bootstrap/constants.php	/^define( __NAMESPACE__ . '\\PLUGIN_FILE_NAME', strtolower( preg_replace( '\/([a-z])([A-Z])\/', '$1-$2', __NAMESPACE__ ) ) . '.php' );$/;"	d
+__NAMESPACE__	bootstrap/constants.php	/^define( __NAMESPACE__ . '\\PLUGIN_NAME', get_plugin_header( 'Name' ) );$/;"	d
+__NAMESPACE__	bootstrap/constants.php	/^define( __NAMESPACE__ . '\\PLUGIN_URL' , plugins_url( '', PLUGIN_FILE ) );$/;"	d
+__NAMESPACE__	bootstrap/constants.php	/^define( __NAMESPACE__ . '\\TEXTDOMAIN', strtolower( str_replace( ' ', '-', PLUGIN_NAME ) ) );$/;"	d
+__NAMESPACE__	lib/version.php	/^ * 		define( __NAMESPACE__ . '\\DATABASE_VERSION', 2 );$/;"	d
+__NAMESPACE__	lib/version.php	/^define( __NAMESPACE__ . '\\DATABASE_VERSION', 4 );$/;"	d
+__call	lib/form/input/wrapper.php	/^	public function __call( $name, $arguments = array() ) {$/;"	f
+__callStatic	lib/model/base.php	/^	public static function __callStatic( $name, $arguments ) {$/;"	f
+__construct	lib/feed_list_table.php	/^	function __construct(){$/;"	f
+__construct	lib/feeds/atom.php	/^	public function __construct( $show_slug, $feed_slug ) {$/;"	f
+__construct	lib/feeds/rss.php	/^	public function __construct( $show_slug, $feed_slug ) {$/;"	f
+__construct	lib/form/input/builder.php	/^	public function __construct( $object, $context ) {$/;"	f
+__construct	lib/form/input/wrapper.php	/^	public function __construct( $builder ) {$/;"	f
+__construct	lib/format_list_table.php	/^	function __construct(){$/;"	f
+__construct	lib/podcast_post_type.php	/^	public function __construct() {$/;"	f
+__construct	lib/settings/feed.php	/^	public function __construct() {$/;"	f
+__construct	lib/settings/format.php	/^	public function __construct( $handle ) {$/;"	f
+__construct	lib/settings/media_location.php	/^	public function __construct() {$/;"	f
+__construct	lib/settings/settings.php	/^	public function __construct( $handle ) {$/;"	f
+__construct	lib/settings/show.php	/^	public function __construct( $handle ) {$/;"	f
+__construct	lib/show_list_table.php	/^	function __construct(){$/;"	f
+__get	lib/model/base.php	/^	public function __get( $name ) {$/;"	f
+__set	lib/model/base.php	/^	public function __set( $name, $value ) {$/;"	f
+_column_headers	lib/feed_list_table.php	/^		$this->_column_headers = array( $columns, $hidden, $sortable );$/;"	v
+_column_headers	lib/format_list_table.php	/^		$this->_column_headers = array( $columns, $hidden, $sortable );$/;"	v
+_column_headers	lib/show_list_table.php	/^		$this->_column_headers = array( $columns, $hidden, $sortable );$/;"	v
+a	lib/modules/podlove_web_player/player/podlove-web-player/libs/jquery.ba-hashchange.min.js	/^(function($,e,b){var c="hashchange",h=document,f,g=$.event.special,i=h.documentMode,d="on"+c in e&&(i===b||i>7);function a(j){j=j||location.href;return"#"+j.replace(\/^[^#]*#?(.*)$\/,"$1")}$.fn[c]=function(j){return j?this.bind(c,j):this.trigger(c)};$.fn[c].delay=50;g[c]=$.extend(g[c],{setup:function(){if(d){return false}$(f.start)},teardown:function(){if(d){return false}$(f.stop)}});f=(function(){var j={},p,m=a(),k=function(q){return q},l=k,o=k;j.start=function(){p||n()};j.stop=function(){p&&clearTimeout(p);p=b};function n(){var r=a(),q=o(m);if(r!==m){l(m=r,q);$(e).trigger(c)}else{if(q!==m){location.href=location.href.replace(\/#.*\/,"")+q}}p=setTimeout(n,$.fn[c].delay)}$.browser.msie&&!d&&(function(){var q,r;j.start=function(){if(!q){r=$.fn[c].src;r=r&&r+a();q=$('<iframe tabindex="-1" title="empty"\/>').hide().one("load",function(){r||l(a());n()}).attr("src",r||"javascript:0").insertAfter("body")[0].contentWindow;h.onpropertychange=function(){try{if(event.propertyName==="title"){q.document.title=h.title}}catch(s){}}}};j.stop=k;o=function(){return a(q.location.href)};l=function(v,s){var u=q.document,t=$.fn[c].domain;if(v!==s){u.title=h.title;u.open();t&&u.write('<script>document.domain="'+t+'"<\\\/script>');u.close();q.location.hash=v}}})();return j})()})(jQuery,this);/;"	f
+a.cancelFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^else a.hasMozNativeFullScreen&&f.mozRequestFullScreen()};a.cancelFullScreen=function(){if(a.hasWebkitNativeFullScreen)document.webkitCancelFullScreen();else a.hasMozNativeFullScreen&&document.mozCancelFullScreen()}}if(a.hasSemiNativeFullScreen&&d.match(\/mac os x 10_5\/i)){a.hasNativeFullScreen=false;a.hasSemiNativeFullScreen=false}}};mejs.MediaFeatures.init();$/;"	f
+a.cancelFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^else a.hasMozNativeFullScreen&&f.mozRequestFullScreen()};a.cancelFullScreen=function(){if(a.hasWebkitNativeFullScreen)document.webkitCancelFullScreen();else a.hasMozNativeFullScreen&&document.mozCancelFullScreen()}}if(a.hasSemiNativeFullScreen&&d.match(\/mac os x 10_5\/i)){a.hasNativeFullScreen=false;a.hasSemiNativeFullScreen=false}}};mejs.MediaFeatures.init();$/;"	f
+a.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^a.hasMozNativeFullScreen;a.nativeFullScreenEnabled=a.hasTrueNativeFullScreen;if(a.hasMozNativeFullScreen)a.nativeFullScreenEnabled=e.mozFullScreenEnabled;if(this.isChrome)a.hasSemiNativeFullScreen=false;if(a.hasTrueNativeFullScreen){a.fullScreenEventName=a.hasWebkitNativeFullScreen?"webkitfullscreenchange":"mozfullscreenchange";a.isFullScreen=function(){if(e.mozRequestFullScreen)return b.mozFullScreen;else if(e.webkitRequestFullScreen)return b.webkitIsFullScreen};a.requestFullScreen=function(f){if(a.hasWebkitNativeFullScreen)f.webkitRequestFullScreen();$/;"	f
+a.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^a.hasMozNativeFullScreen;a.nativeFullScreenEnabled=a.hasTrueNativeFullScreen;if(a.hasMozNativeFullScreen)a.nativeFullScreenEnabled=e.mozFullScreenEnabled;if(this.isChrome)a.hasSemiNativeFullScreen=false;if(a.hasTrueNativeFullScreen){a.fullScreenEventName=a.hasWebkitNativeFullScreen?"webkitfullscreenchange":"mozfullscreenchange";a.isFullScreen=function(){if(e.mozRequestFullScreen)return b.mozFullScreen;else if(e.webkitRequestFullScreen)return b.webkitIsFullScreen};a.requestFullScreen=function(f){if(a.hasWebkitNativeFullScreen)f.webkitRequestFullScreen();$/;"	f
+a.requestFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^a.hasMozNativeFullScreen;a.nativeFullScreenEnabled=a.hasTrueNativeFullScreen;if(a.hasMozNativeFullScreen)a.nativeFullScreenEnabled=e.mozFullScreenEnabled;if(this.isChrome)a.hasSemiNativeFullScreen=false;if(a.hasTrueNativeFullScreen){a.fullScreenEventName=a.hasWebkitNativeFullScreen?"webkitfullscreenchange":"mozfullscreenchange";a.isFullScreen=function(){if(e.mozRequestFullScreen)return b.mozFullScreen;else if(e.webkitRequestFullScreen)return b.webkitIsFullScreen};a.requestFullScreen=function(f){if(a.hasWebkitNativeFullScreen)f.webkitRequestFullScreen();$/;"	f
+a.requestFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^a.hasMozNativeFullScreen;a.nativeFullScreenEnabled=a.hasTrueNativeFullScreen;if(a.hasMozNativeFullScreen)a.nativeFullScreenEnabled=e.mozFullScreenEnabled;if(this.isChrome)a.hasSemiNativeFullScreen=false;if(a.hasTrueNativeFullScreen){a.fullScreenEventName=a.hasWebkitNativeFullScreen?"webkitfullscreenchange":"mozfullscreenchange";a.isFullScreen=function(){if(e.mozRequestFullScreen)return b.mozFullScreen;else if(e.webkitRequestFullScreen)return b.webkitIsFullScreen};a.requestFullScreen=function(f){if(a.hasWebkitNativeFullScreen)f.webkitRequestFullScreen();$/;"	f
+about_meta	lib/podcast_post_type.php	/^	public function about_meta() {$/;"	f
+about_player_meta_box	lib/modules/podlove_web_player/podlove_web_player.php	/^	public function about_player_meta_box() {$/;"	f
+action	lib/settings/feed.php	/^		$action  = ( isset( $_REQUEST[ 'action' ] ) ) ? $_REQUEST[ 'action' ] : NULL;$/;"	v
+action	lib/settings/feed.php	/^		$action = '&action=' . $action;$/;"	v
+action	lib/settings/feed.php	/^		if ( $action == 'delete' ) {$/;"	v
+action	lib/settings/feed.php	/^		} elseif ( $action == 'create' ) {$/;"	v
+action	lib/settings/format.php	/^			$action = ( isset( $_REQUEST[ 'action' ] ) ) ? $_REQUEST[ 'action' ] : NULL;$/;"	v
+action	lib/settings/format.php	/^		$action = '&action=' . $action;$/;"	v
+action	lib/settings/format.php	/^		$action = ( isset( $_REQUEST[ 'action' ] ) ) ? $_REQUEST[ 'action' ] : NULL;$/;"	v
+action	lib/settings/format.php	/^		if ( $action === 'save' ) {$/;"	v
+action	lib/settings/format.php	/^		} elseif ( $action === 'create' ) {$/;"	v
+action	lib/settings/format.php	/^		} elseif ( $action === 'delete' ) {$/;"	v
+action	lib/settings/media_location.php	/^		$action  = ( isset( $_REQUEST[ 'action' ] ) ) ? $_REQUEST[ 'action' ] : NULL;$/;"	v
+action	lib/settings/media_location.php	/^		$action = '&action=' . $action;$/;"	v
+action	lib/settings/media_location.php	/^		if ( $action == 'delete' ) {$/;"	v
+action	lib/settings/media_location.php	/^		} elseif ( $action == 'create' ) {$/;"	v
+action	lib/settings/show.php	/^			$action = ( isset( $_REQUEST[ 'action' ] ) ) ? $_REQUEST[ 'action' ] : NULL;$/;"	v
+action	lib/settings/show.php	/^		$action = '&action=' . $action;$/;"	v
+action	lib/settings/show.php	/^		$action = ( isset( $_REQUEST[ 'action' ] ) ) ? $_REQUEST[ 'action' ] : NULL;$/;"	v
+action	lib/settings/show.php	/^		if ( $action === 'save' ) {$/;"	v
+action	lib/settings/show.php	/^		} elseif ( $action === 'create' ) {$/;"	v
+action	lib/settings/show.php	/^		} elseif ( $action === 'delete' ) {$/;"	v
+actions	lib/feed_list_table.php	/^		$actions = array($/;"	v
+actions	lib/format_list_table.php	/^		$actions = array($/;"	v
+actions	lib/show_list_table.php	/^		$actions = array($/;"	v
+activate	plugin.php	/^function activate() {$/;"	f
+activate_for_current_blog	plugin.php	/^function activate_for_current_blog() {$/;"	f
+add_feed_discoverability	plugin.php	/^function add_feed_discoverability() {$/;"	f
+add_feed_routes	lib/feeds.php	/^function add_feed_routes() {$/;"	f
+add_post_type_to_feeds	lib/podcast_post_type.php	/^	function add_post_type_to_feeds( $query_var ) {$/;"	f
+addressCurrentTime	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function addressCurrentTime(e) {$/;"	f
+after_input_callback	lib/form/builder.php	/^		$this->after_input_callback  = isset( $field_values[ 'after_input_callback' ] )  ? $field_values[ 'after_input_callback' ]  : NULL;$/;"	v
+all	lib/model/base.php	/^	public static function all() {$/;"	f
+all_formats_data	lib/settings/show.php	/^		$all_formats_data = get_option( 'podlove_webplayer_formats' );$/;"	v
+all_formats_data	lib/shortcodes.php	/^	$all_formats_data = get_option( 'podlove_webplayer_formats' );$/;"	v
+args	lib/feeds/atom.php	/^		$args = array($/;"	v
+args	lib/feeds/rss.php	/^		$args = array($/;"	v
+args	lib/podcast_post_type.php	/^		$args = apply_filters( 'podlove_post_type_args', $args );$/;"	v
+args	lib/podcast_post_type.php	/^		$args = array($/;"	v
+arguments	lib/form/input/builder.php	/^		$this->arguments  = $arguments;$/;"	v
+arguments	lib/form/input/builder.php	/^	public $arguments;$/;"	v
+arguments	lib/form/input/wrapper.php	/^	public function __call( $name, $arguments = array() ) {$/;"	v
+attributes	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$attributes = array();$/;"	v
+attributes_string	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$attributes_string = !empty($attributes) ? implode(' ', $attributes) : '';$/;"	v
+audio_formats	lib/shortcodes.php	/^	$audio_formats = array( 'mp3', 'mp4', 'ogg' );$/;"	v
+author	lib/feeds/base.php	/^		$author = sprintf( '<itunes:author>%s<\/itunes:author>', $show->author_name );$/;"	v
+author_url	templates/feed-atom.php	/^			<?php $author_url = get_the_author_meta('url'); if ( !empty($author_url) ) : ?>$/;"	v
+available_formats	lib/shortcodes.php	/^	$available_formats = array();$/;"	v
+b	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^a;var b,c="http:\/\/www.youtube.com\/apiplayer?enablejsapi=1&amp;playerapiid="+a.pluginId+"&amp;version=3&amp;autoplay=0&amp;controls=0&amp;modestbranding=1&loop=0";if(mejs.MediaFeatures.isIE){b=document.createElement("div");a.container.appendChild(b);b.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="\/\/download.macromedia.com\/pub\/shockwave\/cabs\/flash\/swflash.cab" id="'+a.pluginId+'" width="'+a.width+'" height="'+a.height+'"><param name="movie" value="'+c+'" \/><param name="wmode" value="transparent" \/><param name="allowScriptAccess" value="always" \/><param name="allowFullScreen" value="true" \/><\/object>'}else a.container.innerHTML=$/;"	v
+b	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^a;var b,c="http:\/\/www.youtube.com\/apiplayer?enablejsapi=1&amp;playerapiid="+a.pluginId+"&amp;version=3&amp;autoplay=0&amp;controls=0&amp;modestbranding=1&loop=0";if(mejs.MediaFeatures.isIE){b=document.createElement("div");a.container.appendChild(b);b.outerHTML='<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="\/\/download.macromedia.com\/pub\/shockwave\/cabs\/flash\/swflash.cab" id="'+a.pluginId+'" width="'+a.width+'" height="'+a.height+'"><param name="movie" value="'+c+'" \/><param name="wmode" value="transparent" \/><param name="allowScriptAccess" value="always" \/><param name="allowFullScreen" value="true" \/><\/object>'}else a.container.innerHTML=$/;"	v
+b.target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^c)}},fireEvent:function(a,b,c){var d,e;a=this.pluginMediaElements[a];a.ended=false;a.paused=true;b={type:b,target:a};for(d in c){a[d]=c[d];b[d]=c[d]}e=c.bufferedTime||0;b.target.buffered=b.buffered={start:function(){return 0},end:function(){return e},length:1};a.dispatchEvent(b.type,b)}};$/;"	p
+b.target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^c)}},fireEvent:function(a,b,c){var d,e;a=this.pluginMediaElements[a];a.ended=false;a.paused=true;b={type:b,target:a};for(d in c){a[d]=c[d];b[d]=c[d]}e=c.bufferedTime||0;b.target.buffered=b.buffered={start:function(){return 0},end:function(){return e},length:1};a.dispatchEvent(b.type,b)}};$/;"	p
+b.type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^c)}},fireEvent:function(a,b,c){var d,e;a=this.pluginMediaElements[a];a.ended=false;a.paused=true;b={type:b,target:a};for(d in c){a[d]=c[d];b[d]=c[d]}e=c.bufferedTime||0;b.target.buffered=b.buffered={start:function(){return 0},end:function(){return e},length:1};a.dispatchEvent(b.type,b)}};$/;"	p
+b.type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^c)}},fireEvent:function(a,b,c){var d,e;a=this.pluginMediaElements[a];a.ended=false;a.paused=true;b={type:b,target:a};for(d in c){a[d]=c[d];b[d]=c[d]}e=c.bufferedTime||0;b.target.buffered=b.buffered={start:function(){return 0},end:function(){return e},length:1};a.dispatchEvent(b.type,b)}};$/;"	p
+before_input_callback	lib/form/builder.php	/^		$this->before_input_callback = isset( $field_values[ 'before_input_callback' ] ) ? $field_values[ 'before_input_callback' ] : NULL;$/;"	v
+block	lib/feeds/base.php	/^		$block = sprintf( '<itunes:block>%s<\/itunes:block>', ( $feed->enable ) ? 'no' : 'yes' );$/;"	v
+blogids	plugin.php	/^			$blogids = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM " . $wpdb->blogs ) );$/;"	v
+build	lib/model/base.php	/^	public static function build() {$/;"	f
+build_for	lib/helper.php	/^function build_for( $object, $args, $callback ) {$/;"	f
+build_input_values	lib/form/input/builder.php	/^	private function build_input_values( $object_key, $arguments ) {$/;"	f
+builder	lib/form/input/wrapper.php	/^		$builder      = $this->builder;$/;"	v
+builder	lib/form/input/wrapper.php	/^		$this->builder = $builder;$/;"	v
+builder	lib/form/input/wrapper.php	/^	public $builder;$/;"	v
+builder	lib/helper.php	/^	$builder = new Builder;$/;"	v
+button_text	lib/settings/format.php	/^	private function form_template( $format, $action, $button_text = NULL ) {$/;"	v
+button_text	lib/settings/show.php	/^	private function form_template( $show, $action, $button_text = NULL ) {$/;"	v
+by	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^\/\/ This is now handled by calling wp_enqueue_script inside the pwp_media_shortcode function by default. This means that MediaElement.js's JavaScript will only be called as needed$/;"	f
+callback	lib/form/builder.php	/^				$callback = '';$/;"	v
+callback	lib/form/builder.php	/^				$callback = call_user_func( $this->field_values[ 'multiselect_callback' ], $key );$/;"	v
+cat	lib/helper.php	/^			$cat    = $parts[ 0 ];$/;"	v
+categories	lib/feeds/base.php	/^		$categories = \\Podlove\\Itunes\\categories( false );	$/;"	v
+categories	lib/helper.php	/^function categories( $prefix_subcategories = true ) {$/;"	f
+category_html	lib/feeds/base.php	/^		$category_html = '';$/;"	v
+category_id	lib/feeds/base.php	/^			$category_id = $show->{'category_' . $i};$/;"	v
+chapters	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$chapters = array();$/;"	v
+chapters	lib/shortcodes.php	/^		$chapters = sprintf( 'chapters="_podlove_chapters_%s"', $show->slug );$/;"	v
+chapters	lib/shortcodes.php	/^	$chapters = '';$/;"	v
+checkbox	lib/form/input/builder.php	/^	public function checkbox( $object_key, $arguments ) {$/;"	f
+checkbox_fields	lib/settings/show.php	/^				$checkbox_fields = array( 'discoverable', 'enable', 'show_description' );$/;"	v
+checked	lib/form/builder.php	/^				$checked = $this->field_value[ $key ];$/;"	v
+checked	lib/form/builder.php	/^				$checked = $this->field_values[ 'default' ];$/;"	v
+class	lib/model/base.php	/^		$class = get_called_class();$/;"	v
+class	lib/settings/settings.php	/^			$class = \\Podlove\\Modules\\Base::get_class_by_module_name( $module_name );$/;"	v
+class	plugin.php	/^		$class = Modules\\Base::get_class_by_module_name( $module_name );$/;"	v
+class_name	bootstrap/autoload.php	/^	$class_name = array_pop( $split );$/;"	v
+class_name	bootstrap/autoload.php	/^	$class_name = podlove_camelcase_to_snakecase( $class_name );$/;"	v
+class_name	lib/modules/base.php	/^		$class_name     = podlove_snakecase_to_camelsnakecase( $module_name );$/;"	v
+column_cover	lib/show_list_table.php	/^	function column_cover( $show ) {$/;"	f
+column_discoverable	lib/feed_list_table.php	/^	function column_discoverable( $feed ) {$/;"	f
+column_extension	lib/format_list_table.php	/^	function column_extension( $format ) {$/;"	f
+column_feeds	lib/show_list_table.php	/^	function column_feeds( $show ) {$/;"	f
+column_format	lib/format_list_table.php	/^	function column_format( $format ) {$/;"	f
+column_id	lib/format_list_table.php	/^	function column_id( $format ) {$/;"	f
+column_id	lib/show_list_table.php	/^	function column_id( $show ) {$/;"	f
+column_media	lib/show_list_table.php	/^	function column_media( $show ) {$/;"	f
+column_mime	lib/format_list_table.php	/^	function column_mime( $format ) {$/;"	f
+column_name	lib/feed_list_table.php	/^	function column_name( $feed ) {$/;"	f
+column_name	lib/format_list_table.php	/^	function column_name( $format ) {$/;"	f
+column_name	lib/show_list_table.php	/^	function column_name( $show ) {$/;"	f
+column_show	lib/feed_list_table.php	/^	function column_show( $feed ) {$/;"	f
+column_url	lib/feed_list_table.php	/^	function column_url( $feed ) {$/;"	f
+columns	lib/feed_list_table.php	/^		$columns = $this->get_columns();$/;"	v
+columns	lib/feed_list_table.php	/^		$columns = array($/;"	v
+columns	lib/format_list_table.php	/^		$columns = $this->get_columns();$/;"	v
+columns	lib/format_list_table.php	/^		$columns = array($/;"	v
+columns	lib/show_list_table.php	/^		$columns = $this->get_columns();$/;"	v
+columns	lib/show_list_table.php	/^		$columns = array($/;"	v
+compiled_html	lib/form/builder.php	/^			$compiled_html = '';$/;"	v
+compiled_html	lib/form/input/builder.php	/^		$compiled_html = '';$/;"	v
+context	lib/form/builder.php	/^		$this->context      = $context;$/;"	v
+context	lib/form/builder.php	/^	private $context;$/;"	v
+context	lib/form/input/builder.php	/^		$context = isset( $args[ 'context' ] ) ? $this->context . '[' . $args[ 'context' ] . ']' . "[{$object->id}]" : $this->context; $/;"	v
+context	lib/form/input/builder.php	/^		$this->context    = $context;$/;"	v
+context	lib/form/input/builder.php	/^	public $context;$/;"	v
+context	lib/helper.php	/^	$context = isset( $args[ 'context' ] ) ? $args[ 'context' ] : ''; $/;"	v
+correct_php_version	podlove.php	/^$correct_php_version = version_compare( phpversion(), "5.3", ">=" );$/;"	v
+count	lib/model/base.php	/^	public static function count() {$/;"	f
+cover_art	lib/feeds/base.php	/^			$cover_art = '';$/;"	v
+cover_art	lib/feeds/base.php	/^			$cover_art = sprintf( '<itunes:image href="%s" \/>', $cover_art_url );$/;"	v
+cover_art_url	lib/feeds/base.php	/^		$cover_art_url       = $release->cover_art;$/;"	v
+coverimage	lib/feeds/base.php	/^		$coverimage = sprintf( '<itunes:image href="%s" \/>', $show->cover_image );$/;"	v
+create	lib/settings/feed.php	/^	private function create() {$/;"	f
+create	lib/settings/format.php	/^	private function create() {$/;"	f
+create	lib/settings/media_location.php	/^	private function create() {$/;"	f
+create	lib/settings/show.php	/^	private function create() {$/;"	f
+create_menu	lib/podcast_post_type.php	/^	public function create_menu() {$/;"	f
+create_new_blog	plugin.php	/^function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {$/;"	f
+curl	lib/model/media_file.php	/^		$curl = curl_init();$/;"	v
+curl_get_header	lib/model/media_file.php	/^	function curl_get_header() {$/;"	f
+current_blog	plugin.php	/^		$current_blog = $wpdb->blogid;$/;"	v
+current_blog	plugin.php	/^            		$current_blog = $wpdb->blogid;$/;"	v
+current_page	lib/feed_list_table.php	/^		$current_page = $this->get_pagenum();$/;"	v
+current_page	lib/format_list_table.php	/^		$current_page = $this->get_pagenum();$/;"	v
+current_page	lib/show_list_table.php	/^		$current_page = $this->get_pagenum();$/;"	v
+custom_field	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$custom_field = trim($custom_field);$/;"	v
+dashboard_page_hook	lib/podcast_post_type.php	/^		$dashboard_page_hook = add_submenu_page($/;"	v
+data	lib/feed_list_table.php	/^		$data = \\Podlove\\Model\\Feed::all();$/;"	v
+data	lib/feed_list_table.php	/^		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ) , $per_page );$/;"	v
+data	lib/format_list_table.php	/^		$data = \\Podlove\\Model\\MediaFormat::all();$/;"	v
+data	lib/format_list_table.php	/^		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ) , $per_page );$/;"	v
+data	lib/model/base.php	/^	private $data = array();$/;"	v
+data	lib/show_list_table.php	/^		$data = \\Podlove\\Model\\Show::all();$/;"	v
+data	lib/show_list_table.php	/^		$data = array_slice( $data, ( ( $current_page - 1 ) * $per_page ) , $per_page );$/;"	v
+database_version	lib/version.php	/^	$database_version = get_option( 'podlove_database_version' );$/;"	v
+database_version	lib/version.php	/^	if ( $database_version === false ) {$/;"	v
+deactivate	plugin.php	/^function deactivate() {$/;"	f
+decimals	lib/helper.php	/^function format_bytes( $size, $decimals = 2 ) {$/;"	v
+deepLink	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	var deepLink = false,$/;"	v
+default	lib/form/builder.php	/^		$default  = ( isset( $field_values[ 'default' ] ) ) ? $field_values[ 'default' ] : NULL;$/;"	v
+default_formats	plugin.php	/^		$default_formats = array($/;"	v
+default_values	lib/model/base.php	/^	public function default_values() {$/;"	f
+default_values	lib/model/feed.php	/^	public function default_values() {$/;"	f
+default_values	lib/model/media_location.php	/^	public function default_values() {$/;"	f
+default_values	lib/model/release.php	/^	public function default_values() {$/;"	f
+defaults	lib/helper.php	/^	$defaults = array($/;"	v
+defaults	lib/model/base.php	/^		$defaults = $this->default_values();$/;"	v
+delete	lib/model/base.php	/^	public function delete() {$/;"	f
+delete	lib/settings/feed.php	/^	private function delete() {$/;"	f
+delete	lib/settings/format.php	/^	private function delete() {$/;"	f
+delete	lib/settings/media_location.php	/^	private function delete() {$/;"	f
+delete	lib/settings/show.php	/^	private function delete() {$/;"	f
+destroy	lib/model/base.php	/^	public static function destroy() {$/;"	f
+determine_file_size	lib/model/media_file.php	/^	private function determine_file_size() {$/;"	f
+dhandle	lib/modules/base.php	/^		if ( $dhandle = opendir( $modules_dir ) ) {$/;"	v
+dimensions	lib/model/show.php	/^	public function get_cover( $dimensions = '1400' ) {$/;"	v
+dir	bootstrap/constants.php	/^$dir = dirname( __FILE__ );$/;"	v
+dir	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$dir = PODLOVEWEBPLAYER_DIR;$/;"	v
+display_tablenav	lib/feed_list_table.php	/^	public function display_tablenav( $which ) {$/;"	f
+div	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$div = stripos($line, ' ');$/;"	v
+do_feed	lib/feeds/atom.php	/^	function do_feed( $feed ) {$/;"	f
+do_feed	lib/feeds/rss.php	/^	function do_feed( $feed ) {$/;"	f
+do_template	lib/form/input/table_wrapper.php	/^	public function do_template( $object_key, $field_name, $field_id, $field_values, $block ) {$/;"	f
+do_template	lib/form/input/wrapper.php	/^	public abstract function do_template( $object_key, $field_name, $field_id, $field_values, $block );$/;"	f
+download_link_name	lib/shortcodes.php	/^		$download_link_name = $media_location->title;$/;"	v
+download_link_url	lib/shortcodes.php	/^		$download_link_url = get_bloginfo( 'url' ) . '?download_media_file=' . $media_file->id;$/;"	v
+duration	lib/feeds/base.php	/^		$duration = sprintf( '<itunes:duration>%s<\/itunes:duration>', $enclosure_duration );$/;"	v
+e.target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^			type: eventName,$/;"	p
+e.target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^			type: eventName,$/;"	p
+e.type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		e = {$/;"	p
+e.type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^		e = {$/;"	p
+edit_template	lib/settings/format.php	/^	private function edit_template() {$/;"	f
+edit_template	lib/settings/show.php	/^	private function edit_template() {$/;"	f
+enclosure_duration	lib/feeds/base.php	/^		$enclosure_duration  = $release->duration;$/;"	v
+enclosure_file_size	lib/feeds/base.php	/^		$enclosure_file_size = $file->size;$/;"	v
+enclosure_url	lib/feeds/base.php	/^		$enclosure_url = $release->enclosure_url( $show, $feed->media_location(), $format );$/;"	v
+enclosure_url	lib/model/release.php	/^	function enclosure_url( $show, $media_location, $format ) {$/;"	f
+end	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^				$end = ($i == (count($chapters) - 1)) ? '9999999' : $chapters[$i + 1]['timecode'];$/;"	v
+episode	lib/feeds/base.php	/^		$episode  = \\Podlove\\Model\\Episode::find_or_create_by_post_id( $post->ID );$/;"	v
+episode	lib/model/episode.php	/^		$episode = Episode::find_one_by_property( 'post_id', $post_id );$/;"	v
+episode	lib/model/episode.php	/^		$episode = new Episode();$/;"	v
+episode	lib/model/release.php	/^	public function episode() {$/;"	f
+episode	lib/podcast_post_type.php	/^		$episode = \\Podlove\\Model\\Episode::find_or_create_by_post_id( $post_id );$/;"	v
+episode	lib/shortcodes.php	/^	$episode         = Model\\Episode::find_or_create_by_post_id( $post->ID );$/;"	v
+episode	lib/shortcodes.php	/^	$episode     = Model\\Episode::find_or_create_by_post_id( $post->ID );$/;"	v
+episode_downloads_shortcode	lib/shortcodes.php	/^function episode_downloads_shortcode( $options ) {$/;"	f
+episode_ids	lib/model/feed.php	/^		$episode_ids = array_map( function ( $v ) { return $v->episode_id; }, $releases );$/;"	v
+episodes	lib/model/feed.php	/^		$episodes = Episode::find_all_by_where( "id IN (" . implode( ',', $episode_ids ) . ")" );$/;"	v
+explicit	lib/feeds/base.php	/^		$explicit = sprintf( '<itunes:explicit>%s<\/itunes:explicit>', ( $show->explicit ) ? 'yes' : 'no' );$/;"	v
+extend	lib/podcast_post_type.php	/^			$extend = array($/;"	v
+extension_key	lib/settings/show.php	/^				<?php foreach ( $extensions as $extension_key => $extension_label ): ?>$/;"	v
+f	lib/settings/show.php	/^					$f = new \\Podlove\\Form\\Input\\TableWrapper( $media_location_form );$/;"	v
+f	plugin.php	/^			$f = new Model\\MediaFormat;$/;"	v
+feed	lib/feeds.php	/^	$feed = \\Podlove\\Model\\Feed::find_by_show_slug_and_feed_slug( $show_slug, $feed_slug );$/;"	v
+feed	lib/feeds/atom.php	/^		$feed           = \\Podlove\\Model\\Feed::find_one_by_slug( $feed_slug );$/;"	v
+feed	lib/feeds/rss.php	/^		$feed           = \\Podlove\\Model\\Feed::find_one_by_slug( $feed_slug );$/;"	v
+feed	lib/settings/feed.php	/^		$feed = new \\Podlove\\Model\\Feed;$/;"	v
+feed	lib/settings/feed.php	/^	protected $feed;$/;"	v
+feed	lib/settings/show.php	/^				$feed = $feed_form->object;$/;"	v
+feed	lib/settings/show.php	/^				$feed = \\Podlove\\Model\\Feed::find_by_id( $feed_id );$/;"	v
+feed	lib/settings/show.php	/^		$feed    = $args[ 'args' ][ 0 ];$/;"	v
+feed	lib/settings/show.php	/^		$feed = new \\Podlove\\Model\\Feed;$/;"	v
+feed_id	lib/settings/feed.php	/^		$feed_id = ( isset( $_REQUEST[ 'feed' ] ) ) ? (int) $_REQUEST[ 'feed' ] : NULL;$/;"	v
+feed_id	lib/settings/show.php	/^			foreach ( $_POST[ 'podlove_show' ][ 'podlove_feed' ] as $feed_id => $feed_data ) {$/;"	v
+feed_overview_meta	lib/podcast_post_type.php	/^	public function feed_overview_meta() {$/;"	f
+feed_slug	lib/feeds.php	/^	$feed_slug = get_query_var( 'feed_slug' );$/;"	v
+feed_slug	lib/model/feed.php	/^			if ( $feed_slug == $feed->slug ) {$/;"	v
+feed_wrapper	lib/settings/show.php	/^				$feed_wrapper = new \\Podlove\\Form\\Input\\TableWrapper( $feed_form );$/;"	v
+feeds	lib/feeds/atom.php	/^			$feeds = $show->feeds();$/;"	v
+feeds	lib/model/feed.php	/^		$feeds = $show->feeds();$/;"	v
+feeds	lib/model/show.php	/^	function feeds() {$/;"	f
+feeds	lib/settings/feed.php	/^		$feeds = \\Podlove\\Model\\Feed::find_all_by_show_id( $show_id );$/;"	v
+feeds	lib/settings/show.php	/^			$feeds = \\Podlove\\Model\\Feed::find_all_by_show_id( $form->object->id );$/;"	v
+feeds	lib/show_list_table.php	/^		$feeds = $show->feeds();$/;"	v
+feeds	plugin.php	/^	$feeds = \\Podlove\\Model\\Feed::find_all_by_discoverable( 1 );$/;"	v
+field_id	lib/form/builder.php	/^		$this->field_id     = "{$context}_{$field_key}";$/;"	v
+field_id	lib/form/builder.php	/^	private $field_id;$/;"	v
+field_id	lib/form/input/builder.php	/^		$this->field_id        = $this->get_field_id();$/;"	v
+field_id	lib/form/input/wrapper.php	/^		$field_id     = $this->builder->get_field_id( $object_key );$/;"	v
+field_key	lib/form/builder.php	/^		$this->field_key    = $field_key;$/;"	v
+field_key	lib/form/builder.php	/^	private $field_key;$/;"	v
+field_keys	lib/settings/feed.php	/^	protected $field_keys;$/;"	v
+field_name	lib/form/builder.php	/^		$this->field_name   = "{$context}[{$field_key}]";$/;"	v
+field_name	lib/form/builder.php	/^	private $field_name;$/;"	v
+field_name	lib/form/input/builder.php	/^		$this->field_name      = $this->get_field_name();$/;"	v
+field_name	lib/form/input/wrapper.php	/^		$field_name   = $this->builder->get_field_name( $object_key );$/;"	v
+field_value	lib/form/builder.php	/^			$this->field_value = $default;$/;"	v
+field_value	lib/form/builder.php	/^			$this->field_value = $value;$/;"	v
+field_value	lib/form/builder.php	/^			$this->field_value = array();$/;"	v
+field_value	lib/form/builder.php	/^		$this->field_value = in_array( $this->field_value, array( 1, '1', true, 'true', 'on' ) );$/;"	v
+field_value	lib/form/input/builder.php	/^		$this->field_value     = $this->object->{$object_key};$/;"	v
+field_values	lib/form/builder.php	/^		$this->field_values = $field_values;$/;"	v
+field_values	lib/form/builder.php	/^	private $field_values;$/;"	v
+field_values	lib/form/input/wrapper.php	/^		$field_values = ( isset( $arguments[ 1 ] ) ) ? $arguments[ 1 ] : array();$/;"	v
+fields_for	lib/form/input/builder.php	/^	function fields_for( $object, $args, $callback ) {$/;"	f
+file	lib/feeds/base.php	/^		$file     = \\Podlove\\Model\\MediaFile::find_by_release_id_and_media_location_id( $release->id, $location->id );$/;"	v
+file	lib/model/media_file.php	/^		$file = File::find_by_release_id_and_media_location_id( $release_id, $media_location_id );$/;"	v
+file	lib/model/media_file.php	/^		$file = new MediaFile();$/;"	v
+file	lib/podcast_post_type.php	/^					$file = new \\Podlove\\Model\\MediaFile();$/;"	v
+file	lib/podcast_post_type.php	/^				$file     = \\Podlove\\Model\\MediaFile::find_by_release_id_and_media_location_id( $release->id, $location->id );$/;"	v
+file	lib/podcast_post_type.php	/^				$file = \\Podlove\\Model\\MediaFile::find_by_release_id_and_media_location_id( $release->id, $media_location_id );$/;"	v
+file	lib/podcast_post_type.php	/^				if ( $file === NULL && $media_location_value ) {$/;"	v
+file	plugin.php	/^	$file = \\Podlove\\Model\\MediaFile::find_by_id( $file_id );$/;"	v
+file_id	plugin.php	/^	$file_id = $_REQUEST[ 'file_id' ];$/;"	v
+file_name	lib/model/media_file.php	/^		$file_name = $this->release()->slug$/;"	v
+file_slug	lib/feeds/base.php	/^		$file_slug           = $release->slug;$/;"	v
+filesize	lib/podcast_post_type.php	/^				$filesize = ( is_object( $file ) ) ? $file->size : 0;					$/;"	v
+find_all_by_property	lib/model/base.php	/^	public static function find_all_by_property( $property, $value ) {$/;"	f
+find_all_by_where	lib/model/base.php	/^	public static function find_all_by_where( $where ) {$/;"	f
+find_by_id	lib/model/base.php	/^	public static function find_by_id( $id ) {$/;"	f
+find_by_release_id_and_media_location_id	lib/model/media_file.php	/^	public function find_by_release_id_and_media_location_id( $release_id, $media_location_id ) {$/;"	f
+find_by_show_id_and_media_format_id	lib/model/media_location.php	/^	public function find_by_show_id_and_media_format_id( $show_id, $media_format_id ) {$/;"	f
+find_by_show_id_and_media_location_id	lib/model/feed.php	/^	public function find_by_show_id_and_media_location_id( $show_id, $media_location_id ) {$/;"	f
+find_by_show_slug_and_feed_slug	lib/model/feed.php	/^	public function find_by_show_slug_and_feed_slug( $show_slug, $feed_slug ) {$/;"	f
+find_one_by_property	lib/model/base.php	/^	public static function find_one_by_property( $property, $value ) {$/;"	f
+find_one_by_where	lib/model/base.php	/^	public static function find_one_by_where( $where ) {$/;"	f
+find_or_create_by_episode_id_and_show_id	lib/model/release.php	/^	public function find_or_create_by_episode_id_and_show_id( $episode_id, $show_id ) {$/;"	f
+find_or_create_by_post_id	lib/model/episode.php	/^	public function find_or_create_by_post_id( $post_id ) {$/;"	f
+find_or_create_by_release_id_and_media_location_id	lib/model/media_file.php	/^	public function find_or_create_by_release_id_and_media_location_id( $release_id, $media_location_id ) {$/;"	f
+first	lib/model/base.php	/^	public static function first() {$/;"	f
+flag_as_not_new	lib/model/base.php	/^	public function flag_as_not_new() {$/;"	f
+flash_src	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$flash_src = htmlspecialchars($src);$/;"	v
+flash_src	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^		$flash_src = htmlspecialchars($mp3);$/;"	v
+flash_src	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^		$flash_src = htmlspecialchars($mp4);$/;"	v
+flash_src	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^		$flash_src = htmlspecialchars($src);$/;"	v
+flash_src	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$flash_src = '';$/;"	v
+fname	lib/modules/base.php	/^			while (false !== ( $fname = readdir( $dhandle ) ) ) {$/;"	v
+for	lib/helper.php	/^ * Convenience wrapper function for Form Builder.$/;"	f
+for	plugin.php	/^ * function for each of them.$/;"	f
+for	plugin.php	/^ * uninstall function for each of them.$/;"	f
+form_checkbox_input	lib/form/builder.php	/^	private function form_checkbox_input() {$/;"	f
+form_data	lib/podcast_post_type.php	/^		$this->form_data = array($/;"	v
+form_multiselect_input	lib/form/builder.php	/^	private function form_multiselect_input() {$/;"	f
+form_select_input	lib/form/builder.php	/^	private function form_select_input() {$/;"	f
+form_template	lib/settings/format.php	/^	private function form_template( $format, $action, $button_text = NULL ) {$/;"	f
+form_template	lib/settings/show.php	/^	private function form_template( $show, $action, $button_text = NULL ) {$/;"	f
+form_text_input	lib/form/builder.php	/^	private function form_text_input() {$/;"	f
+form_textarea_input	lib/form/builder.php	/^	private function form_textarea_input() {$/;"	f
+format	lib/feeds/atom.php	/^		$format         = $media_location->media_format();$/;"	v
+format	lib/feeds/rss.php	/^		$format         = $media_location->media_format();$/;"	v
+format	lib/model/media_file.php	/^		$format   = MediaFormat::find_by_id( $location->media_format_id );$/;"	v
+format	lib/podcast_post_type.php	/^				$format   = $location->media_format();$/;"	v
+format	lib/settings/format.php	/^		$format = \\Podlove\\Model\\MediaFormat::find_by_id( $_REQUEST[ 'format' ] );$/;"	v
+format	lib/settings/format.php	/^		$format = new \\Podlove\\Model\\MediaFormat;$/;"	v
+format	lib/settings/show.php	/^			<?php foreach ( $formats as $format => $extensions ): ?>$/;"	v
+format_bytes	lib/helper.php	/^function format_bytes( $size, $decimals = 2 ) {$/;"	f
+format_file	lib/shortcodes.php	/^		$format_file = Model\\MediaFile::find_by_release_id_and_media_location_id( $release->id, $format_location->id );$/;"	v
+format_id	lib/settings/format.php	/^	private function redirect( $action, $format_id = NULL ) {$/;"	v
+format_location	lib/shortcodes.php	/^		$format_location = Model\\MediaLocation::find_by_id( $formats_data[ 'audio' ][ $audio_format ] );$/;"	v
+formats	lib/settings/show.php	/^			$formats = array();$/;"	v
+formats	lib/settings/show.php	/^		$formats = array($/;"	v
+formats_data	lib/settings/show.php	/^			$formats_data = $all_formats_data[ $show->id ];$/;"	v
+formats_data	lib/settings/show.php	/^			$formats_data = array();$/;"	v
+formats_data	lib/shortcodes.php	/^		$formats_data = $all_formats_data[ $show->id ];$/;"	v
+formats_data	lib/shortcodes.php	/^	$formats_data = array();$/;"	v
+full_title	lib/model/show.php	/^	public function full_title() {$/;"	f
+function	lib/form/builder.php	/^		$function = 'form_' . $type . '_input';$/;"	v
+gen	lib/feeds/base.php	/^				$gen = '<generator uri="' . \\Podlove\\get_plugin_header( 'PluginURI' ) . '" version="' . \\Podlove\\get_plugin_header( 'Version' ) . '">' . \\Podlove\\get_plugin_header( 'Name' ) . '<\/generator>';$/;"	v
+gen	lib/feeds/base.php	/^				$gen = '<generator>Podlove v' . \\Podlove\\get_plugin_header( 'Version' ) . '<\/generator>';$/;"	v
+generateTimecode	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function generateTimecode(times) {$/;"	f
+generateTimecode.generatePart	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^		function generatePart(seconds) {$/;"	f
+get_all_module_names	lib/modules/base.php	/^	public static function get_all_module_names() {$/;"	f
+get_class_by_module_name	lib/modules/base.php	/^	public static function get_class_by_module_name( $module_name ) {$/;"	f
+get_columns	lib/feed_list_table.php	/^	function get_columns(){$/;"	f
+get_columns	lib/format_list_table.php	/^	function get_columns(){$/;"	f
+get_columns	lib/show_list_table.php	/^	function get_columns(){$/;"	f
+get_content_type	lib/model/feed.php	/^	public function get_content_type() {$/;"	f
+get_cover	lib/model/show.php	/^	public function get_cover( $dimensions = '1400' ) {$/;"	f
+get_download_file_name	lib/model/media_file.php	/^	function get_download_file_name() {$/;"	f
+get_extra_html_attributes	lib/form/input/builder.php	/^	public function get_extra_html_attributes() {$/;"	f
+get_field_id	lib/form/input/builder.php	/^	public function get_field_id() {$/;"	f
+get_field_name	lib/form/input/builder.php	/^	public function get_field_name() {$/;"	f
+get_file_url	lib/model/media_file.php	/^	public function get_file_url() {$/;"	f
+get_fragment	lib/modules/podlove_web_player/player/podlove-web-player/libs/jquery.ba-hashchange.js	/^  function get_fragment( url ) {$/;"	f
+get_module_description	lib/modules/base.php	/^	function get_module_description() {$/;"	f
+get_module_name	lib/modules/base.php	/^	function get_module_name() {$/;"	f
+get_plugin_header	bootstrap/constants.php	/^function get_plugin_header( $tag_name ) {$/;"	f
+get_property	lib/model/base.php	/^	private function get_property( $name ) {$/;"	f
+get_setting	lib/helper.php	/^function get_setting( $name ) {$/;"	f
+get_subscribe_link	lib/model/feed.php	/^	public function get_subscribe_link() {$/;"	f
+get_subscribe_url	lib/model/feed.php	/^	public function get_subscribe_url() {$/;"	f
+guid	lib/custom_guid.php	/^\/\/ 		$guid = uniqid( 'plv-', true ); $/;"	v
+handle_direct_download	lib/shortcodes.php	/^function handle_direct_download() {$/;"	f
+has_entries	lib/model/base.php	/^	public static function has_entries() {$/;"	f
+has_property	lib/model/base.php	/^	public static function has_property( $name ) {$/;"	f
+header	lib/model/media_file.php	/^		$header     = $this->curl_get_header();$/;"	v
+hidden	lib/feed_list_table.php	/^		$hidden = array();$/;"	v
+hidden	lib/format_list_table.php	/^		$hidden = array();$/;"	v
+hidden	lib/show_list_table.php	/^		$hidden = array();$/;"	v
+hook	lib/podcast_post_type.php	/^		$hook = add_menu_page($/;"	v
+hours	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$hours = substr($time, 0, 2);$/;"	v
+html	lib/form/builder.php	/^			$html = $compiled_html;$/;"	v
+html	lib/form/builder.php	/^		$html     = ( isset( $field_values[ 'html' ] ) )    ? $field_values[ 'html' ]    : NULL;$/;"	v
+html	lib/form/builder.php	/^		$this->html         = $html;$/;"	v
+html	lib/form/builder.php	/^	private $html;$/;"	v
+html	lib/shortcodes.php	/^	$html = '<ul class="episode_download_list">';$/;"	v
+htmlMediaElement.canPlayType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		if (mejs.MediaFeatures.isBustedAndroid) {$/;"	f
+htmlMediaElement.canPlayType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^		if (mejs.MediaFeatures.isBustedAndroid) {$/;"	f
+html_attributes	lib/form/input/builder.php	/^		$this->html_attributes = $this->get_extra_html_attributes();$/;"	v
+human_readable_size	js/admin.js	/^function human_readable_size(size) {$/;"	f
+i	lib/feeds/base.php	/^		for ( $i = 1; $i <= 3; $i++ ) { $/;"	v
+i	lib/helper.php	/^    for ( $i = 0; $size >= 1024 && $i < 4; $i++ ) $size \/= 1024;$/;"	v
+i	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			foreach ($chapters as $i => $chapter) {$/;"	v
+i	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^		foreach ($chapters as $i => $chapter) {$/;"	v
+i	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	foreach ($lines as $i => $line) {$/;"	v
+i	lib/version.php	/^		for ( $i = $database_version+1; $i <= DATABASE_VERSION; $i++ ) { $/;"	v
+id	lib/form/builder.php	/^			$id = $this->field_id . '_' . $key;$/;"	v
+id	lib/form/builder.php	/^			$id = str_replace( '__', '_', $id );$/;"	v
+id	lib/form/builder.php	/^			$id = str_replace( array( '[', ']' ), '_', $id );$/;"	v
+id	lib/model/base.php	/^				$this->id = mysql_insert_id();$/;"	v
+id	lib/settings/show.php	/^					$id    = sprintf( 'podlove_webplayer_formats_%s_%s'  , $format, $extension_key );$/;"	v
+if	lib/version.php	/^ *		Feel free to move the migration code into a separate function if it's$/;"	f
+image	lib/form/input/builder.php	/^	public function image( $object_key, $arguments ) {$/;"	f
+img_html_attributes	lib/form/input/builder.php	/^		$img_html_attributes = '';$/;"	v
+info	lib/model/media_file.php	/^		$info = curl_getinfo( $curl );$/;"	v
+info	plugin.php	/^	$info = $file->curl_get_header();$/;"	v
+init	lib/feeds.php	/^function init() {$/;"	f
+input	lib/form/builder.php	/^	public function input( $context, $value, $field_key, $field_values ) {$/;"	f
+input	lib/helper.php	/^function input( $context, $object, $field_key, $field_value ) {$/;"	f
+is_nested_in_meta_box	lib/feed_list_table.php	/^		$this->is_nested_in_meta_box = true;$/;"	v
+is_nested_in_meta_box	lib/feed_list_table.php	/^	private $is_nested_in_meta_box = false;$/;"	v
+is_new	lib/model/base.php	/^		$this->is_new = false;$/;"	v
+is_new	lib/model/base.php	/^	private $is_new = true;$/;"	v
+is_new	lib/model/base.php	/^	public function is_new() {$/;"	f
+items	lib/feed_list_table.php	/^		$this->items = $data;$/;"	v
+items	lib/format_list_table.php	/^		$this->items = $data;$/;"	v
+items	lib/show_list_table.php	/^		$this->items = $data;$/;"	v
+jQuery.fn.mediaelementplayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	if (typeof jQuery != 'undefined') {$/;"	f
+jQuery.fn.mediaelementplayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	if (typeof jQuery != 'undefined') {$/;"	f
+key	lib/feeds/base.php	/^		return apply_filters( 'podlove_feed_title_name', ( $key == 'name' ) ? '' : $value );$/;"	v
+key	lib/form/builder.php	/^				<option value="<?php echo $key; ?>"<?php if ( $key == $this->field_value ): ?> selected="selected"<?php endif; ?>><?php echo $value; ?><\/option>$/;"	v
+key	lib/form/builder.php	/^			<?php foreach ( $this->field_values[ 'options' ] as $key => $value ): ?>$/;"	v
+key	lib/form/builder.php	/^			foreach ( $html as $key => $value ) {$/;"	v
+key	lib/form/builder.php	/^		foreach ( $this->field_values[ 'options' ] as $key => $value ) {$/;"	v
+key	lib/form/input/builder.php	/^				<option value="<?php echo $key; ?>"<?php if ( $key == $this->field_value ): ?> selected="selected"<?php endif; ?>><?php echo $value; ?><\/option>$/;"	v
+key	lib/form/input/builder.php	/^			<?php foreach ( $this->arguments[ 'options' ] as $key => $value ): ?>$/;"	v
+key	lib/form/input/builder.php	/^			<input type="radio" id="<?php echo $this->field_id . '_' . $key; ?>" name="<?php echo $this->field_name; ?>" value="<?php echo $key; ?>"<?php if ( $key == $this->field_value ): ?> checked="checked"<?php endif; ?>>$/;"	v
+key	lib/form/input/builder.php	/^		<?php foreach ( $this->arguments[ 'options' ] as $key => $value ): ?>$/;"	v
+key	lib/form/input/builder.php	/^		foreach ( $this->arguments[ 'html' ] as $key => $value )$/;"	v
+key	lib/podcast_post_type.php	/^				if ( $key === 'chapters' ) {$/;"	v
+key	lib/podcast_post_type.php	/^			<?php foreach ( $this->form_data as $key => $value ): ?>$/;"	v
+key	lib/podcast_post_type.php	/^			foreach ( $this->form_data as $key => $value ) {$/;"	v
+key	lib/settings/format.php	/^		foreach ( $_POST[ 'podlove_format' ] as $key => $value ) {$/;"	v
+key	lib/settings/format.php	/^		foreach ( $_POST[ 'podlove_format' ] as $key => $value )$/;"	v
+key	lib/settings/show.php	/^				foreach ( $feed_data as $key => $value ) {$/;"	v
+key	lib/settings/show.php	/^				foreach ( $media_location_data as $key => $value ) {$/;"	v
+key	lib/settings/show.php	/^		foreach ( $_POST[ 'podlove_show' ] as $key => $value ) {$/;"	v
+key	plugin.php	/^			foreach ( $format as $key => $value ) {$/;"	v
+keywords	lib/feeds/base.php	/^		$keywords = sprintf( '<itunes:keywords>%s<\/itunes:keywords>', $show->keywords );$/;"	v
+labels	lib/podcast_post_type.php	/^		$labels = array($/;"	v
+lib	bootstrap/autoload.php	/^	$lib = dirname( __FILE__ ) . '\/..\/lib\/';$/;"	v
+line	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$line = trim(str_replace("\\n", '', $line));$/;"	v
+lines	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$lines = explode("\\n", $chapstring);$/;"	v
+link	lib/feed_list_table.php	/^		$link = function ( $title ) use ( $feed ) {$/;"	v
+load	lib/modules/base.php	/^	abstract function load();$/;"	f
+load	lib/modules/podlove_web_player/podlove_web_player.php	/^	public function load() {$/;"	f
+loading	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^			var $/;"	v
+loading	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^			var $/;"	v
+location	lib/feeds/base.php	/^		$location = \\Podlove\\Model\\MediaLocation::find_by_show_id_and_media_format_id( $show->id, $format->id );$/;"	v
+location	lib/model/media_file.php	/^		$location = MediaLocation::find_by_id( $this->media_location_id );$/;"	v
+location	lib/podcast_post_type.php	/^				$location = \\Podlove\\Model\\MediaLocation::find_by_id( $location_id );$/;"	v
+location_options	lib/podcast_post_type.php	/^		$location_options = array();$/;"	v
+location_values	lib/podcast_post_type.php	/^		$location_values = array();$/;"	v
+locations	lib/settings/show.php	/^				$locations = array();$/;"	v
+media_file	lib/shortcodes.php	/^	$media_file    = Model\\MediaFile::find_by_id( $media_file_id );$/;"	v
+media_file_id	lib/shortcodes.php	/^	$media_file_id = (int) $_GET[ 'download_media_file' ];$/;"	v
+media_files	lib/model/feed.php	/^		$media_files = $this->media_location()->media_files();$/;"	v
+media_files	lib/model/media_location.php	/^	function media_files() {$/;"	f
+media_files	lib/model/release.php	/^	public function media_files() {$/;"	f
+media_files	lib/podcast_post_type.php	/^						<?php $media_files = $release->media_files(); ?>$/;"	v
+media_files	lib/shortcodes.php	/^	$media_files = $release->media_files();$/;"	v
+media_format	lib/model/media_location.php	/^	public function media_format() {$/;"	f
+media_format	lib/shortcodes.php	/^		$media_format   = $media_location->media_format();$/;"	v
+media_location	lib/feeds/atom.php	/^		$media_location = $feed->media_location();$/;"	v
+media_location	lib/feeds/rss.php	/^		$media_location = $feed->media_location();$/;"	v
+media_location	lib/model/feed.php	/^	public function media_location() {$/;"	f
+media_location	lib/model/media_file.php	/^	public function media_location() {$/;"	f
+media_location	lib/settings/media_location.php	/^		$media_location = new \\Podlove\\Model\\MediaLocation;$/;"	v
+media_location	lib/settings/show.php	/^					$media_location = $media_location_form->object;$/;"	v
+media_location	lib/settings/show.php	/^				$media_location = \\Podlove\\Model\\MediaLocation::find_by_id( $media_location_id );$/;"	v
+media_location	lib/settings/show.php	/^		$media_location = new \\Podlove\\Model\\MediaLocation;$/;"	v
+media_location	lib/shortcodes.php	/^		$media_location = $media_file->media_location();$/;"	v
+media_location_id	lib/podcast_post_type.php	/^			foreach ( $release_values[ 'media_locations' ] as $media_location_id => $media_location_value ) {$/;"	v
+media_location_id	lib/settings/media_location.php	/^		$media_location_id = ( isset( $_REQUEST[ 'media_location' ] ) ) ? (int) $_REQUEST[ 'media_location' ] : NULL;$/;"	v
+media_location_id	lib/settings/show.php	/^			foreach ( $_POST[ 'podlove_show' ][ 'podlove_media_location' ] as $media_location_id => $media_location_data ) {$/;"	v
+media_locations	lib/model/show.php	/^	public function media_locations() {$/;"	f
+media_locations	lib/podcast_post_type.php	/^		$media_locations = $show->valid_media_locations();$/;"	v
+media_locations	lib/podcast_post_type.php	/^		$media_locations = array_map( function( $f ) { return $f->id; }, \\Podlove\\Model\\MediaFormat::all() );$/;"	v
+media_locations	lib/settings/media_location.php	/^		$media_locations = \\Podlove\\Model\\MediaLocation::find_all_by_id( $media_location_id );$/;"	v
+media_locations	lib/settings/show.php	/^				$media_locations = $feed->show()->media_locations();$/;"	v
+media_locations	lib/settings/show.php	/^			$media_locations = \\Podlove\\Model\\MediaLocation::find_all_by_show_id( $form->object->id );$/;"	v
+media_locations	lib/settings/show.php	/^		$media_locations = $args[ 'args' ][ 0 ];$/;"	v
+media_locations_form	lib/podcast_post_type.php	/^		$media_locations_form = array($/;"	v
+mediahtml	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$mediahtml = <<<_end_$/;"	v
+mejs	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.PluginMediaElement=function(a,b,c){this.id=a;this.pluginType=b;this.src=c;this.events={}};$/;"	c
+mejs	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.PluginMediaElement=function(a,b,c){this.id=a;this.pluginType=b;this.src=c;this.events={}};$/;"	c
+mejs.HtmlMediaElement.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	pluginType: 'native',$/;"	p
+mejs.HtmlMediaElement.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	p
+mejs.HtmlMediaElement.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	pluginType: 'native',$/;"	p
+mejs.HtmlMediaElement.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	p
+mejs.HtmlMediaElement.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.HtmlMediaElement = {$/;"	p
+mejs.HtmlMediaElement.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	p
+mejs.HtmlMediaElement.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.HtmlMediaElement = {$/;"	p
+mejs.HtmlMediaElement.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	p
+mejs.HtmlMediaElement.setCurrentTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	isFullScreen: false,$/;"	m
+mejs.HtmlMediaElement.setCurrentTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	m
+mejs.HtmlMediaElement.setCurrentTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	isFullScreen: false,$/;"	m
+mejs.HtmlMediaElement.setCurrentTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	m
+mejs.HtmlMediaElement.setMuted	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setMuted	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setSrc	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setSrc	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	m
+mejs.HtmlMediaElement.setSrc	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setSrc	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	m
+mejs.HtmlMediaElement.setVideoSize	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setVideoSize	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	m
+mejs.HtmlMediaElement.setVideoSize	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setVideoSize	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	m
+mejs.HtmlMediaElement.setVolume	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElement.setVolume	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElement.stop	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElement.stop	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.create	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.HtmlMediaElementShim = {$/;"	m
+mejs.HtmlMediaElementShim.create	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElementShim={create:function(a,b){var c=mejs.MediaElementDefaults,d=typeof a=="string"?document.getElementById(a):a,e=d.tagName.toLowerCase(),g=e==="audio"||e==="video",f=g?d.getAttribute("src"):d.getAttribute("href");e=d.getAttribute("poster");var j=d.getAttribute("autoplay"),h=d.getAttribute("preload"),l=d.getAttribute("controls"),k;for(k in b)c[k]=b[k];f=typeof f=="undefined"||f===null||f==""?null:f;e=typeof e=="undefined"||e===null?"":e;h=typeof h=="undefined"||h===null||h==="false"?$/;"	m
+mejs.HtmlMediaElementShim.create	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.HtmlMediaElementShim = {$/;"	m
+mejs.HtmlMediaElementShim.create	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElementShim={create:function(a,b){var c=mejs.MediaElementDefaults,d=typeof a=="string"?document.getElementById(a):a,e=d.tagName.toLowerCase(),g=e==="audio"||e==="video",f=g?d.getAttribute("src"):d.getAttribute("href");e=d.getAttribute("poster");var j=d.getAttribute("autoplay"),h=d.getAttribute("preload"),l=d.getAttribute("controls"),k;for(k in b)c[k]=b[k];f=typeof f=="undefined"||f===null||f==""?null:f;e=typeof e=="undefined"||e===null?"":e;h=typeof h=="undefined"||h===null||h==="false"?$/;"	m
+mejs.HtmlMediaElementShim.createErrorMessage	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.createErrorMessage	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^""&&g.length>0)h.url=g[0].url;return h},formatType:function(a,b){return a&&!b?this.getTypeFromFile(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b},getTypeFromFile:function(a){a=a.substring(a.lastIndexOf(".")+1);return(\/(mp4|m4v|ogg|ogv|webm|flv|wmv|mpeg|mov)\/gi.test(a)?"video":"audio")+"\/"+a},createErrorMessage:function(a,b,c){var d=a.htmlMediaElement,e=document.createElement("div");e.className="me-cannotplay";try{e.style.width=d.width+"px";e.style.height=d.height+"px"}catch(g){}e.innerHTML=c!==$/;"	m
+mejs.HtmlMediaElementShim.createErrorMessage	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.createErrorMessage	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^""&&g.length>0)h.url=g[0].url;return h},formatType:function(a,b){return a&&!b?this.getTypeFromFile(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b},getTypeFromFile:function(a){a=a.substring(a.lastIndexOf(".")+1);return(\/(mp4|m4v|ogg|ogv|webm|flv|wmv|mpeg|mov)\/gi.test(a)?"video":"audio")+"\/"+a},createErrorMessage:function(a,b,c){var d=a.htmlMediaElement,e=document.createElement("div");e.className="me-cannotplay";try{e.style.width=d.width+"px";e.style.height=d.height+"px"}catch(g){}e.innerHTML=c!==$/;"	m
+mejs.HtmlMediaElementShim.createPlugin	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.createPlugin	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.determinePlayback	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.determinePlayback	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^"none":h;j=!(typeof j=="undefined"||j===null||j==="false");l=!(typeof l=="undefined"||l===null||l==="false");k=this.determinePlayback(d,c,mejs.MediaFeatures.supportsMediaTag,g,f);k.url=k.url!==null?mejs.Utility.absolutizeUrl(k.url):"";if(k.method=="native"){if(mejs.MediaFeatures.isBustedAndroid){d.src=k.url;d.addEventListener("click",function(){d.play()},false)}return this.updateNative(k,c,j,h)}else if(k.method!=="")return this.createPlugin(k,c,e,j,h,l);else{this.createErrorMessage(k,c,e);return this}},$/;"	m
+mejs.HtmlMediaElementShim.determinePlayback	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.determinePlayback	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^"none":h;j=!(typeof j=="undefined"||j===null||j==="false");l=!(typeof l=="undefined"||l===null||l==="false");k=this.determinePlayback(d,c,mejs.MediaFeatures.supportsMediaTag,g,f);k.url=k.url!==null?mejs.Utility.absolutizeUrl(k.url):"";if(k.method=="native"){if(mejs.MediaFeatures.isBustedAndroid){d.src=k.url;d.addEventListener("click",function(){d.play()},false)}return this.updateNative(k,c,j,h)}else if(k.method!=="")return this.createPlugin(k,c,e,j,h,l);else{this.createErrorMessage(k,c,e);return this}},$/;"	m
+mejs.HtmlMediaElementShim.flashPlayers	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^c.ended=b.ended;c.muted=a.isMuted();c.volume=a.getVolume()\/100;c.bytesTotal=a.getVideoBytesTotal();c.bufferedBytes=a.getVideoBytesLoaded();var d=c.bufferedBytes\/c.bytesTotal*c.duration;c.target.buffered=c.buffered={start:function(){return 0},end:function(){return d},length:1}}b.dispatchEvent(c.type,c)},iFrameReady:function(){for(this.isIframeLoaded=this.isLoaded=true;this.iframeQueue.length>0;)this.createIframe(this.iframeQueue.pop())},flashPlayers:{},createFlash:function(a){this.flashPlayers[a.pluginId]=$/;"	p
+mejs.HtmlMediaElementShim.flashPlayers	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^c.ended=b.ended;c.muted=a.isMuted();c.volume=a.getVolume()\/100;c.bytesTotal=a.getVideoBytesTotal();c.bufferedBytes=a.getVideoBytesLoaded();var d=c.bufferedBytes\/c.bytesTotal*c.duration;c.target.buffered=c.buffered={start:function(){return 0},end:function(){return d},length:1}}b.dispatchEvent(c.type,c)},iFrameReady:function(){for(this.isIframeLoaded=this.isLoaded=true;this.iframeQueue.length>0;)this.createIframe(this.iframeQueue.pop())},flashPlayers:{},createFlash:function(a){this.flashPlayers[a.pluginId]=$/;"	p
+mejs.HtmlMediaElementShim.formatType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.formatType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^""&&g.length>0)h.url=g[0].url;return h},formatType:function(a,b){return a&&!b?this.getTypeFromFile(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b},getTypeFromFile:function(a){a=a.substring(a.lastIndexOf(".")+1);return(\/(mp4|m4v|ogg|ogv|webm|flv|wmv|mpeg|mov)\/gi.test(a)?"video":"audio")+"\/"+a},createErrorMessage:function(a,b,c){var d=a.htmlMediaElement,e=document.createElement("div");e.className="me-cannotplay";try{e.style.width=d.width+"px";e.style.height=d.height+"px"}catch(g){}e.innerHTML=c!==$/;"	m
+mejs.HtmlMediaElementShim.formatType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.formatType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^""&&g.length>0)h.url=g[0].url;return h},formatType:function(a,b){return a&&!b?this.getTypeFromFile(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b},getTypeFromFile:function(a){a=a.substring(a.lastIndexOf(".")+1);return(\/(mp4|m4v|ogg|ogv|webm|flv|wmv|mpeg|mov)\/gi.test(a)?"video":"audio")+"\/"+a},createErrorMessage:function(a,b,c){var d=a.htmlMediaElement,e=document.createElement("div");e.className="me-cannotplay";try{e.style.width=d.width+"px";e.style.height=d.height+"px"}catch(g){}e.innerHTML=c!==$/;"	m
+mejs.HtmlMediaElementShim.getTypeFromFile	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.getTypeFromFile	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^""&&g.length>0)h.url=g[0].url;return h},formatType:function(a,b){return a&&!b?this.getTypeFromFile(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b},getTypeFromFile:function(a){a=a.substring(a.lastIndexOf(".")+1);return(\/(mp4|m4v|ogg|ogv|webm|flv|wmv|mpeg|mov)\/gi.test(a)?"video":"audio")+"\/"+a},createErrorMessage:function(a,b,c){var d=a.htmlMediaElement,e=document.createElement("div");e.className="me-cannotplay";try{e.style.width=d.width+"px";e.style.height=d.height+"px"}catch(g){}e.innerHTML=c!==$/;"	m
+mejs.HtmlMediaElementShim.getTypeFromFile	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.HtmlMediaElementShim.getTypeFromFile	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^""&&g.length>0)h.url=g[0].url;return h},formatType:function(a,b){return a&&!b?this.getTypeFromFile(a):b&&~b.indexOf(";")?b.substr(0,b.indexOf(";")):b},getTypeFromFile:function(a){a=a.substring(a.lastIndexOf(".")+1);return(\/(mp4|m4v|ogg|ogv|webm|flv|wmv|mpeg|mov)\/gi.test(a)?"video":"audio")+"\/"+a},createErrorMessage:function(a,b,c){var d=a.htmlMediaElement,e=document.createElement("div");e.className="me-cannotplay";try{e.style.width=d.width+"px";e.style.height=d.height+"px"}catch(g){}e.innerHTML=c!==$/;"	m
+mejs.MediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^};$/;"	f
+mejs.MediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^error:function(){}};mejs.MediaElement=function(a,b){return mejs.HtmlMediaElementShim.create(a,b)};$/;"	f
+mejs.MediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^};$/;"	f
+mejs.MediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^error:function(){}};mejs.MediaElement=function(a,b){return mejs.HtmlMediaElementShim.create(a,b)};$/;"	f
+mejs.MediaElementDefaults.mode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.MediaElementDefaults = {$/;"	p
+mejs.MediaElementDefaults.mode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.MediaElementDefaults={mode:"auto",plugins:["flash","silverlight","youtube","vimeo"],enablePluginDebug:false,type:"",pluginPath:mejs.Utility.getScriptPath(["mediaelement.js","mediaelement.min.js","mediaelement-and-player.js","mediaelement-and-player.min.js"]),flashName:"flashmediaelement.swf",enablePluginSmoothing:false,silverlightName:"silverlightmediaelement.xap",defaultVideoWidth:480,defaultVideoHeight:270,pluginWidth:-1,pluginHeight:-1,pluginVars:[],timerRate:250,startVolume:0.8,success:function(){},$/;"	p
+mejs.MediaElementDefaults.mode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.MediaElementDefaults = {$/;"	p
+mejs.MediaElementDefaults.mode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.MediaElementDefaults={mode:"auto",plugins:["flash","silverlight","youtube","vimeo"],enablePluginDebug:false,type:"",pluginPath:mejs.Utility.getScriptPath(["mediaelement.js","mediaelement.min.js","mediaelement-and-player.js","mediaelement-and-player.min.js"]),flashName:"flashmediaelement.swf",enablePluginSmoothing:false,silverlightName:"silverlightmediaelement.xap",defaultVideoWidth:480,defaultVideoHeight:270,pluginWidth:-1,pluginHeight:-1,pluginVars:[],timerRate:250,startVolume:0.8,success:function(){},$/;"	p
+mejs.MediaElementDefaults.plugins	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	mode: 'auto',$/;"	p
+mejs.MediaElementDefaults.plugins	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.MediaElementDefaults={mode:"auto",plugins:["flash","silverlight","youtube","vimeo"],enablePluginDebug:false,type:"",pluginPath:mejs.Utility.getScriptPath(["mediaelement.js","mediaelement.min.js","mediaelement-and-player.js","mediaelement-and-player.min.js"]),flashName:"flashmediaelement.swf",enablePluginSmoothing:false,silverlightName:"silverlightmediaelement.xap",defaultVideoWidth:480,defaultVideoHeight:270,pluginWidth:-1,pluginHeight:-1,pluginVars:[],timerRate:250,startVolume:0.8,success:function(){},$/;"	p
+mejs.MediaElementDefaults.plugins	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	mode: 'auto',$/;"	p
+mejs.MediaElementDefaults.plugins	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.MediaElementDefaults={mode:"auto",plugins:["flash","silverlight","youtube","vimeo"],enablePluginDebug:false,type:"",pluginPath:mejs.Utility.getScriptPath(["mediaelement.js","mediaelement.min.js","mediaelement-and-player.js","mediaelement-and-player.min.js"]),flashName:"flashmediaelement.swf",enablePluginSmoothing:false,silverlightName:"silverlightmediaelement.xap",defaultVideoWidth:480,defaultVideoHeight:270,pluginWidth:-1,pluginHeight:-1,pluginVars:[],timerRate:250,startVolume:0.8,success:function(){},$/;"	p
+mejs.MediaElementPlayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	mejs.players = [];$/;"	f
+mejs.MediaElementPlayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	};$/;"	c
+mejs.MediaElementPlayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^228],action:function(a,b){if(!isNaN(b.duration)&&b.duration>0){if(a.isVideo){a.showControls();a.startControlsTimer()}b.setCurrentTime(Math.min(b.currentTime+b.duration*0.05,b.duration))}}},{keys:[70],action:function(a){if(typeof a.enterFullScreen!="undefined")a.isFullScreen?a.exitFullScreen():a.enterFullScreen()}}]};mejs.mepIndex=0;mejs.players=[];mejs.MediaElementPlayer=function(a,b){if(!(this instanceof mejs.MediaElementPlayer))return new mejs.MediaElementPlayer(a,b);this.$media=this.$node=f(a);$/;"	c
+mejs.MediaElementPlayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	mejs.players = [];$/;"	f
+mejs.MediaElementPlayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	};$/;"	c
+mejs.MediaElementPlayer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^228],action:function(a,b){if(!isNaN(b.duration)&&b.duration>0){if(a.isVideo){a.showControls();a.startControlsTimer()}b.setCurrentTime(Math.min(b.currentTime+b.duration*0.05,b.duration))}}},{keys:[70],action:function(a){if(typeof a.enterFullScreen!="undefined")a.isFullScreen?a.exitFullScreen():a.enterFullScreen()}}]};mejs.mepIndex=0;mejs.players=[];mejs.MediaElementPlayer=function(a,b){if(!(this instanceof mejs.MediaElementPlayer))return new mejs.MediaElementPlayer(a,b);this.$media=this.$node=f(a);$/;"	c
+mejs.MediaElementPlayer.controlsAreVisible	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		hasFocus: false,$/;"	p
+mejs.MediaElementPlayer.controlsAreVisible	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^this.node=this.media=this.$media[0];if(typeof this.node.player!="undefined")return this.node.player;else this.node.player=this;if(typeof b=="undefined")b=this.$node.data("mejsoptions");this.options=f.extend({},mejs.MepDefaults,b);mejs.players.push(this);this.init();return this};mejs.MediaElementPlayer.prototype={hasFocus:false,controlsAreVisible:true,init:function(){var a=this,b=mejs.MediaFeatures,c=f.extend(true,{},a.options,{success:function(e,g){a.meReady(e,g)},error:function(e){a.handleError(e)}}),$/;"	p
+mejs.MediaElementPlayer.controlsAreVisible	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^		hasFocus: false,$/;"	p
+mejs.MediaElementPlayer.controlsAreVisible	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^this.node=this.media=this.$media[0];if(typeof this.node.player!="undefined")return this.node.player;else this.node.player=this;if(typeof b=="undefined")b=this.$node.data("mejsoptions");this.options=f.extend({},mejs.MepDefaults,b);mejs.players.push(this);this.init();return this};mejs.MediaElementPlayer.prototype={hasFocus:false,controlsAreVisible:true,init:function(){var a=this,b=mejs.MediaFeatures,c=f.extend(true,{},a.options,{success:function(e,g){a.meReady(e,g)},error:function(e){a.handleError(e)}}),$/;"	p
+mejs.MediaElementPlayer.controlsEnabled	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^this.controlsTimer=null}},controlsEnabled:true,disableControls:function(){this.killControlsTimer();this.hideControls(false);this.controlsEnabled=false},enableControls:function(){this.showControls(false);this.controlsEnabled=true},meReady:function(a,b){var c=this,d=mejs.MediaFeatures,e=b.getAttribute("autoplay");e=!(typeof e=="undefined"||e===null||e==="false");var g;if(!c.created){c.created=true;c.media=a;c.domNode=b;if(!(d.isAndroid&&c.options.AndroidUseNativeControls)&&!(d.isiPad&&c.options.iPadUseNativeControls)&&$/;"	p
+mejs.MediaElementPlayer.controlsEnabled	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^this.controlsTimer=null}},controlsEnabled:true,disableControls:function(){this.killControlsTimer();this.hideControls(false);this.controlsEnabled=false},enableControls:function(){this.showControls(false);this.controlsEnabled=true},meReady:function(a,b){var c=this,d=mejs.MediaFeatures,e=b.getAttribute("autoplay");e=!(typeof e=="undefined"||e===null||e==="false");var g;if(!c.created){c.created=true;c.media=a;c.domNode=b;if(!(d.isAndroid&&c.options.AndroidUseNativeControls)&&!(d.isiPad&&c.options.iPadUseNativeControls)&&$/;"	p
+mejs.MediaElementPlayer.disableControls	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^this.controlsTimer=null}},controlsEnabled:true,disableControls:function(){this.killControlsTimer();this.hideControls(false);this.controlsEnabled=false},enableControls:function(){this.showControls(false);this.controlsEnabled=true},meReady:function(a,b){var c=this,d=mejs.MediaFeatures,e=b.getAttribute("autoplay");e=!(typeof e=="undefined"||e===null||e==="false");var g;if(!c.created){c.created=true;c.media=a;c.domNode=b;if(!(d.isAndroid&&c.options.AndroidUseNativeControls)&&!(d.isiPad&&c.options.iPadUseNativeControls)&&$/;"	m
+mejs.MediaElementPlayer.disableControls	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^this.controlsTimer=null}},controlsEnabled:true,disableControls:function(){this.killControlsTimer();this.hideControls(false);this.controlsEnabled=false},enableControls:function(){this.showControls(false);this.controlsEnabled=true},meReady:function(a,b){var c=this,d=mejs.MediaFeatures,e=b.getAttribute("autoplay");e=!(typeof e=="undefined"||e===null||e==="false");var g;if(!c.created){c.created=true;c.media=a;c.domNode=b;if(!(d.isAndroid&&c.options.AndroidUseNativeControls)&&!(d.isiPad&&c.options.iPadUseNativeControls)&&$/;"	m
+mejs.MediaElementPlayer.handleError	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^a.pluginType=="native"){a.load();a.play()}if(c.options.success)typeof c.options.success=="string"?window[c.options.success](c.media,c.domNode,c):c.options.success(c.media,c.domNode,c)}},handleError:function(a){this.controls.hide();this.options.error&&this.options.error(a)},setPlayerSize:function(a,b){if(typeof a!="undefined")this.width=a;if(typeof b!="undefined")this.height=b;if(this.height.toString().indexOf("%")>0){var c=this.media.videoWidth&&this.media.videoWidth>0?this.media.videoWidth:this.options.defaultVideoWidth,$/;"	m
+mejs.MediaElementPlayer.handleError	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^a.pluginType=="native"){a.load();a.play()}if(c.options.success)typeof c.options.success=="string"?window[c.options.success](c.media,c.domNode,c):c.options.success(c.media,c.domNode,c)}},handleError:function(a){this.controls.hide();this.options.error&&this.options.error(a)},setPlayerSize:function(a,b){if(typeof a!="undefined")this.width=a;if(typeof b!="undefined")this.height=b;if(this.height.toString().indexOf("%")>0){var c=this.media.videoWidth&&this.media.videoWidth>0?this.media.videoWidth:this.options.defaultVideoWidth,$/;"	m
+mejs.MediaElementPlayer.hasFocus	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	mejs.MediaElementPlayer.prototype = {$/;"	p
+mejs.MediaElementPlayer.hasFocus	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^this.node=this.media=this.$media[0];if(typeof this.node.player!="undefined")return this.node.player;else this.node.player=this;if(typeof b=="undefined")b=this.$node.data("mejsoptions");this.options=f.extend({},mejs.MepDefaults,b);mejs.players.push(this);this.init();return this};mejs.MediaElementPlayer.prototype={hasFocus:false,controlsAreVisible:true,init:function(){var a=this,b=mejs.MediaFeatures,c=f.extend(true,{},a.options,{success:function(e,g){a.meReady(e,g)},error:function(e){a.handleError(e)}}),$/;"	p
+mejs.MediaElementPlayer.hasFocus	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	mejs.MediaElementPlayer.prototype = {$/;"	p
+mejs.MediaElementPlayer.hasFocus	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^this.node=this.media=this.$media[0];if(typeof this.node.player!="undefined")return this.node.player;else this.node.player=this;if(typeof b=="undefined")b=this.$node.data("mejsoptions");this.options=f.extend({},mejs.MepDefaults,b);mejs.players.push(this);this.init();return this};mejs.MediaElementPlayer.prototype={hasFocus:false,controlsAreVisible:true,init:function(){var a=this,b=mejs.MediaFeatures,c=f.extend(true,{},a.options,{success:function(e,g){a.meReady(e,g)},error:function(e){a.handleError(e)}}),$/;"	p
+mejs.MediaElementPlayer.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		controlsAreVisible: true,$/;"	m
+mejs.MediaElementPlayer.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^this.node=this.media=this.$media[0];if(typeof this.node.player!="undefined")return this.node.player;else this.node.player=this;if(typeof b=="undefined")b=this.$node.data("mejsoptions");this.options=f.extend({},mejs.MepDefaults,b);mejs.players.push(this);this.init();return this};mejs.MediaElementPlayer.prototype={hasFocus:false,controlsAreVisible:true,init:function(){var a=this,b=mejs.MediaFeatures,c=f.extend(true,{},a.options,{success:function(e,g){a.meReady(e,g)},error:function(e){a.handleError(e)}}),$/;"	m
+mejs.MediaElementPlayer.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^		controlsAreVisible: true,$/;"	m
+mejs.MediaElementPlayer.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^this.node=this.media=this.$media[0];if(typeof this.node.player!="undefined")return this.node.player;else this.node.player=this;if(typeof b=="undefined")b=this.$node.data("mejsoptions");this.options=f.extend({},mejs.MepDefaults,b);mejs.players.push(this);this.init();return this};mejs.MediaElementPlayer.prototype={hasFocus:false,controlsAreVisible:true,init:function(){var a=this,b=mejs.MediaFeatures,c=f.extend(true,{},a.options,{success:function(e,g){a.meReady(e,g)},error:function(e){a.handleError(e)}}),$/;"	m
+mejs.MediaFeatures.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.MediaFeatures = {$/;"	m
+mejs.MediaFeatures.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.MediaFeatures={init:function(){var a=this,b=document,c=mejs.PluginDetector.nav,d=mejs.PluginDetector.ua.toLowerCase(),e,g=["source","track","audio","video"];a.isiPad=d.match(\/ipad\/i)!==null;a.isiPhone=d.match(\/iphone\/i)!==null;a.isiOS=a.isiPhone||a.isiPad;a.isAndroid=d.match(\/android\/i)!==null;a.isBustedAndroid=d.match(\/android 2\\.[12]\/)!==null;a.isIE=c.appName.toLowerCase().indexOf("microsoft")!=-1;a.isChrome=d.match(\/chrome\/gi)!==null;a.isFirefox=d.match(\/firefox\/gi)!==null;a.isWebkit=d.match(\/webkit\/gi)!==$/;"	m
+mejs.MediaFeatures.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.MediaFeatures = {$/;"	m
+mejs.MediaFeatures.init	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.MediaFeatures={init:function(){var a=this,b=document,c=mejs.PluginDetector.nav,d=mejs.PluginDetector.ua.toLowerCase(),e,g=["source","track","audio","video"];a.isiPad=d.match(\/ipad\/i)!==null;a.isiPhone=d.match(\/iphone\/i)!==null;a.isiOS=a.isiPhone||a.isiPad;a.isAndroid=d.match(\/android\/i)!==null;a.isBustedAndroid=d.match(\/android 2\\.[12]\/)!==null;a.isIE=c.appName.toLowerCase().indexOf("microsoft")!=-1;a.isChrome=d.match(\/chrome\/gi)!==null;a.isFirefox=d.match(\/firefox\/gi)!==null;a.isWebkit=d.match(\/webkit\/gi)!==$/;"	m
+mejs.MediaPluginBridge.pluginMediaElements	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.MediaPluginBridge = {$/;"	p
+mejs.MediaPluginBridge.pluginMediaElements	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.MediaPluginBridge={pluginMediaElements:{},htmlMediaElements:{},registerPluginElement:function(a,b,c){this.pluginMediaElements[a]=b;this.htmlMediaElements[a]=c},initPlugin:function(a){var b=this.pluginMediaElements[a],c=this.htmlMediaElements[a];if(b){switch(b.pluginType){case "flash":b.pluginElement=b.pluginApi=document.getElementById(a);break;case "silverlight":b.pluginElement=document.getElementById(b.id);b.pluginApi=b.pluginElement.Content.MediaElementJS}b.pluginApi!=null&&b.success&&b.success(b,$/;"	p
+mejs.MediaPluginBridge.pluginMediaElements	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.MediaPluginBridge = {$/;"	p
+mejs.MediaPluginBridge.pluginMediaElements	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.MediaPluginBridge={pluginMediaElements:{},htmlMediaElements:{},registerPluginElement:function(a,b,c){this.pluginMediaElements[a]=b;this.htmlMediaElements[a]=c},initPlugin:function(a){var b=this.pluginMediaElements[a],c=this.htmlMediaElements[a];if(b){switch(b.pluginType){case "flash":b.pluginElement=b.pluginApi=document.getElementById(a);break;case "silverlight":b.pluginElement=document.getElementById(b.id);b.pluginApi=b.pluginElement.Content.MediaElementJS}b.pluginApi!=null&&b.success&&b.success(b,$/;"	p
+mejs.MepDefaults.defaultVideoHeight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.defaultVideoHeight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.defaultVideoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.defaultVideoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.poster	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.poster	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.videoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.MepDefaults.videoWidth	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^(function(f){mejs.MepDefaults={poster:"",defaultVideoWidth:480,defaultVideoHeight:270,videoWidth:-1,videoHeight:-1,defaultAudioWidth:400,defaultAudioHeight:30,audioWidth:-1,audioHeight:-1,startVolume:0.8,loop:false,enableAutosize:true,alwaysShowHours:false,showTimecodeFrameCount:false,framesPerSecond:25,autosizeProgress:true,alwaysShowControls:false,iPadUseNativeControls:false,iPhoneUseNativeControls:false,AndroidUseNativeControls:false,features:["playpause","current","progress","duration","tracks",$/;"	p
+mejs.PluginDetector.hasPluginVersion	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.PluginDetector = {$/;"	m
+mejs.PluginDetector.hasPluginVersion	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.PluginDetector={hasPluginVersion:function(a,b){var c=this.plugins[a];b[1]=b[1]||0;b[2]=b[2]||0;return c[0]>b[0]||c[0]==b[0]&&c[1]>b[1]||c[0]==b[0]&&c[1]==b[1]&&c[2]>=b[2]?true:false},nav:window.navigator,ua:window.navigator.userAgent.toLowerCase(),plugins:[],addPlugin:function(a,b,c,d,e){this.plugins[a]=this.detectPlugin(b,c,d,e)},detectPlugin:function(a,b,c,d){var e=[0,0,0],g;if(typeof this.nav.plugins!="undefined"&&typeof this.nav.plugins[a]=="object"){if((c=this.nav.plugins[a].description)&&$/;"	m
+mejs.PluginDetector.hasPluginVersion	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.PluginDetector = {$/;"	m
+mejs.PluginDetector.hasPluginVersion	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.PluginDetector={hasPluginVersion:function(a,b){var c=this.plugins[a];b[1]=b[1]||0;b[2]=b[2]||0;return c[0]>b[0]||c[0]==b[0]&&c[1]>b[1]||c[0]==b[0]&&c[1]==b[1]&&c[2]>=b[2]?true:false},nav:window.navigator,ua:window.navigator.userAgent.toLowerCase(),plugins:[],addPlugin:function(a,b,c,d,e){this.plugins[a]=this.detectPlugin(b,c,d,e)},detectPlugin:function(a,b,c,d){var e=[0,0,0],g;if(typeof this.nav.plugins!="undefined"&&typeof this.nav.plugins[a]=="object"){if((c=this.nav.plugins[a].description)&&$/;"	m
+mejs.PluginDetector.nav	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	p
+mejs.PluginDetector.nav	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	p
+mejs.PluginMediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^};$/;"	c
+mejs.PluginMediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	c
+mejs.PluginMediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^};$/;"	c
+mejs.PluginMediaElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.HtmlMediaElement={pluginType:"native",isFullScreen:false,setCurrentTime:function(a){this.currentTime=a},setMuted:function(a){this.muted=a},setVolume:function(a){this.volume=a},stop:function(){this.pause()},setSrc:function(a){for(var b=this.getElementsByTagName("source");b.length>0;)this.removeChild(b[0]);if(typeof a=="string")this.src=a;else{var c;for(b=0;b<a.length;b++){c=a[b];if(this.canPlayType(c.type))this.src=c.src}}},setVideoSize:function(a,b){this.width=a;this.height=b}};$/;"	c
+mejs.PluginMediaElement.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	pluginType: '',$/;"	p
+mejs.PluginMediaElement.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	pluginType: '',$/;"	p
+mejs.PluginMediaElement.playbackRate	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	isFullScreen: false,$/;"	p
+mejs.PluginMediaElement.playbackRate	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	isFullScreen: false,$/;"	p
+mejs.PluginMediaElement.pluginElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.PluginMediaElement.prototype = {$/;"	p
+mejs.PluginMediaElement.pluginElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.PluginMediaElement.prototype = {$/;"	p
+mejs.PluginMediaElement.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	pluginElement: null,$/;"	p
+mejs.PluginMediaElement.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	pluginElement: null,$/;"	p
+mejs.TrackFormatParser.pattern_identifier	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	mejs.TrackFormatParser = {$/;"	p
+mejs.TrackFormatParser.pattern_identifier	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^el:"Greek",ht:"Haitian Creole",iw:"Hebrew",hi:"Hindi",hu:"Hungarian",is:"Icelandic",id:"Indonesian",ga:"Irish",it:"Italian",ja:"Japanese",ko:"Korean",lv:"Latvian",lt:"Lithuanian",mk:"Macedonian",ms:"Malay",mt:"Maltese",no:"Norwegian",fa:"Persian",pl:"Polish",pt:"Portuguese",ro:"Romanian",ru:"Russian",sr:"Serbian",sk:"Slovak",sl:"Slovenian",es:"Spanish",sw:"Swahili",sv:"Swedish",tl:"Tagalog",th:"Thai",tr:"Turkish",uk:"Ukrainian",vi:"Vietnamese",cy:"Welsh",yi:"Yiddish"}};mejs.TrackFormatParser={pattern_identifier:\/^([a-zA-z]+-)?[0-9]+$\/,$/;"	p
+mejs.TrackFormatParser.pattern_identifier	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	mejs.TrackFormatParser = {$/;"	p
+mejs.TrackFormatParser.pattern_identifier	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^el:"Greek",ht:"Haitian Creole",iw:"Hebrew",hi:"Hindi",hu:"Hungarian",is:"Icelandic",id:"Indonesian",ga:"Irish",it:"Italian",ja:"Japanese",ko:"Korean",lv:"Latvian",lt:"Lithuanian",mk:"Macedonian",ms:"Malay",mt:"Maltese",no:"Norwegian",fa:"Persian",pl:"Polish",pt:"Portuguese",ro:"Romanian",ru:"Russian",sr:"Serbian",sk:"Slovak",sl:"Slovenian",es:"Spanish",sw:"Swahili",sv:"Swedish",tl:"Tagalog",th:"Thai",tr:"Turkish",uk:"Ukrainian",vi:"Vietnamese",cy:"Welsh",yi:"Yiddish"}};mejs.TrackFormatParser={pattern_identifier:\/^([a-zA-z]+-)?[0-9]+$\/,$/;"	p
+mejs.TrackFormatParser.split2	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	if ('x\\n\\ny'.split(\/\\n\/gi).length != 3) {$/;"	f
+mejs.TrackFormatParser.split2	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	if ('x\\n\\ny'.split(\/\\n\/gi).length != 3) {$/;"	f
+mejs.Utility.absolutizeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.Utility.absolutizeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.absolutizeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.Utility.absolutizeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.encodeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.Utility = {$/;"	m
+mejs.Utility.encodeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.encodeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.Utility = {$/;"	m
+mejs.Utility.encodeUrl	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.escapeHTML	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.Utility.escapeHTML	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.escapeHTML	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.Utility.escapeHTML	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.getScriptPath	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.Utility.getScriptPath	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.getScriptPath	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.Utility.getScriptPath	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.Utility={encodeUrl:function(a){return encodeURIComponent(a)},escapeHTML:function(a){return a.toString().split("&").join("&amp;").split("<").join("&lt;").split('"').join("&quot;")},absolutizeUrl:function(a){var b=document.createElement("div");b.innerHTML='<a href="'+this.escapeHTML(a)+'">x<\/a>';return b.firstChild.href},getScriptPath:function(a){for(var b=0,c,d="",e="",g,f=document.getElementsByTagName("script"),j=f.length,h=a.length;b<j;b++){g=f[b].src;for(c=0;c<h;c++){e=a[c];if(g.indexOf(e)>$/;"	m
+mejs.Utility.removeSwf	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.Utility.removeSwf	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.Utility.secondsToTimeCode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.Utility.secondsToTimeCode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^-1){d=g.substring(0,g.indexOf(e));break}}if(d!=="")break}return d},secondsToTimeCode:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;var e=Math.floor(a\/3600)%24,g=Math.floor(a\/60)%60,f=Math.floor(a%60);a=Math.floor((a%1*d).toFixed(3));return(b||e>0?(e<10?"0"+e:e)+":":"")+(g<10?"0"+g:g)+":"+(f<10?"0"+f:f)+(c?":"+(a<10?"0"+a:a):"")},timeCodeToSeconds:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;a=a.split(":");b=parseInt(a[0],$/;"	m
+mejs.Utility.secondsToTimeCode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.Utility.secondsToTimeCode	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^-1){d=g.substring(0,g.indexOf(e));break}}if(d!=="")break}return d},secondsToTimeCode:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;var e=Math.floor(a\/3600)%24,g=Math.floor(a\/60)%60,f=Math.floor(a%60);a=Math.floor((a%1*d).toFixed(3));return(b||e>0?(e<10?"0"+e:e)+":":"")+(g<10?"0"+g:g)+":"+(f<10?"0"+f:f)+(c?":"+(a<10?"0"+a:a):"")},timeCodeToSeconds:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;a=a.split(":");b=parseInt(a[0],$/;"	m
+mejs.Utility.timeCodeToSeconds	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	m
+mejs.Utility.timeCodeToSeconds	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^-1){d=g.substring(0,g.indexOf(e));break}}if(d!=="")break}return d},secondsToTimeCode:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;var e=Math.floor(a\/3600)%24,g=Math.floor(a\/60)%60,f=Math.floor(a%60);a=Math.floor((a%1*d).toFixed(3));return(b||e>0?(e<10?"0"+e:e)+":":"")+(g<10?"0"+g:g)+":"+(f<10?"0"+f:f)+(c?":"+(a<10?"0"+a:a):"")},timeCodeToSeconds:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;a=a.split(":");b=parseInt(a[0],$/;"	m
+mejs.Utility.timeCodeToSeconds	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	m
+mejs.Utility.timeCodeToSeconds	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^-1){d=g.substring(0,g.indexOf(e));break}}if(d!=="")break}return d},secondsToTimeCode:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;var e=Math.floor(a\/3600)%24,g=Math.floor(a\/60)%60,f=Math.floor(a%60);a=Math.floor((a%1*d).toFixed(3));return(b||e>0?(e<10?"0"+e:e)+":":"")+(g<10?"0"+g:g)+":"+(f<10?"0"+f:f)+(c?":"+(a<10?"0"+a:a):"")},timeCodeToSeconds:function(a,b,c,d){if(typeof c=="undefined")c=false;else if(typeof d=="undefined")d=25;a=a.split(":");b=parseInt(a[0],$/;"	m
+mejs.YouTubeApi.iframeQueue	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	},$/;"	p
+mejs.YouTubeApi.iframeQueue	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	},$/;"	p
+mejs.YouTubeApi.isIframeLoaded	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	isIframeStarted: false,$/;"	p
+mejs.YouTubeApi.isIframeLoaded	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.YouTubeApi={isIframeStarted:false,isIframeLoaded:false,loadIframeApi:function(){if(!this.isIframeStarted){var a=document.createElement("script");a.src="http:\/\/www.youtube.com\/player_api";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);this.isIframeStarted=true}},iframeQueue:[],enqueueIframe:function(a){if(this.isLoaded)this.createIframe(a);else{this.loadIframeApi();this.iframeQueue.push(a)}},createIframe:function(a){var b=a.pluginMediaElement,c=new YT.Player(a.containerId,$/;"	p
+mejs.YouTubeApi.isIframeLoaded	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	isIframeStarted: false,$/;"	p
+mejs.YouTubeApi.isIframeLoaded	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.YouTubeApi={isIframeStarted:false,isIframeLoaded:false,loadIframeApi:function(){if(!this.isIframeStarted){var a=document.createElement("script");a.src="http:\/\/www.youtube.com\/player_api";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);this.isIframeStarted=true}},iframeQueue:[],enqueueIframe:function(a){if(this.isLoaded)this.createIframe(a);else{this.loadIframeApi();this.iframeQueue.push(a)}},createIframe:function(a){var b=a.pluginMediaElement,c=new YT.Player(a.containerId,$/;"	p
+mejs.YouTubeApi.isIframeStarted	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.YouTubeApi = {$/;"	p
+mejs.YouTubeApi.isIframeStarted	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.YouTubeApi={isIframeStarted:false,isIframeLoaded:false,loadIframeApi:function(){if(!this.isIframeStarted){var a=document.createElement("script");a.src="http:\/\/www.youtube.com\/player_api";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);this.isIframeStarted=true}},iframeQueue:[],enqueueIframe:function(a){if(this.isLoaded)this.createIframe(a);else{this.loadIframeApi();this.iframeQueue.push(a)}},createIframe:function(a){var b=a.pluginMediaElement,c=new YT.Player(a.containerId,$/;"	p
+mejs.YouTubeApi.isIframeStarted	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.YouTubeApi = {$/;"	p
+mejs.YouTubeApi.isIframeStarted	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.YouTubeApi={isIframeStarted:false,isIframeLoaded:false,loadIframeApi:function(){if(!this.isIframeStarted){var a=document.createElement("script");a.src="http:\/\/www.youtube.com\/player_api";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);this.isIframeStarted=true}},iframeQueue:[],enqueueIframe:function(a){if(this.isLoaded)this.createIframe(a);else{this.loadIframeApi();this.iframeQueue.push(a)}},createIframe:function(a){var b=a.pluginMediaElement,c=new YT.Player(a.containerId,$/;"	p
+mejs.YouTubeApi.loadIframeApi	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	isIframeLoaded: false,$/;"	m
+mejs.YouTubeApi.loadIframeApi	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.YouTubeApi={isIframeStarted:false,isIframeLoaded:false,loadIframeApi:function(){if(!this.isIframeStarted){var a=document.createElement("script");a.src="http:\/\/www.youtube.com\/player_api";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);this.isIframeStarted=true}},iframeQueue:[],enqueueIframe:function(a){if(this.isLoaded)this.createIframe(a);else{this.loadIframeApi();this.iframeQueue.push(a)}},createIframe:function(a){var b=a.pluginMediaElement,c=new YT.Player(a.containerId,$/;"	m
+mejs.YouTubeApi.loadIframeApi	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^	isIframeLoaded: false,$/;"	m
+mejs.YouTubeApi.loadIframeApi	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.YouTubeApi={isIframeStarted:false,isIframeLoaded:false,loadIframeApi:function(){if(!this.isIframeStarted){var a=document.createElement("script");a.src="http:\/\/www.youtube.com\/player_api";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);this.isIframeStarted=true}},iframeQueue:[],enqueueIframe:function(a){if(this.isLoaded)this.createIframe(a);else{this.loadIframeApi();this.iframeQueue.push(a)}},createIframe:function(a){var b=a.pluginMediaElement,c=new YT.Player(a.containerId,$/;"	m
+mejs.language.codes	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^	mejs.language = {$/;"	p
+mejs.language.codes	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^"<\/span><\/div><\/div>"));e+=d}b.chapters.find("div.mejs-chapter").click(function(){b.media.setCurrentTime(parseFloat(f(this).attr("rel")));b.media.paused&&b.media.play()});b.chapters.show()}});mejs.language={codes:{af:"Afrikaans",sq:"Albanian",ar:"Arabic",be:"Belarusian",bg:"Bulgarian",ca:"Catalan",zh:"Chinese","zh-cn":"Chinese Simplified","zh-tw":"Chinese Traditional",hr:"Croatian",cs:"Czech",da:"Danish",nl:"Dutch",en:"English",et:"Estonian",tl:"Filipino",fi:"Finnish",fr:"French",gl:"Galician",de:"German",$/;"	p
+mejs.language.codes	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^	mejs.language = {$/;"	p
+mejs.language.codes	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.min.js	/^"<\/span><\/div><\/div>"));e+=d}b.chapters.find("div.mejs-chapter").click(function(){b.media.setCurrentTime(parseFloat(f(this).attr("rel")));b.media.paused&&b.media.play()});b.chapters.show()}});mejs.language={codes:{af:"Afrikaans",sq:"Albanian",ar:"Arabic",be:"Belarusian",bg:"Bulgarian",ca:"Catalan",zh:"Chinese","zh-cn":"Chinese Simplified","zh-tw":"Chinese Traditional",hr:"Croatian",cs:"Czech",da:"Danish",nl:"Dutch",en:"English",et:"Estonian",tl:"Filipino",fi:"Finnish",fr:"French",gl:"Galician",de:"German",$/;"	p
+mejs.mejs.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.playbackRate	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.playbackRate	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.pluginElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.pluginElement	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.mejs.pluginType	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^mejs.PluginMediaElement.prototype={pluginElement:null,pluginType:"",isFullScreen:false,playbackRate:-1,defaultPlaybackRate:-1,seekable:[],played:[],paused:true,ended:false,seeking:false,duration:0,error:null,tagName:"",muted:false,volume:1,currentTime:0,play:function(){if(this.pluginApi!=null){this.pluginType=="youtube"?this.pluginApi.playVideo():this.pluginApi.playMedia();this.paused=false}},load:function(){if(this.pluginApi!=null){this.pluginType!="youtube"&&this.pluginApi.loadMedia();this.paused=$/;"	p
+mejs.plugins.silverlight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^mejs.plugins = {$/;"	p
+mejs.plugins.silverlight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^*\/var mejs=mejs||{};mejs.version="2.9.1";mejs.meIndex=0;mejs.plugins={silverlight:[{version:[3,0],types:["video\/mp4","video\/m4v","video\/mov","video\/wmv","audio\/wma","audio\/m4a","audio\/mp3","audio\/wav","audio\/mpeg"]}],flash:[{version:[9,0,124],types:["video\/mp4","video\/m4v","video\/mov","video\/flv","video\/x-flv","audio\/flv","audio\/x-flv","audio\/mp3","audio\/m4a","audio\/mpeg","video\/youtube","video\/x-youtube"]}],youtube:[{version:null,types:["video\/youtube","video\/x-youtube"]}],vimeo:[{version:null,types:["video\/vimeo"]}]};$/;"	p
+mejs.plugins.silverlight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^mejs.plugins = {$/;"	p
+mejs.plugins.silverlight	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^*\/var mejs=mejs||{};mejs.version="2.9.1";mejs.meIndex=0;mejs.plugins={silverlight:[{version:[3,0],types:["video\/mp4","video\/m4v","video\/mov","video\/wmv","audio\/wma","audio\/m4a","audio\/mp3","audio\/wav","audio\/mpeg"]}],flash:[{version:[9,0,124],types:["video\/mp4","video\/m4v","video\/mov","video\/flv","video\/x-flv","audio\/flv","audio\/x-flv","audio\/mp3","audio\/m4a","audio\/mpeg","video\/youtube","video\/x-youtube"]}],youtube:[{version:null,types:["video\/youtube","video\/x-youtube"]}],vimeo:[{version:null,types:["video\/vimeo"]}]};$/;"	p
+method	lib/helper.php	/^	$method = isset( $args[ 'method' ] ) ? $args[ 'method' ] : 'post';$/;"	v
+mins	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$mins = substr($time, 3, 2);$/;"	v
+model	lib/model/base.php	/^			$model = new $class();$/;"	v
+model	lib/model/base.php	/^		$model = new $class();$/;"	v
+models	lib/model/base.php	/^		$models = array();$/;"	v
+module	lib/settings/settings.php	/^			$module = new $class;$/;"	v
+module	plugin.php	/^		$module = new $class;$/;"	v
+module_description	lib/modules/podlove_web_player/podlove_web_player.php	/^	private $module_description = 'An audio player for the web. Let users listen to your podcast right on your website';$/;"	v
+module_name	lib/modules/podlove_web_player/podlove_web_player.php	/^	private $module_name = 'Podlove Web Player';$/;"	v
+modules	lib/modules/base.php	/^		$modules = array();$/;"	v
+modules	lib/settings/settings.php	/^		$modules = \\Podlove\\Modules\\Base::get_all_module_names();$/;"	v
+modules	plugin.php	/^	$modules = Modules\\Base::get_all_module_names();$/;"	v
+modules_dir	lib/modules/base.php	/^		$modules_dir = \\Podlove\\PLUGIN_DIR . 'lib\/modules\/';$/;"	v
+more	templates/feed-atom.php	/^$more = 1;$/;"	v
+more	templates/feed-rss2.php	/^$more = 1;$/;"	v
+msecs	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$msecs = count(substr($time, 9, 1)) ? substr($time, 9, 3) : 0;$/;"	v
+mute_feed_title	lib/feeds/base.php	/^function mute_feed_title() {$/;"	f
+name	bootstrap/autoload.php	/^	\/\/ class name without namespace$/;"	c
+name	bootstrap/autoload.php	/^	\/\/ get class name without namespace$/;"	c
+name	lib/form/builder.php	/^			$name = $this->field_name . '[' . $key . ']';$/;"	v
+name	lib/helper.php	/^			<?php foreach ( $args[ 'hidden' ] as $name => $value ): ?>$/;"	v
+name	lib/model/base.php	/^	 * The name is derived from the namespace an class name. Additionally, it$/;"	c
+name	lib/modules/base.php	/^	 * Get full class name for the main module class.$/;"	c
+name	lib/settings/show.php	/^					$name  = sprintf( 'podlove_webplayer_formats[%s][%s]', $format, $extension_key );$/;"	v
+namespace_name	lib/modules/base.php	/^		$namespace_name = podlove_camelsnakecase_to_camelcase( $class_name );$/;"	v
+namespaces	bootstrap/autoload.php	/^	$namespaces = $split;$/;"	v
+nested_feed_media_locations_callback	lib/settings/show.php	/^	public static function nested_feed_media_locations_callback( $post, $args ) {$/;"	f
+nested_feed_meta_box_callback	lib/settings/show.php	/^	public static function nested_feed_meta_box_callback( $post, $args ) {$/;"	f
+newTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^										var newTime = Math.max(media.currentTime - (media.duration * 0.05), 0);$/;"	v
+newTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^										var newTime = Math.min(media.currentTime + (media.duration * 0.05), media.duration);$/;"	v
+newTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^										var newTime = Math.max(media.currentTime - (media.duration * 0.05), 0);$/;"	v
+newTime	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelementplayer.js	/^										var newTime = Math.min(media.currentTime + (media.duration * 0.05), media.duration);$/;"	v
+new_rules	lib/feeds.php	/^		$new_rules = array( $/;"	v
+new_template	lib/settings/format.php	/^	private function new_template() {$/;"	f
+new_template	lib/settings/show.php	/^	private function new_template() {$/;"	f
+no_enclosure_autodiscovery	lib/no_enclosure_autodiscovery.php	/^function no_enclosure_autodiscovery( $meta_id, $post_id, $meta_key, $meta_value ) {$/;"	f
+noshow_admin_notice	lib/podcast_post_type.php	/^	public function noshow_admin_notice() {$/;"	f
+object	lib/form/input/builder.php	/^		$this->object     = $object;$/;"	v
+object	lib/form/input/builder.php	/^	public $object;$/;"	v
+object_key	lib/form/input/builder.php	/^		$this->object_key = $object_key;$/;"	v
+object_key	lib/form/input/builder.php	/^	public $object_key;$/;"	v
+object_key	lib/form/input/wrapper.php	/^		$object_key   = $arguments[ 0 ];$/;"	v
+old_options	lib/settings/show.php	/^			$old_options = get_option( 'podlove_webplayer_formats', array() );$/;"	v
+onYouTubePlayerAPIReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^function onYouTubePlayerAPIReady() {$/;"	f
+onYouTubePlayerAPIReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^c,"pause");break;case 3:mejs.YouTubeApi.createEvent(b,c,"progress")}}};function onYouTubePlayerAPIReady(){mejs.YouTubeApi.iFrameReady()}function onYouTubePlayerReady(a){mejs.YouTubeApi.flashReady(a)}window.mejs=mejs;window.MediaElement=mejs.MediaElement;$/;"	f
+onYouTubePlayerAPIReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^function onYouTubePlayerAPIReady() {$/;"	f
+onYouTubePlayerAPIReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^c,"pause");break;case 3:mejs.YouTubeApi.createEvent(b,c,"progress")}}};function onYouTubePlayerAPIReady(){mejs.YouTubeApi.iFrameReady()}function onYouTubePlayerReady(a){mejs.YouTubeApi.flashReady(a)}window.mejs=mejs;window.MediaElement=mejs.MediaElement;$/;"	f
+onYouTubePlayerReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^function onYouTubePlayerReady(id) {$/;"	f
+onYouTubePlayerReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^c,"pause");break;case 3:mejs.YouTubeApi.createEvent(b,c,"progress")}}};function onYouTubePlayerAPIReady(){mejs.YouTubeApi.iFrameReady()}function onYouTubePlayerReady(a){mejs.YouTubeApi.flashReady(a)}window.mejs=mejs;window.MediaElement=mejs.MediaElement;$/;"	f
+onYouTubePlayerReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^function onYouTubePlayerReady(id) {$/;"	f
+onYouTubePlayerReady	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^c,"pause");break;case 3:mejs.YouTubeApi.createEvent(b,c,"progress")}}};function onYouTubePlayerAPIReady(){mejs.YouTubeApi.iFrameReady()}function onYouTubePlayerReady(a){mejs.YouTubeApi.flashReady(a)}window.mejs=mejs;window.MediaElement=mejs.MediaElement;$/;"	f
+options	lib/helper.php	/^	$options = get_option( 'podlove' );$/;"	v
+options	lib/helper.php	/^	$options = wp_parse_args( $options, $defaults );$/;"	v
+options	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$options = array();$/;"	v
+options_string	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$options_string = !empty($options) ? '{' . implode(',', $options) . '}' : '';$/;"	v
+options_string	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$options_string = str_replace('"', '\\'', $options_string);$/;"	v
+out	lib/show_list_table.php	/^		$out = '';$/;"	v
+output	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$output = '<table rel="wp_pwp_' . $podlovePlayerIndex . '" class="pwp_chapters">';$/;"	v
+override_feed_entry	lib/feeds/base.php	/^function override_feed_entry( $hook, $show, $feed, $format ) {$/;"	f
+override_feed_head	lib/feeds/base.php	/^function override_feed_head( $hook, $show, $feed, $format ) {$/;"	f
+override_feed_language	lib/feeds/base.php	/^function override_feed_language( $feed ) {$/;"	f
+override_feed_title	lib/feeds/base.php	/^function override_feed_title( $feed ) {$/;"	f
+owner	lib/feeds/base.php	/^		$owner = sprintf( '$/;"	v
+page	lib/settings/feed.php	/^		$page   = 'admin.php?page=' . $_REQUEST[ 'page' ];$/;"	v
+page	lib/settings/format.php	/^		$page   = 'admin.php?page=' . $_REQUEST[ 'page' ];$/;"	v
+page	lib/settings/format.php	/^	public function page() {$/;"	f
+page	lib/settings/media_location.php	/^		$page   = 'admin.php?page=' . $_REQUEST[ 'page' ];$/;"	v
+page	lib/settings/settings.php	/^	function page() {$/;"	f
+page	lib/settings/show.php	/^		$page   = 'admin.php?page=' . $_REQUEST[ 'page' ];$/;"	v
+page	lib/settings/show.php	/^	public function page() {$/;"	f
+pagehook	lib/settings/settings.php	/^	static $pagehook;$/;"	v
+pagehook	lib/settings/show.php	/^	static $pagehook;$/;"	v
+parseTimecode	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function parseTimecode(timecode) {$/;"	f
+parts	lib/helper.php	/^			$parts  = explode( '-', $key );$/;"	v
+per_page	lib/feed_list_table.php	/^			$per_page = 10;$/;"	v
+per_page	lib/feed_list_table.php	/^			$per_page = 99999;$/;"	v
+per_page	lib/format_list_table.php	/^		$per_page = 10;$/;"	v
+per_page	lib/show_list_table.php	/^		$per_page = 10;$/;"	v
+plugin	bootstrap/autoload.php	/^	$plugin = array_shift( $split ); $/;"	v
+plugin_data	bootstrap/constants.php	/^	$plugin_data  = get_plugin_data( PLUGIN_FILE );$/;"	v
+plugin_data	bootstrap/constants.php	/^	static $plugin_data; \/\/ only load file once$/;"	v
+plugin_file	plugin.php	/^	$plugin_file = basename( dirname( __FILE__ ) ) . '\/' . basename( __FILE__ );$/;"	v
+podlovePlayerIndex	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^$podlovePlayerIndex = 1;$/;"	v
+podlove_autoloader	bootstrap/autoload.php	/^function podlove_autoloader( $class_name ) {$/;"	f
+podlove_camelcase_to_snakecase	bootstrap/autoload.php	/^function podlove_camelcase_to_snakecase( $string ) {$/;"	f
+podlove_camelsnakecase_to_camelcase	bootstrap/autoload.php	/^function podlove_camelsnakecase_to_camelcase( $string ) {$/;"	f
+podlove_pwp_add_scripts	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	function podlove_pwp_add_scripts() {$/;"	f
+podlove_pwp_add_styles	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_add_styles() {$/;"	f
+podlove_pwp_audio_shortcode	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_audio_shortcode($atts) {$/;"	f
+podlove_pwp_chapters_from_string	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_chapters_from_string($chapstring) {$/;"	f
+podlove_pwp_create_menu	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_create_menu() {$/;"	f
+podlove_pwp_init	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_init() {$/;"	f
+podlove_pwp_install	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_install() {$/;"	f
+podlove_pwp_media_shortcode	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_media_shortcode($tagName, $atts) {$/;"	f
+podlove_pwp_register_settings	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_register_settings() {$/;"	f
+podlove_pwp_remove	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_remove() {$/;"	f
+podlove_pwp_render_chapters	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_render_chapters($custom_field) {$/;"	f
+podlove_pwp_settings_page	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_settings_page() {$/;"	f
+podlove_pwp_video_shortcode	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^function podlove_pwp_video_shortcode($atts) {$/;"	f
+podlove_snakecase_to_camelsnakecase	bootstrap/autoload.php	/^function podlove_snakecase_to_camelsnakecase( $string ) {$/;"	f
+podlove_webplayer_settings_callback	lib/settings/show.php	/^	public static function podlove_webplayer_settings_callback( $post, $args ) {$/;"	f
+possibilities	bootstrap/autoload.php	/^	$possibilities = array();$/;"	v
+post_id	lib/podcast_post_type.php	/^		$post_id = $post->ID;$/;"	v
+post_ids	lib/model/feed.php	/^	function post_ids() {$/;"	f
+post_type_meta_box_callback	lib/podcast_post_type.php	/^	public function post_type_meta_box_callback( $post, $args ) {$/;"	f
+prefix_subcategories	lib/helper.php	/^function categories( $prefix_subcategories = true ) {$/;"	v
+prepare_for_meta_box	lib/feed_list_table.php	/^	public function prepare_for_meta_box() {$/;"	f
+prepare_items	lib/feed_list_table.php	/^	function prepare_items() {$/;"	f
+prepare_items	lib/format_list_table.php	/^	function prepare_items() {$/;"	f
+prepare_items	lib/show_list_table.php	/^	function prepare_items() {$/;"	f
+process_form	lib/settings/feed.php	/^	public function process_form() {$/;"	f
+process_form	lib/settings/format.php	/^	public function process_form() {$/;"	f
+process_form	lib/settings/media_location.php	/^	public function process_form() {$/;"	f
+process_form	lib/settings/show.php	/^	public function process_form() {$/;"	f
+properties	lib/model/base.php	/^		$properties = self::properties();$/;"	v
+properties	lib/model/base.php	/^	private static $properties = array();$/;"	v
+properties	lib/model/base.php	/^	private static function properties() {$/;"	f
+property	lib/model/base.php	/^			foreach ( $row as $property => $value ) {$/;"	v
+property	lib/model/base.php	/^		$property = preg_replace_callback($/;"	v
+property	lib/model/base.php	/^		foreach ( $defaults as $property => $value ) {$/;"	v
+property	lib/model/base.php	/^		foreach ( $row as $property => $value ) {$/;"	v
+property	lib/model/base.php	/^	public static function property( $name, $type ) {$/;"	f
+property_name_to_sql_update_statement	lib/model/base.php	/^	private function property_name_to_sql_update_statement( $p ) {$/;"	f
+property_name_to_sql_value	lib/model/base.php	/^	private function property_name_to_sql_value( $p ) {$/;"	f
+property_names	lib/model/base.php	/^	public static function property_names() {$/;"	f
+property_sql	lib/model/base.php	/^		$property_sql = array();$/;"	v
+radio	lib/form/input/builder.php	/^	public function radio( $object_key, $arguments ) {$/;"	f
+raw_formats	lib/settings/show.php	/^			$raw_formats = \\Podlove\\Model\\MediaFormat::all();$/;"	v
+redirect	lib/settings/feed.php	/^	private function redirect( $action, $show_id = NULL ) {$/;"	f
+redirect	lib/settings/format.php	/^	private function redirect( $action, $format_id = NULL ) {$/;"	f
+redirect	lib/settings/media_location.php	/^	private function redirect( $action, $show_id = NULL ) {$/;"	f
+redirect	lib/settings/show.php	/^	private function redirect( $action, $show_id = NULL ) {$/;"	f
+register_meta_boxes	lib/modules/podlove_web_player/podlove_web_player.php	/^	public function register_meta_boxes() {$/;"	f
+register_post_type_meta_boxes	lib/podcast_post_type.php	/^	public function register_post_type_meta_boxes() {$/;"	f
+release	lib/feeds/base.php	/^		$release  = \\Podlove\\Model\\Release::find_or_create_by_episode_id_and_show_id( $episode->id, $show->id );$/;"	v
+release	lib/model/episode.php	/^	public function release() {$/;"	f
+release	lib/model/media_file.php	/^		$release  = Release::find_by_id( $this->release_id );$/;"	v
+release	lib/model/media_file.php	/^	public function release() {$/;"	f
+release	lib/model/release.php	/^		$release = Release::find_one_by_where( $where );$/;"	v
+release	lib/model/release.php	/^		$release = new Release();$/;"	v
+release	lib/podcast_post_type.php	/^			$release = \\Podlove\\Model\\Release::find_or_create_by_episode_id_and_show_id( $episode->id, $show_id );$/;"	v
+release	lib/podcast_post_type.php	/^		$release = \\Podlove\\Model\\Release::find_or_create_by_episode_id_and_show_id( $episode->id, $show->id );$/;"	v
+release	lib/shortcodes.php	/^	$release         = $episode->release();$/;"	v
+release	lib/shortcodes.php	/^	$release     = $episode->release();$/;"	v
+release_column	lib/podcast_post_type.php	/^			foreach ( $this->form_data as $release_column => $_ )$/;"	v
+release_ids	lib/model/feed.php	/^		$release_ids = array_map( function ( $v ) { return $v->release_id; }, $media_files );$/;"	v
+releases	lib/model/feed.php	/^		$releases = Release::find_all_by_where( "id IN (" . implode( ',', $release_ids ) . ")" );$/;"	v
+releases	lib/model/show.php	/^	public function releases() {$/;"	f
+releases	lib/podcast_post_type.php	/^			$releases = $show->releases();$/;"	v
+result	plugin.php	/^	$result = array();$/;"	v
+row	lib/model/base.php	/^		$row = $wpdb->get_row( 'SELECT * FROM ' . self::table_name() . ' LIMIT 0,1' );$/;"	v
+row	lib/model/base.php	/^		$row = $wpdb->get_row( 'SELECT * FROM ' . self::table_name() . ' WHERE id = ' . (int) $id );$/;"	v
+row	lib/model/base.php	/^		$row = $wpdb->get_row($/;"	v
+rows	lib/model/base.php	/^		$rows = $wpdb->get_results( 'SELECT * FROM ' . self::table_name() );$/;"	v
+rows	lib/model/base.php	/^		$rows = $wpdb->get_results($/;"	v
+rows	lib/podcast_post_type.php	/^						$rows = 2;$/;"	v
+rows	lib/podcast_post_type.php	/^					$rows = count( explode( "\\n", $release->chapters ) );$/;"	v
+run_migrations_for_version	lib/version.php	/^ * 		function run_migrations_for_version( $version ) {$/;"	f
+run_migrations_for_version	lib/version.php	/^function run_migrations_for_version( $version ) {$/;"	f
+save	lib/model/base.php	/^	public function save() {$/;"	f
+save	lib/model/media_file.php	/^	public function save() {$/;"	f
+save	lib/settings/format.php	/^	private function save() {$/;"	f
+save	lib/settings/show.php	/^	private function save() {$/;"	f
+save_postdata	lib/podcast_post_type.php	/^	public function save_postdata( $post_id ) {$/;"	f
+secs	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$secs = substr($time, 6, 2);$/;"	v
+select	lib/form/input/builder.php	/^	public function select( $object_key, $arguments ) {$/;"	f
+setFragmentURL	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function setFragmentURL(fragment) {$/;"	f
+set_defaults	lib/model/base.php	/^	private function set_defaults() {$/;"	f
+set_property	lib/model/base.php	/^	private function set_property( $name, $value ) {$/;"	f
+settings_page	lib/podcast_post_type.php	/^	public function settings_page() {$/;"	f
+show	lib/feed_list_table.php	/^		$show = $feed->show();$/;"	v
+show	lib/feeds/atom.php	/^		$show           = \\Podlove\\Model\\Show::find_one_by_slug( $show_slug );$/;"	v
+show	lib/feeds/rss.php	/^		$show           = \\Podlove\\Model\\Show::find_one_by_slug( $show_slug );$/;"	v
+show	lib/model/feed.php	/^		$show  = Show::find_one_by_slug( $show_slug );$/;"	v
+show	lib/model/feed.php	/^	public function show() {$/;"	f
+show	lib/model/media_file.php	/^		$show     = Show::find_by_id( $release->show_id );$/;"	v
+show	lib/model/media_location.php	/^	public function show() {$/;"	f
+show	lib/model/release.php	/^	public function show() {$/;"	f
+show	lib/podcast_post_type.php	/^			$show    = \\Podlove\\Model\\Show::find_by_id( $show_id );$/;"	v
+show	lib/podcast_post_type.php	/^		$show = $args[ 'args' ][ 0 ];$/;"	v
+show	lib/settings/feed.php	/^		$show   = ( $show_id ) ? '&show=' . $show_id : '';$/;"	v
+show	lib/settings/feed.php	/^	protected $show;$/;"	v
+show	lib/settings/format.php	/^		$show   = ( $format_id ) ? '&format=' . $format_id : '';$/;"	v
+show	lib/settings/media_location.php	/^		$show   = ( $show_id ) ? '&show=' . $show_id : '';$/;"	v
+show	lib/settings/show.php	/^			$show = $form->object;$/;"	v
+show	lib/settings/show.php	/^		$show            = $media_locations[ 0 ]->show();$/;"	v
+show	lib/settings/show.php	/^		$show   = ( $show_id ) ? '&show=' . $show_id : '';$/;"	v
+show	lib/settings/show.php	/^		$show = \\Podlove\\Model\\Show::find_by_id( $_REQUEST[ 'show' ] );$/;"	v
+show	lib/settings/show.php	/^		$show = new \\Podlove\\Model\\Show;$/;"	v
+show	lib/shortcodes.php	/^	$show            = $release->show();$/;"	v
+show_id	lib/podcast_post_type.php	/^		foreach ( $_POST[ '_podlove_meta' ] as $show_id => $_ ) {$/;"	v
+show_id	lib/podcast_post_type.php	/^		foreach ( $_POST[ '_podlove_meta' ] as $show_id => $release_values ) {$/;"	v
+show_id	lib/settings/feed.php	/^		$show_id = ( isset( $_REQUEST[ 'show' ] ) ) ? (int) $_REQUEST[ 'show' ] : NULL;$/;"	v
+show_id	lib/settings/feed.php	/^	private function redirect( $action, $show_id = NULL ) {$/;"	v
+show_id	lib/settings/media_location.php	/^		$show_id           = ( isset( $_REQUEST[ 'show' ] ) ) ? (int) $_REQUEST[ 'show' ] : NULL;$/;"	v
+show_id	lib/settings/media_location.php	/^		$show_id = ( isset( $_REQUEST[ 'show' ] ) ) ? (int) $_REQUEST[ 'show' ] : NULL;$/;"	v
+show_id	lib/settings/media_location.php	/^	private function redirect( $action, $show_id = NULL ) {$/;"	v
+show_id	lib/settings/show.php	/^	private function redirect( $action, $show_id = NULL ) {$/;"	v
+show_slug	lib/feeds.php	/^	$show_slug = get_query_var( 'show_slug' );$/;"	v
+shows	lib/podcast_post_type.php	/^		$shows = \\Podlove\\Model\\Show::all();$/;"	v
+shows	lib/settings/show.php	/^		$shows = \\Podlove\\Model\\Show::all();$/;"	v
+size	lib/model/media_file.php	/^		$this->size = $header[ 'download_content_length' ];$/;"	v
+skin_class	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^		$skin_class  = 'mejs-' . $skin;$/;"	v
+skin_class	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$skin_class = '';$/;"	v
+skipToLinkedTime	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function skipToLinkedTime(e) {$/;"	f
+sortable	lib/feed_list_table.php	/^		$sortable = $this->get_sortable_columns();$/;"	v
+sortable	lib/format_list_table.php	/^		$sortable = $this->get_sortable_columns();$/;"	v
+sortable	lib/show_list_table.php	/^		$sortable = $this->get_sortable_columns();$/;"	v
+sources	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$sources = array();$/;"	v
+sources_string	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	$sources_string = !empty($sources) ? implode("\\n\\t\\t", $sources) : '';$/;"	v
+specialIEContainer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		var specialIEContainer,$/;"	v
+specialIEContainer	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^		var specialIEContainer,$/;"	v
+split	bootstrap/autoload.php	/^	$split  = explode( '\\\\', $class_name );$/;"	v
+sql	lib/model/base.php	/^			$sql = 'INSERT INTO '$/;"	v
+sql	lib/model/base.php	/^			$sql = 'UPDATE ' . self::table_name()$/;"	v
+sql	lib/model/base.php	/^		$sql = 'CREATE TABLE IF NOT EXISTS '$/;"	v
+sql	lib/model/base.php	/^		$sql = 'DELETE FROM '$/;"	v
+sql	lib/model/base.php	/^		$sql = 'SELECT COUNT(*) FROM ' . self::table_name();$/;"	v
+sql	lib/no_enclosure_autodiscovery.php	/^	$sql = "$/;"	v
+sql	lib/version.php	/^			$sql = sprintf($/;"	v
+str_hashchange	lib/modules/podlove_web_player/player/podlove-web-player/libs/jquery.ba-hashchange.js	/^  var str_hashchange = 'hashchange',$/;"	v
+string	lib/form/input/builder.php	/^	public function string( $object_key, $arguments ) {$/;"	f
+subcat	lib/feeds/base.php	/^			if ( $subcat == '00' ) {$/;"	v
+subcat	lib/helper.php	/^			$subcat = $parts[ 1 ];$/;"	v
+subject	lib/settings/feed.php	/^		$subject = ( isset( $_REQUEST[ 'subject' ] ) ) ? $_REQUEST[ 'subject' ] : NULL;$/;"	v
+subject	lib/settings/media_location.php	/^		$subject = ( isset( $_REQUEST[ 'subject' ] ) ) ? $_REQUEST[ 'subject' ] : NULL;$/;"	v
+subtitle	lib/feeds/base.php	/^		$subtitle = sprintf( '<itunes:subtitle>%s<\/itunes:subtitle>', $show->subtitle );$/;"	v
+success	lib/model/base.php	/^			$success = $wpdb->query( $sql );$/;"	v
+summary	lib/feeds/base.php	/^		$summary = sprintf( '<itunes:summary>%s<\/itunes:summary>', $show->summary );$/;"	v
+summary	lib/feeds/base.php	/^		$summary = sprintf( '<itunes:summary>%s<\/itunes:summary>', htmlspecialchars( strip_tags( $post->post_excerpt ) ) );$/;"	v
+t	lib/helper.php	/^function t( $text ) {$/;"	f
+t	lib/model/show.php	/^			$t = $t . ' - ' . $this->subtitle;$/;"	v
+t	lib/model/show.php	/^		$t = $this->name;$/;"	v
+t.cancelFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^			}$/;"	f
+t.cancelFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^			}$/;"	f
+t.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^			t.fullScreenEventName = (t.hasWebkitNativeFullScreen) ? 'webkitfullscreenchange' : 'mozfullscreenchange';$/;"	f
+t.isFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^			t.fullScreenEventName = (t.hasWebkitNativeFullScreen) ? 'webkitfullscreenchange' : 'mozfullscreenchange';$/;"	f
+t.requestFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^			}$/;"	f
+t.requestFullScreen	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^			}$/;"	f
+table	lib/podcast_post_type.php	/^		$table = new \\Podlove\\Feed_List_Table();$/;"	v
+table	lib/settings/format.php	/^		$table = new \\Podlove\\Format_List_Table();$/;"	v
+table	lib/settings/show.php	/^		$table = new \\Podlove\\Show_List_Table();$/;"	v
+table_name	lib/model/base.php	/^		$table_name = get_called_class();$/;"	v
+table_name	lib/model/base.php	/^		$table_name = str_replace( 'Model_', '', $table_name );$/;"	v
+table_name	lib/model/base.php	/^		$table_name = str_replace( '\\\\', '_', $table_name );$/;"	v
+table_name	lib/model/base.php	/^		$table_name = strtolower( $table_name );$/;"	v
+table_name	lib/model/base.php	/^	public static function table_name() {$/;"	f
+tagName	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	if ($height && $tagName == 'video') {$/;"	v
+tagName	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^	if ($width && $tagName == 'video') {$/;"	v
+target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^			type: eventName,$/;"	p
+target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^{height:a.height,width:a.width,videoId:a.videoId,playerVars:{controls:0},events:{onReady:function(){a.pluginMediaElement.pluginApi=c;mejs.MediaPluginBridge.initPlugin(a.pluginId);setInterval(function(){mejs.YouTubeApi.createEvent(c,b,"timeupdate")},250)},onStateChange:function(d){mejs.YouTubeApi.handleStateChange(d.data,c,b)}}})},createEvent:function(a,b,c){c={type:c,target:b};if(a&&a.getDuration){b.currentTime=c.currentTime=a.getCurrentTime();b.duration=c.duration=a.getDuration();c.paused=b.paused;$/;"	p
+target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^			type: eventName,$/;"	p
+target	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^{height:a.height,width:a.width,videoId:a.videoId,playerVars:{controls:0},events:{onReady:function(){a.pluginMediaElement.pluginApi=c;mejs.MediaPluginBridge.initPlugin(a.pluginId);setInterval(function(){mejs.YouTubeApi.createEvent(c,b,"timeupdate")},250)},onStateChange:function(d){mejs.YouTubeApi.handleStateChange(d.data,c,b)}}})},createEvent:function(a,b,c){c={type:c,target:b};if(a&&a.getDuration){b.currentTime=c.currentTime=a.getCurrentTime();b.duration=c.duration=a.getDuration();c.paused=b.paused;$/;"	p
+temp	lib/helper.php	/^	$temp = array();$/;"	v
+template	lib/model/release.php	/^		$template = $media_location->url_template;$/;"	v
+template	lib/model/release.php	/^		$template = str_replace( '%episode_slug%', $this->slug, $template );$/;"	v
+template	lib/model/release.php	/^		$template = str_replace( '%format_extension%', $format->extension, $template );$/;"	v
+template	lib/model/release.php	/^		$template = str_replace( '%media_file_base_url%', $show->media_file_base_uri, $template );$/;"	v
+template	lib/model/release.php	/^		$template = str_replace( '%suffix%', $media_location->suffix, $template );$/;"	v
+text	lib/form/input/builder.php	/^	public function text( $object_key, $arguments ) {$/;"	f
+time	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php	/^			$time = trim(substr($line, 0, $div));$/;"	v
+title	lib/model/media_format.php	/^	public function title() {$/;"	f
+title	lib/model/media_location.php	/^	public function title() {$/;"	f
+total_items	lib/feed_list_table.php	/^		$total_items = count( $data );$/;"	v
+total_items	lib/format_list_table.php	/^		$total_items = count( $data );$/;"	v
+total_items	lib/show_list_table.php	/^		$total_items = count( $data );$/;"	v
+type	lib/form/builder.php	/^		$type     = ( isset( $field_values[ 'type' ] ) )    ? $field_values[ 'type' ]    : 'text';$/;"	v
+type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^		var obj = {$/;"	p
+type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^{height:a.height,width:a.width,videoId:a.videoId,playerVars:{controls:0},events:{onReady:function(){a.pluginMediaElement.pluginApi=c;mejs.MediaPluginBridge.initPlugin(a.pluginId);setInterval(function(){mejs.YouTubeApi.createEvent(c,b,"timeupdate")},250)},onStateChange:function(d){mejs.YouTubeApi.handleStateChange(d.data,c,b)}}})},createEvent:function(a,b,c){c={type:c,target:b};if(a&&a.getDuration){b.currentTime=c.currentTime=a.getCurrentTime();b.duration=c.duration=a.getDuration();c.paused=b.paused;$/;"	p
+type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^		var obj = {$/;"	p
+type	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^{height:a.height,width:a.width,videoId:a.videoId,playerVars:{controls:0},events:{onReady:function(){a.pluginMediaElement.pluginApi=c;mejs.MediaPluginBridge.initPlugin(a.pluginId);setInterval(function(){mejs.YouTubeApi.createEvent(c,b,"timeupdate")},250)},onStateChange:function(d){mejs.YouTubeApi.handleStateChange(d.data,c,b)}}})},createEvent:function(a,b,c){c={type:c,target:b};if(a&&a.getDuration){b.currentTime=c.currentTime=a.getCurrentTime();b.duration=c.duration=a.getDuration();c.paused=b.paused;$/;"	p
+uninstall	plugin.php	/^function uninstall() {$/;"	f
+uninstall_for_current_blog	plugin.php	/^function uninstall_for_current_blog() {$/;"	f
+units	lib/helper.php	/^    $units = array( ' B', ' KB', ' MB', ' GB', ' TB' );$/;"	v
+updateChapterMarks	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function updateChapterMarks(player, marks) {$/;"	f
+url	lib/helper.php	/^		$url = $args[ 'action' ];$/;"	v
+url	lib/helper.php	/^		$url = is_admin() ? 'admin.php' : '';$/;"	v
+url	lib/model/feed.php	/^		$url = $this->get_subscribe_url();$/;"	v
+url	lib/model/feed.php	/^		$url = sprintf($/;"	v
+valid_media_locations	lib/model/show.php	/^	function valid_media_locations() {$/;"	f
+validate_file	plugin.php	/^function validate_file() {$/;"	f
+validate_podcast_files	lib/podcast_post_type.php	/^	function validate_podcast_files() {$/;"	f
+value	lib/settings/show.php	/^					$value = ( isset( $formats_data[$format] ) && isset( $formats_data[$format][$extension_key] ) ) ? $formats_data[$format][$extension_key] : 0;$/;"	v
+view_template	lib/settings/format.php	/^	private function view_template() {$/;"	f
+view_template	lib/settings/show.php	/^	private function view_template() {$/;"	f
+webplayer_shortcode	lib/shortcodes.php	/^function webplayer_shortcode( $options ) {$/;"	f
+where	lib/model/feed.php	/^		$where = sprintf( 'show_id = "%s" AND media_location_id = "%s"', $show_id, $media_location_id );$/;"	v
+where	lib/model/media_file.php	/^		$where = sprintf( 'release_id = "%s" AND media_location_id = "%s"', $release_id, $media_location_id );$/;"	v
+where	lib/model/media_location.php	/^		$where = sprintf( 'show_id = "%s" AND media_format_id = "%s"', $show_id, $media_format_id );$/;"	v
+where	lib/model/release.php	/^		$where = sprintf( 'episode_id = "%s" AND show_id = "%s"', $episode_id, $show_id );$/;"	v
+where	lib/model/show.php	/^		$where = sprintf( 'show_id = "%s" AND media_format_id > 0', $this->id );$/;"	v
+window	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^'<object type="application\/x-shockwave-flash" id="'+a.pluginId+'" data="'+c+'" width="'+a.width+'" height="'+a.height+'" style="visibility: visible; "><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><\/object>'},flashReady:function(a){var b=this.flashPlayers[a],c=document.getElementById(a),d=b.pluginMediaElement;d.pluginApi=d.pluginElement=c;mejs.MediaPluginBridge.initPlugin(a);c.cueVideoById(b.videoId);a=b.containerId+"_callback";window[a]=function(e){mejs.YouTubeApi.handleStateChange(e,$/;"	f
+window	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^'<object type="application\/x-shockwave-flash" id="'+a.pluginId+'" data="'+c+'" width="'+a.width+'" height="'+a.height+'" style="visibility: visible; "><param name="allowScriptAccess" value="always"><param name="wmode" value="transparent"><\/object>'},flashReady:function(a){var b=this.flashPlayers[a],c=document.getElementById(a),d=b.pluginMediaElement;d.pluginApi=d.pluginElement=c;mejs.MediaPluginBridge.initPlugin(a);c.cueVideoById(b.videoId);a=b.containerId+"_callback";window[a]=function(e){mejs.YouTubeApi.handleStateChange(e,$/;"	f
+wrapper	lib/settings/format.php	/^			$wrapper = new \\Podlove\\Form\\Input\\TableWrapper( $form );$/;"	v
+wrapper	lib/settings/show.php	/^			$wrapper = new \\Podlove\\Form\\Input\\TableWrapper( $form );$/;"	v
+wrapper	lib/settings/show.php	/^		$wrapper         = $args[ 'args' ][ 1 ];$/;"	v
+wrapper	lib/settings/show.php	/^		$wrapper = $args[ 'args' ][ 1 ];$/;"	v
+youtubeSettings.container	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^					youtubeSettings = {$/;"	p
+youtubeSettings.container	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^'<embed id="'+h+'" name="'+h+'" play="true" loop="false" quality="high" bgcolor="#000000" wmode="transparent" allowScriptAccess="always" allowFullScreen="true" type="application\/x-shockwave-flash" pluginspage="\/\/www.macromedia.com\/go\/getflashplayer" src="'+b.pluginPath+b.flashName+'" flashvars="'+d.join("&")+'" width="'+f+'" height="'+j+'"><\/embed>';break;case "youtube":b=a.url.substr(a.url.lastIndexOf("=")+1);youtubeSettings={container:k,containerId:k.id,pluginMediaElement:l,pluginId:h,videoId:b,$/;"	p
+youtubeSettings.container	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^					youtubeSettings = {$/;"	p
+youtubeSettings.container	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^'<embed id="'+h+'" name="'+h+'" play="true" loop="false" quality="high" bgcolor="#000000" wmode="transparent" allowScriptAccess="always" allowFullScreen="true" type="application\/x-shockwave-flash" pluginspage="\/\/www.macromedia.com\/go\/getflashplayer" src="'+b.pluginPath+b.flashName+'" flashvars="'+d.join("&")+'" width="'+f+'" height="'+j+'"><\/embed>';break;case "youtube":b=a.url.substr(a.url.lastIndexOf("=")+1);youtubeSettings={container:k,containerId:k.id,pluginMediaElement:l,pluginId:h,videoId:b,$/;"	p
+youtubeSettings.containerId	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.js	/^						container: container,$/;"	p
+youtubeSettings.containerId	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement-and-player.min.js	/^'<embed id="'+h+'" name="'+h+'" play="true" loop="false" quality="high" bgcolor="#000000" wmode="transparent" allowScriptAccess="always" allowFullScreen="true" type="application\/x-shockwave-flash" pluginspage="\/\/www.macromedia.com\/go\/getflashplayer" src="'+b.pluginPath+b.flashName+'" flashvars="'+d.join("&")+'" width="'+f+'" height="'+j+'"><\/embed>';break;case "youtube":b=a.url.substr(a.url.lastIndexOf("=")+1);youtubeSettings={container:k,containerId:k.id,pluginMediaElement:l,pluginId:h,videoId:b,$/;"	p
+youtubeSettings.containerId	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.js	/^						container: container,$/;"	p
+youtubeSettings.containerId	lib/modules/podlove_web_player/player/podlove-web-player/mediaelement/mediaelement.min.js	/^'<embed id="'+h+'" name="'+h+'" play="true" loop="false" quality="high" bgcolor="#000000" wmode="transparent" allowScriptAccess="always" allowFullScreen="true" type="application\/x-shockwave-flash" pluginspage="\/\/www.macromedia.com\/go\/getflashplayer" src="'+b.pluginPath+b.flashName+'" flashvars="'+d.join("&")+'" width="'+f+'" height="'+j+'"><\/embed>';break;case "youtube":b=a.url.substr(a.url.lastIndexOf("=")+1);youtubeSettings={container:k,containerId:k.id,pluginMediaElement:l,pluginId:h,videoId:b,$/;"	p
+zeroFill	lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.js	/^	function zeroFill(number, width) {$/;"	f
