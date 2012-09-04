@@ -39,7 +39,7 @@
 
 namespace Podlove;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 8 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 9 );
 
 add_action( 'init', function () {
 	
@@ -58,6 +58,13 @@ add_action( 'init', function () {
 
 } );
 
+/**
+ * Find and run migration for given version number.
+ *
+ * @todo  move migrations into separate files
+ * 
+ * @param  int $version
+ */
 function run_migrations_for_version( $version ) {
 	global $wpdb;
 	
@@ -119,12 +126,131 @@ function run_migrations_for_version( $version ) {
 			$wpdb->query( $sql );
 			break;	
 		case 8:
-		$sql = sprintf(
-			'ALTER TABLE `%s` ADD COLUMN `supports_cover_art` INT',
-			\Podlove\Model\Show::table_name()
-		);
-		$wpdb->query( $sql );
+			$sql = sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `supports_cover_art` INT',
+				\Podlove\Model\Show::table_name()
+			);
+			$wpdb->query( $sql );
 			break;
+		case 9:
+			// huge architecture migration
+			
+			// assume first show will be blueprint for the podcast
+			$show  = $wpdb->get_row(
+				sprintf(
+					'SELECT * FROM %s LIMIT 1',
+					$wpdb->prefix . 'podlove_show'
+				),
+				ARRAY_A
+			);
+			$show_id = $show['id'];
+
+			// On my local machine the migration runs twice.
+			// This is a quick fix. caveat: someone who has no show defined
+			// will need to uninstall the plugin. That seems acceptable.
+			if ( ! $show_id )
+				return;
+
+			// all releases of this show will be converted to episodes
+			$releases = $wpdb->get_results(
+				sprintf(
+					'
+					SELECT
+						E.post_id, R.episode_id, R.active, R.enable, R.slug, R.duration, R.cover_art, R.chapters
+					FROM 
+						%s R
+						INNER JOIN %s E ON R.episode_id = E.id
+					WHERE
+						R.show_id = "%s"
+					',
+					$wpdb->prefix . 'podlove_release',
+					$wpdb->prefix . 'podlove_episode',
+					$show_id
+				),
+				ARRAY_A
+			);
+
+			// write show settings to podcast
+			$podcast = \Podlove\Model\Podcast::get_instance();
+			foreach ( $show as $key => $value ) {
+				$podcast->$key = $value;
+			}
+			$podcast->save();
+
+			// rebuild show table
+			\Podlove\Model\Show::destroy();
+			\Podlove\Model\Show::build();
+			
+			// rebuild episodes table
+			\Podlove\Model\Episode::destroy();
+			\Podlove\Model\Episode::build();
+			foreach ( $releases as $release ) {
+				$episode = new \Podlove\Model\Episode();
+				foreach ( $release as $key => $value ) {
+					if ( ! in_array( $key, array( 'episode_id' ) ) ) {
+						$episode->$key = $value;
+					}
+				}
+				$episode->save();
+			}
+
+			// clean feed table
+			$sql = sprintf(
+				'DELETE FROM `%s` WHERE `show_id` != "%s"',
+				\Podlove\Model\Feed::table_name(),
+				$show_id
+			);
+			$wpdb->query( $sql );
+
+			$sql = sprintf(
+				'ALTER TABLE `%s` DROP COLUMN `show_id`',
+				\Podlove\Model\Feed::table_name()
+			);
+			$wpdb->query( $sql );
+
+			// fix mediafile table
+			$sql = sprintf(
+				'ALTER TABLE `%s` CHANGE `release_id` `episode_id` INT',
+				\Podlove\Model\MediaFile::table_name()
+			);
+			$wpdb->query( $sql );
+
+			// remove suffix
+			$sql = sprintf(
+				'ALTER TABLE `%s` DROP COLUMN `suffix`',
+				\Podlove\Model\MediaLocation::table_name()
+			);
+			$wpdb->query( $sql );
+
+			// add more default formats
+			$default_formats = array(
+				array( 'name' => 'PDF Document',  'type' => 'ebook', 'mime_type' => 'application/pdf',  'extension' => 'pdf' ),
+				array( 'name' => 'ePub Document', 'type' => 'ebook', 'mime_type' => 'application/epub+zip',  'extension' => 'epub' ),
+				array( 'name' => 'PNG Image',     'type' => 'image', 'mime_type' => 'image/png',   'extension' => 'png' ),
+				array( 'name' => 'JPEG Image',    'type' => 'image', 'mime_type' => 'image/jpeg',  'extension' => 'jpg' ),
+			);
+			
+			foreach ( $default_formats as $format ) {
+				$f = new Model\MediaFormat;
+				foreach ( $format as $key => $value ) {
+					$f->{$key} = $value;
+				}
+				$f->save();
+			}
+
+			// update assistant
+			$assistant = \Podlove\Modules\EpisodeAssistant\Episode_Assistant::instance();
+			$template = $assistant->get_module_option( 'title_template' );
+			$template = str_replace( '%show_slug%', '%podcast_slug%', $template );
+			$assistant->update_module_option( 'title_template', $template );
+
+			// update media locations
+			$media_locations = \Podlove\Model\MediaLocation::all();
+			foreach ( $media_locations as $media_location ) {
+				$media_location->url_template = str_replace( '%suffix%', '', $media_location->url_template );
+				$media_location->save();
+			}
+		break;
 
 	}
 

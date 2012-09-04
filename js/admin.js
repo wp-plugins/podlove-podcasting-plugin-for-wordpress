@@ -15,11 +15,11 @@ function human_readable_size(size) {
 
 jQuery(function($) {
 
-	$("#podlove_settings_handle_validation").each(function() {
+	$("#validation").each(function() {
 		PODLOVE.DashboardValidation($(this));
 	});
 
-	$(".postbox[id*='podlove_show']").each(function() {
+	$("#podlove_podcast").each(function() {
 		PODLOVE.Episode($(this));
 	});
 

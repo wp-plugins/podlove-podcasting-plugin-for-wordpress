@@ -5,27 +5,27 @@ if( ! class_exists( 'WP_List_Table' ) ){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class Feed_List_Table extends \WP_List_Table {
+class Media_Location_List_Table extends \WP_List_Table {
 	
 	function __construct(){
 		global $status, $page;
 		        
 		// Set parent defaults
 		parent::__construct( array(
-		    'singular'  => 'feed',   // singular name of the listed records
-		    'plural'    => 'feeds',  // plural name of the listed records
+		    'singular'  => 'media_location',   // singular name of the listed records
+		    'plural'    => 'media_locations',  // plural name of the listed records
 		    'ajax'      => false       // does this table support ajax?
 		) );
 	}
 	
-	public function column_name( $feed ) {
+	public function column_title( $media_location ) {
 
-		$link = function ( $title, $action = 'edit' ) use ( $feed ) {
+		$link = function ( $title, $action = 'edit' ) use ( $media_location ) {
 			return sprintf(
-				'<a href="?page=%s&action=%s&feed=%s">' . $title . '</a>',
+				'<a href="?page=%s&action=%s&media_location=%s">' . $title . '</a>',
 				$_REQUEST['page'],
 				$action,
-				$feed->id
+				$media_location->id
 			);
 		};
 
@@ -34,37 +34,23 @@ class Feed_List_Table extends \WP_List_Table {
 			'delete' => $link( __( 'Delete', 'podlove' ), 'delete' )
 		);
 	
+		$title = ( $media_location->title ) ? $media_location->title : __( '- title missing -', 'podlove' );
+
 		return sprintf( '%1$s %2$s',
-		    $link( $feed->name ),
+		    $link( $title ),
 		    $this->row_actions( $actions )
 		);
 	}
 	
-	public function column_discoverable( $feed ) {
-		return $feed->discoverable ? '✓' : '×';
-	}
-
-	public function column_url( $feed ) {
-		return $feed->get_subscribe_link();
-	}
-
-	public function column_format( $feed ) {
-		return $feed->format;
-	}
-
-	public function column_media( $feed ) {
-		$media_location = $feed->media_location();
-
-		return ( $media_location ) ? $media_location->title() : __( 'not set', 'podlove' );
+	public function column_media_format( $media_location ) {
+		$format = $media_location->media_format();
+		return ( $format ) ? $format->title() : "-";
 	}
 
 	public function get_columns(){
 		$columns = array(
-			'name'         => __( 'Feed', 'podlove' ),
-			'url'          => __( 'Subscribe URL', 'podlove' ),
-			'format'       => __( 'Format', 'podlove' ),
-			'media'        => __( 'Media', 'podlove' ),
-			'discoverable' => __( 'Discoverable', 'podlove' )
+			'title'        => __( 'Media Location', 'podlove' ),
+			'media_format' => __( 'Media Format', 'podlove' ),
 		);
 		return $columns;
 	}
@@ -80,7 +66,7 @@ class Feed_List_Table extends \WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		
 		// retrieve data
-		$data = \Podlove\Model\Feed::all();
+		$data = \Podlove\Model\MediaLocation::all();
 		
 		// get current page
 		$current_page = $this->get_pagenum();

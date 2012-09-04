@@ -14,7 +14,7 @@ function activate_for_current_blog() {
 	Model\Show::build();
 	Model\Episode::build();
 	Model\Release::build();
-	
+
 	if ( ! Model\MediaFormat::has_entries() ) {
 		$default_formats = array(
 			array( 'name' => 'MP3 Audio',              'type' => 'audio', 'mime_type' => 'audio/mpeg',  'extension' => 'mp3' ),
@@ -35,8 +35,6 @@ function activate_for_current_blog() {
 			array( 'name' => 'PNG Image',              'type' => 'image', 'mime_type' => 'image/png',   'extension' => 'png' ),
 			array( 'name' => 'JPEG Image',             'type' => 'image', 'mime_type' => 'image/jpeg',  'extension' => 'jpg' ),
 		);
-		// todo: add flac
-		// todo: pentabarf-ish validation. summary of all conflicts / missing info is dashboard
 		
 		foreach ( $default_formats as $format ) {
 			$f = new Model\MediaFormat;
@@ -168,9 +166,7 @@ function add_feed_discoverability() {
 	$feeds = \Podlove\Model\Feed::find_all_by_discoverable( 1 );
 
 	foreach ( $feeds as $feed ) {
-		if ( $feed->show() ) {
-			echo '<link rel="alternate" type="' . $feed->get_content_type() . '" title="' . esc_attr( $feed->title_for_discovery() ) . '" href="' . $feed->get_subscribe_url() . "\" />\n";			
-		}
+		echo '<link rel="alternate" type="' . $feed->get_content_type() . '" title="' . esc_attr( $feed->title_for_discovery() ) . '" href="' . $feed->get_subscribe_url() . "\" />\n";			
 	}
 		
 }
@@ -180,6 +176,12 @@ add_action( 'init', function () {
 
 	// priority 2 so they are placed below the WordPress default discovery links
 	add_action( 'wp_head', '\Podlove\add_feed_discoverability', 2 );
+
+	// hide WordPress default link discovery
+	if ( \Podlove\get_setting( 'hide_wp_feed_discovery' ) === 'on' ) {
+		remove_action( 'wp_head', 'feed_links',       2 );
+		remove_action( 'wp_head', 'feed_links_extra', 3 );
+	}
 });
 
 add_action( 'init', function () {
@@ -266,6 +268,7 @@ add_action( 'plugins_loaded', function () {
 } );
 
 namespace Podlove\AJAX;
+use \Podlove\Model;
 
 function validate_file() {
 	$file_id = $_REQUEST['file_id'];
@@ -290,17 +293,16 @@ add_action( 'wp_ajax_podlove-validate-file', '\Podlove\AJAX\validate_file' );
 
 function create_episode() {
 
-	$show_id = isset( $_REQUEST['show_id'] ) ? $_REQUEST['show_id'] : NULL;
-	$slug    = isset( $_REQUEST['slug'] )    ? $_REQUEST['slug']    : NULL;
-	$title   = isset( $_REQUEST['title'] )   ? $_REQUEST['title']   : NULL;
+	$slug  = isset( $_REQUEST['slug'] )  ? $_REQUEST['slug']  : NULL;
+	$title = isset( $_REQUEST['title'] ) ? $_REQUEST['title'] : NULL;
 
-	if ( ! $show_id || ! $slug || ! $title )
+	if ( ! $slug || ! $title )
 		die();
-
 
 	$args = array(
 		'post_type' => 'podcast',
 		'post_title' => $title,
+		'post_content' => \Podlove\Podcast_Post_Type::$default_post_content
 	);
 
 	// create post
@@ -308,16 +310,16 @@ function create_episode() {
 
 	// link episode and release
 	$episode = \Podlove\Model\Episode::find_or_create_by_post_id( $post_id );
-	$release = \Podlove\Model\Release::find_or_create_by_episode_id_and_show_id( $episode->id, $show_id );
-	$release->slug = $slug;
-	$release->save();
+	$episode->slug = $slug;
+	$episode->enable = true;
+	$episode->active = true;
+	$episode->save();
 
 	// activate all media files
-	$show = \Podlove\Model\Show::find_by_id( $show_id );
-	$media_locations = $show->valid_media_locations();
+	$media_locations = Model\MediaLocation::all();
 	foreach ( $media_locations as $media_location ) {
 		$media_file = new \Podlove\Model\MediaFile();
-		$media_file->release_id = $release->id;
+		$media_file->episode_id = $episode->id;
 		$media_file->media_location_id = $media_location->id;
 		$media_file->save();
 	}
@@ -330,7 +332,7 @@ function create_episode() {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
-	echo json_encode($result);
+	echo json_encode( $result );
 
 	die();
 }

@@ -289,6 +289,26 @@ abstract class Base
 		return $model;
 	}
 	
+	public static function last() {
+		global $wpdb;
+		
+		$class = get_called_class();
+		$model = new $class();
+		$model->flag_as_not_new();
+		
+		$row = $wpdb->get_row( 'SELECT * FROM ' . self::table_name() . ' ORDER BY id DESC LIMIT 0,1' );
+		
+		if ( ! $row ) {
+			return NULL;
+		}
+		
+		foreach ( $row as $property => $value ) {
+			$model->$property = $value;
+		}
+
+		return $model;
+	}
+
 	/**
 	 * Retrieve all entries from the table.
 	 * 
@@ -323,6 +343,35 @@ abstract class Base
 	public function flag_as_not_new() {
 		$this->is_new = false;
 	}
+
+	/**
+	 * Rails-ish update_attributes for easy form handling.
+	 *
+	 * Takes an array of form values and takes care of serializing it.
+	 * 
+	 * @param  array $attributes
+	 * @return bool
+	 */
+	public function update_attributes( $attributes ) {
+
+		if ( ! is_array( $attributes ) )
+			return false;
+			
+		foreach ( $attributes as $key => $value )
+			$this->{$key} = $value;
+		
+		if ( isset( $_REQUEST['checkboxes'] ) && is_array( $_REQUEST['checkboxes'] ) ) {
+			foreach ( $_REQUEST['checkboxes'] as $checkbox ) {
+				if ( isset( $attributes[ $checkbox ] ) && $attributes[ $checkbox ] === 'on' ) {
+					$this->$checkbox = 1;
+				} else {
+					$this->$checkbox = 0;
+				}
+			}
+		}
+
+		return $this->save();
+	}
 	
 	/**
 	 * Saves changes to database.
@@ -331,7 +380,7 @@ abstract class Base
 	 */
 	public function save() {
 		global $wpdb;
-		
+
 		if ( $this->is_new() ) {
 
 			$this->set_defaults();
@@ -377,7 +426,7 @@ abstract class Base
 			return;
 
 		foreach ( $defaults as $property => $value ) {
-			if ( empty( $this->property ) )
+			if ( $this->$property === NULL )
 				$this->$property = $value;
 		}
 
@@ -413,7 +462,7 @@ abstract class Base
 	}
 	
 	private function property_name_to_sql_value( $p ) {
-		if ( $this->$p ) {
+		if ( $this->$p !== NULL && $this->$p !== '' ) {
 			return sprintf( "'%s'", $this->$p );
 		} else {
 			return 'NULL';
