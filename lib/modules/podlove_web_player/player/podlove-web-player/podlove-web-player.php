@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PodloveWebPlayer
- * @version 1.1.0
+ * @version 1.1.2
  */
 
 /*
@@ -9,7 +9,7 @@ Plugin Name: Podlove Web Player
 Plugin URI: http://podlove.org/podlove-web-player/
 Description: Video and audio plugin for WordPress built on the MediaElement.js HTML5 media player library.
 Author: Gerrit van Aaken and others
-Version: 1.1.0
+Version: 1.1.2
 Author URI: http://praegnanz.de
 License: GPLv3, MIT
 */
@@ -19,6 +19,11 @@ Forked from: http://mediaelementjs.com/ plugin
 which was adapted from: http://videojs.com/ plugin
 */
 
+
+/* Prevent conflicts with already running versions of PWP */
+
+if (!function_exists('podlove_pwp_install')) {
+
 $podlovePlayerIndex = 1;
 
 define('PODLOVEWEBPLAYER_DIR', plugin_dir_url(__FILE__));
@@ -26,6 +31,7 @@ define('PODLOVEWEBPLAYER_PATH', plugin_dir_path(__FILE__));
 define('PODLOVEWEBPLAYER_MEJS_DIR', PODLOVEWEBPLAYER_DIR . 'mediaelement/');
 
 /* Runs when plugin is activated */
+
 
 function podlove_pwp_install() {
 	add_option('pwp_video_skin', '');
@@ -98,7 +104,7 @@ if (!get_option('pwp_script_on_demand')) {
 			// the scripts
 			wp_enqueue_script('mediaelementjs-scripts', PODLOVEWEBPLAYER_MEJS_DIR . 'mediaelement-and-player.min.js', array('jquery'), '2.9.1', false);
 			wp_enqueue_script('ba-hashchange', PODLOVEWEBPLAYER_DIR . 'libs/jquery.ba-hashchange.min.js', array('jquery'), '1.3.0', false);
-			wp_enqueue_script('podlove-web-player', PODLOVEWEBPLAYER_DIR . 'podlove-web-player.js', array('jquery', 'mediaelementjs-scripts'), '1.1.0', false);
+			wp_enqueue_script('podlove-web-player', PODLOVEWEBPLAYER_DIR . 'podlove-web-player.js', array('jquery', 'mediaelementjs-scripts'), '1.1.2', false);
 		}
 	}
 	add_action('wp_print_scripts', 'podlove_pwp_add_scripts');
@@ -149,7 +155,12 @@ function podlove_pwp_media_shortcode($tagName, $atts) {
 		'skin' => get_option('pwp_video_skin'),
 		'autoplay' => '',
 		'loop' => '',
-		'chapterlinks' => 'all',
+
+		// podlove meta info
+		'title' => '',
+		'subtitle' => '',
+		'summary' => '',
+		'permalink' => '',
 
 		// old ones
 		'duration' => 'true',
@@ -162,7 +173,8 @@ function podlove_pwp_media_shortcode($tagName, $atts) {
 		'captionslang' => 'en',
 
 		// chapters
-		'chapters' => ''
+		'chapters' => '',
+		'chapterlinks' => 'all'
 
 	), $atts));
 
@@ -218,9 +230,10 @@ function podlove_pwp_media_shortcode($tagName, $atts) {
 	if ($height && $tagName == 'video') {
 		$attributes[] = 'height="' . $height . '"';
 	}
-	if ($poster) {
+	if ($poster && $tagName == 'video') {
 		$attributes[] = 'poster="' . htmlspecialchars($poster) . '"';
 	}
+
 	if ($preload) {
 		$attributes[] = 'preload="' . $preload . '"';
 	}
@@ -234,7 +247,9 @@ function podlove_pwp_media_shortcode($tagName, $atts) {
 	}
 
 	// CONTROLS array
-	$controls_option[] = '"playpause"';
+	if ($tagName == 'video' || (!$poster && !$title && !$subtitle && !$summary)) {
+		$controls_option[] = '"playpause"';
+	}
 	if ($progress == 'true') {
 		$controls_option[] = '"current"';
 		$controls_option[] = '"progress"';
@@ -289,10 +304,33 @@ function podlove_pwp_media_shortcode($tagName, $atts) {
 		$dimensions = 'width="' . $width . '" height="' . $height . '"';
 	}
 
-	//build actual html player code
-	$mediahtml = <<<_end_
+	//prepare podlove meta info
+	$podloveMeta = "";
+	if ($tagName == 'audio' && ($poster || $title || $subtitle || $summary)) {
+		$podloveMeta .= '<div class="podlovemeta">';
 
-	<div class="mediaelementjs_player_container">
+		$podloveMeta .= '<a class="bigplay" href="">Play Episode</a>';
+		if ($poster) {
+			$podloveMeta .= '<div class="coverart"><img src="'.htmlspecialchars($poster).'" alt=""/></div>';
+		}
+		if ($title) {
+			$podloveMeta .= '<h3>'.$title.'</h3>';
+		}
+		if ($subtitle) {
+			$podloveMeta .= '<div class="subtitle"><strong>'.$subtitle.'</strong></div>';
+		}
+		if ($summary) {
+			$podloveMeta .= '<div class="summary">'.$summary.'</div>';
+		}
+		$podloveMeta .= '</div>';
+	}
+
+	//build actual html player code
+	
+		$mediahtml = <<<_end_
+
+		<div class="mediaelementjs_player_container">
+		{$podloveMeta}
 
 	<{$tagName} id="wp_pwp_{$podlovePlayerIndex}" {$dimensions} controls {$attributes_string} class="{$skin_class}" data-mejsoptions="{$options_string}">
 		{$sources_string}
@@ -433,5 +471,7 @@ function podlove_pwp_init() {
 }
 
 add_action('init', 'podlove_pwp_init');
+
+} // End of code
 
 ?>
