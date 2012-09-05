@@ -4,6 +4,82 @@
 		"selected_items":
 		[
 			[
+				"cov",
+				"cover_art_file_id"
+			],
+			[
+				"fun",
+				"fun	function …"
+			],
+			[
+				"Pod",
+				"Podlove"
+			],
+			[
+				"med",
+				"media_location"
+			],
+			[
+				"ar",
+				"artwork_options"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"fu",
+				"fun	Function"
+			],
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"lab",
+				"label"
+			],
+			[
+				"f",
+				"f	Anonymous Function"
+			],
+			[
+				"cl",
+				"closest"
+			],
+			[
+				"e",
+				"each"
+			],
+			[
+				"con",
+				"contributor"
+			],
+			[
+				"tax",
+				"taxonomy_name"
+			],
+			[
+				"ro",
+				"row"
+			],
+			[
+				"all",
+				"all_contributor_settings"
+			],
+			[
+				"co",
+				"contributor_settings"
+			],
+			[
+				"defau",
+				"default_post_content"
+			],
+			[
+				"pos",
+				"post_content"
+			],
+			[
 				"cre",
 				"create_new_blog"
 			],
@@ -14,10 +90,6 @@
 			[
 				"add_",
 				"add_filter"
-			],
-			[
-				"med",
-				"media_location"
 			],
 			[
 				"tem",
@@ -38,14 +110,6 @@
 			[
 				"for",
 				"foreach	foreach …"
-			],
-			[
-				"pos",
-				"post_id"
-			],
-			[
-				"fun",
-				"fun	function …"
 			],
 			[
 				"page",
@@ -90,10 +154,6 @@
 			[
 				"che",
 				"checkboxes"
-			],
-			[
-				"Pod",
-				"Podcast_Post_Meta_Box"
 			],
 			[
 				"req",
@@ -176,10 +236,6 @@
 				"attr_value"
 			],
 			[
-				"ar",
-				"args"
-			],
-			[
 				"en",
 				"endforeach"
 			],
@@ -200,10 +256,6 @@
 				"prepare"
 			],
 			[
-				"co",
-				"continue"
-			],
-			[
 				"new",
 				"new_file"
 			],
@@ -218,10 +270,6 @@
 			[
 				"ma",
 				"margin-bottom"
-			],
-			[
-				"mar",
-				"margin-top"
 			],
 			[
 				"br",
@@ -240,10 +288,6 @@
 				"apply_filters"
 			],
 			[
-				"e",
-				"extension"
-			],
-			[
 				"is",
 				"is_param_list"
 			],
@@ -258,10 +302,6 @@
 			[
 				"Da",
 				"DashboardValidation"
-			],
-			[
-				"con",
-				"container"
 			],
 			[
 				"rem",
@@ -296,10 +336,6 @@
 				"submenu_index"
 			],
 			[
-				"ro",
-				"role"
-			],
-			[
 				"set",
 				"setting_values"
 			],
@@ -322,10 +358,6 @@
 			[
 				"meta",
 				"meta_box"
-			],
-			[
-				"cl",
-				"class_parts"
 			],
 			[
 				"str",
@@ -408,10 +440,6 @@
 				"json_encode"
 			],
 			[
-				"f",
-				"f	function …"
-			],
-			[
 				"list-",
 				"list-style-type"
 			],
@@ -486,34 +514,6 @@
 			[
 				"media_l",
 				"media_location"
-			],
-			[
-				"Med",
-				"MediaFile"
-			],
-			[
-				"Mo",
-				"Model"
-			],
-			[
-				"strt",
-				"strtoupper"
-			],
-			[
-				"wh",
-				"where"
-			],
-			[
-				"array_f",
-				"array_filter"
-			],
-			[
-				"wp_reg",
-				"wp_register_script"
-			],
-			[
-				"preg_re",
-				"preg_replace"
 			]
 		]
 	},
@@ -673,66 +673,84 @@
 	},
 	"file_history":
 	[
-		"/Users/ericteubert/code/podlove/.wordpress_release/tags/1.1.10-alpha/lib/model/feed.php",
 		"/Users/ericteubert/code/podlove/plugin.php",
+		"/Users/ericteubert/code/podlove/templates/feed-rss2.php",
+		"/Users/ericteubert/code/podlove/podlove.php",
+		"/Users/ericteubert/code/podlove/js/admin/episode.js",
+		"/Users/ericteubert/code/podlove/lib/settings/media_location.php",
+		"/Users/ericteubert/code/podlove/lib/feeds/base.php",
+		"/Users/ericteubert/code/podlove/lib/model/media_file.php",
+		"/Users/ericteubert/code/podlove/lib/shortcodes.php",
+		"/Users/ericteubert/code/podlove/lib/podcast_post_meta_box.php",
+		"/Users/ericteubert/code/podlove/lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php",
+		"/Users/ericteubert/code/podlove/lib/modules/open_graph/open_graph.php",
+		"/Users/ericteubert/code/podlove/lib/settings/podcast.php",
+		"/Users/ericteubert/code/podlove/lib/model/episode.php",
+		"/Users/ericteubert/code/podlove/lib/model/media_location.php",
+		"/Users/ericteubert/code/podlove/lib/version.php",
+		"/Users/ericteubert/code/podlove/lib/settings/dashboard.php",
+		"/Users/ericteubert/code/podlove/lib/settings/web_player.php",
+		"/Users/ericteubert/code/podlove/lib/model/podcast.php",
+		"/Users/ericteubert/code/podlove/lib/model/media_format.php",
+		"/Users/ericteubert/code/podlove/lib/settings/format.php",
+		"/Users/ericteubert/code/podlove/lib/model/feed.php",
+		"/Users/ericteubert/code/podlove/lib/settings/feed.php",
+		"/Users/ericteubert/code/podlove/lib/feeds/atom.php",
+		"/Users/ericteubert/code/podlove/templates/feed-atom.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/feed.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/post-template.php",
+		"/Users/ericteubert/code/podlove/lib/feeds.php",
+		"/Users/ericteubert/code/podlove/lib/modules/contributors/contributors.php",
+		"/Users/ericteubert/code/podlove/lib/form/input/builder.php",
+		"/Users/ericteubert/code/podlove/lib/form/input/table_wrapper.php",
+		"/Users/ericteubert/code/podlove/lib/form/input/wrapper.php",
+		"/Users/ericteubert/code/podlove/lib/podcast_post_type.php",
+		"/Users/ericteubert/code/podlove/js/admin.js",
+		"/Users/ericteubert/code/podlove/js/admin/dashboard_validation.js",
+		"/Users/ericteubert/code/podlove/readme.txt",
+		"/Users/ericteubert/code/Sites/wordpress/wp-admin/js/post.dev.js",
+		"/Users/ericteubert/code/podlove/.git/MERGE_MSG",
+		"/Users/ericteubert/code/podlove/lib/settings/settings.php",
+		"/Users/ericteubert/code/podlove/lib/helper.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/taxonomy.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-admin/edit-form-advanced.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/canonical.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/class-wp.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-app.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-signup.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-admin/includes/meta-boxes.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-admin/press-this.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-admin/edit-tag-form.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/default-filters.php",
+		"/Users/ericteubert/code/Sites/wordpress/wp-admin/includes/post.php",
+		"/Users/ericteubert/code/podlove/lib/modules/episode_assistant/episode_assistant.php",
+		"/Users/ericteubert/code/podlove/.git/COMMIT_EDITMSG",
+		"/Users/ericteubert/code/podlove/.wordpress_release/tags/1.1.10-alpha/lib/model/feed.php",
 		"/Users/ericteubert/.codeintel/config",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/load-scripts.php",
-		"/Users/ericteubert/code/podlove/lib/settings/dashboard.php",
-		"/Users/ericteubert/code/podlove/lib/modules/episode_assistant/episode_assistant.php",
 		"/Users/ericteubert/code/podlove/lib/modules/base.php",
-		"/Users/ericteubert/code/podlove/lib/version.php",
-		"/Users/ericteubert/code/podlove/lib/model/media_location.php",
-		"/Users/ericteubert/code/podlove/readme.txt",
 		"/Users/ericteubert/code/podlove/lib/model/base.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/post.php",
-		"/Users/ericteubert/code/podlove/lib/podcast_post_type.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/edit.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/post.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/post-new.php",
-		"/Users/ericteubert/code/Sites/wordpress/wp-admin/includes/post.php",
-		"/Users/ericteubert/code/podlove/podlove.php",
-		"/Users/ericteubert/code/podlove/lib/feeds.php",
-		"/Users/ericteubert/code/podlove/lib/model/episode.php",
-		"/Users/ericteubert/code/podlove/lib/model/feed.php",
-		"/Users/ericteubert/code/podlove/lib/feeds/base.php",
-		"/Users/ericteubert/code/podlove/lib/feeds/atom.php",
-		"/Users/ericteubert/code/podlove/lib/settings/media_location.php",
-		"/Users/ericteubert/code/podlove/lib/settings/feed.php",
-		"/Users/ericteubert/code/podlove/lib/model/media_file.php",
 		"/Users/ericteubert/code/podlove/lib/feeds/rss.php",
 		"/Users/ericteubert/code/podlove/lib/model/show.php",
-		"/Users/ericteubert/code/podlove/lib/model/podcast.php",
-		"/Users/ericteubert/code/podlove/lib/modules/open_graph/open_graph.php",
-		"/Users/ericteubert/code/Sites/wordpress/wp-app.php",
 		"/Users/ericteubert/code/podlove/lib/modules/podlove_web_player/player/podlove-web-player/libs/jquery.ba-hashchange.js",
-		"/Users/ericteubert/code/podlove/js/admin.js",
-		"/Users/ericteubert/code/podlove/lib/podcast_post_meta_box.php",
 		"/Users/ericteubert/code/podlove/lib/modules/episode_assistant/js/episode_assistant.js",
 		"/Users/ericteubert/code/podlove/lib/settings/show.php",
-		"/Users/ericteubert/code/podlove/lib/settings/settings.php",
-		"/Users/ericteubert/code/podlove/lib/settings/web_player.php",
 		"/Users/ericteubert/code/podlove/lib/media_location_list_table.php",
 		"/Users/ericteubert/code/podlove/js/admin/media_location_settings.js",
-		"/Users/ericteubert/code/podlove/js/admin/episode.js",
-		"/Users/ericteubert/code/podlove/lib/helper.php",
 		"/Users/ericteubert/code/podlove/lib/feed_list_table.php",
-		"/Users/ericteubert/code/podlove/lib/form/input/builder.php",
-		"/Users/ericteubert/code/podlove/lib/form/input/wrapper.php",
-		"/Users/ericteubert/code/podlove/lib/form/input/table_wrapper.php",
-		"/Users/ericteubert/code/podlove/lib/settings/podcast.php",
 		"/Users/ericteubert/code/podlove/lib/custom_guid.php",
-		"/Users/ericteubert/code/podlove/lib/settings/format.php",
 		"/Users/ericteubert/.rvm/gems/ruby-1.9.3-p194/bin/prettify_json.rb",
 		"/Users/ericteubert/code/podlove/lib/modules/podlove_web_player/podlove_web_player.php",
-		"/Users/ericteubert/code/podlove/lib/model/media_format.php",
 		"/Users/ericteubert/code/podlove/lib/model/release.php",
 		"/Users/ericteubert/code/wprelease/wprelease.rb",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/css/ie.css",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/functions.php",
-		"/Users/ericteubert/code/podlove/js/admin/dashboard_validation.js",
 		"/Users/ericteubert/code/podlove/podlove.sublime-project",
 		"/Users/ericteubert/code/podlove/.gitignore",
-		"/Users/ericteubert/code/podlove/templates/feed-rss2.php",
 		"/Users/ericteubert/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/script-loader.php",
 		"/Users/ericteubert/code/Sites/wordpress-multisite/wp-content/plugins/adminimize-2/css/admin.dev.css",
@@ -782,25 +800,7 @@
 		"/Users/ericteubert/code/sma/themes/sma2/search.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/l10n.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/deprecated.php",
-		"/Users/ericteubert/code/Sites/wordpress/wp-includes/nav-menu-template.php",
-		"/Users/ericteubert/Library/Caches/Cleanup At Startup/Transmit/B93351B5-E58B-4270-9449-C283FE509B4A/.htaccess",
-		"/Users/ericteubert/code/flex/ex2-concordance-with-bison/scan.l",
-		"/Users/ericteubert/code/flex/ex2-concordance-with-bison/scan.y",
-		"/Users/ericteubert/code/flex/ex2-concordance-with-bison/function.php",
-		"/Users/ericteubert/code/flex/ex1-concordance/concordance.l",
-		"/Users/ericteubert/code/flex/ex2-concordance-with-bison/bison.h",
-		"/Users/ericteubert/code/flex/ex2-concordance-with-bison/Makefile",
-		"/Users/ericteubert/code/flex/ex1-concordance/Makefile",
-		"/Users/ericteubert/code/podlove/license.txt",
-		"/Users/ericteubert/code/Sites/wordpress/wp-includes/rewrite.php",
-		"/Users/ericteubert/code/codex/draft/namespaces.md",
-		"/Users/ericteubert/code/codex/draft/html-und-templates.md",
-		"/Users/ericteubert/code/codex/draft/wordpress-best-practices.md",
-		"/Users/ericteubert/code/codex/draft/code-style-richtlinien.md",
-		"/Users/ericteubert/code/codex/draft/namenskonventionen.md",
-		"/Users/ericteubert/code/codex/example-plugin/example-plugin.php",
-		"/Users/ericteubert/code/podlove/css/frontend.css",
-		"/Users/ericteubert/code/Sites/wordpress/wp-includes/class.wp-scripts.php"
+		"/Users/ericteubert/code/Sites/wordpress/wp-includes/nav-menu-template.php"
 	],
 	"find":
 	{
@@ -808,9 +808,15 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,-*.css",
+			"-*.po,-.tags,-.tags_sorted_by_file,-*.html",
+			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,*.php",
+			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,*.js",
+			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,*.php",
+			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,-*.css",
 			"-*.po,-.tags,-.tags_sorted_by_file,-*.html",
 			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,/Users/ericteubert/code/podlove",
 			"-*.po,-.tags,-.tags_sorted_by_file,-*.html",
@@ -847,6 +853,83 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"br",
+			"_url",
+			"itunes:image",
+			"$episode->co",
+			"$podcast->get_cover_image",
+			"$podcast->cover_image",
+			"find_or_create",
+			"ion determ",
+			"->cover_art",
+			"cover_art",
+			"->cover_art",
+			"cover_art",
+			"enable epis",
+			"enable episo",
+			"'ebook'",
+			"filesize miss",
+			"podlove_rss_feed_description",
+			"ion get_the_excerpt",
+			"ion the_excerpt_rss",
+			"discovery",
+			"internal name",
+			"internal",
+			"internal title",
+			"rss_la",
+			"ion multisel",
+			"// todo",
+			"todo",
+			"info",
+			"determine_file_size",
+			"curl_get_header",
+			".ajax",
+			"human_readable_size",
+			"todo",
+			"_podlove_chapters",
+			"podcast settings",
+			"location",
+			"slug",
+			"format t",
+			"cover",
+			"itunes:cov",
+			"cover",
+			"tagchecklist",
+			"flush",
+			"hide_wp_feed_discovery",
+			"ion get_sett",
+			"404",
+			"feed url",
+			"changed",
+			"tagsdiv",
+			"ion post_tags_meta_box",
+			"tagsdiv",
+			"tagchecklist",
+			"$contributor->term_id",
+			"edited_",
+			"contributor_settings",
+			"_edit_form_fields",
+			"redirect",
+			"Writer",
+			"writers",
+			"Writers",
+			"merge_episodes",
+			"wp_head",
+			"default_content",
+			"\\AJAX",
+			"default_content",
+			"Podcast_Post_Type",
+			"default_content",
+			"set_default_episode_content",
+			"[podlove",
+			"format_file",
+			"format_location",
+			"release",
+			"rocks",
+			"release",
+			"Dashboard",
+			"validate_podcast_files",
+			"validate ev",
 			"%show_s",
 			"release",
 			"dashboard",
@@ -897,84 +980,7 @@
 			"feed",
 			"Feed",
 			"feed",
-			"Feed",
-			"feed",
-			"Feed",
-			"feed",
-			"Feed",
-			"feed",
-			"Feed",
-			"feed",
-			"Feed",
-			"feed",
-			"Feed",
-			"feed",
-			"self::SETTINGS_PAGE_HANDLE",
-			"create_menu",
-			"arguments",
-			"name",
-			"form_data",
-			"unset",
-			"episode",
-			"filesize",
-			"file",
-			"format",
-			"location",
-			"),",
-			"save_po",
-			"form_data",
-			"req_locations",
-			"locations",
-			"media_locations",
-			"media_location_value",
-			"media_location_id",
-			"media_locations",
-			"'media",
-			"form_da",
-			"ion update_attributes",
-			"media_locations",
-			"register_post_type_meta_box",
-			"register_post_type_meta_boxes",
-			"ave any Shows configured. You ne",
-			"show",
-			"ion build_for",
-			"sett",
-			"custom_guid",
-			"checkboxes",
-			"languagw",
-			"feed",
-			"$_POST['podlove_feed']",
-			"format",
-			"Format",
-			"format",
-			"feed_id",
-			"format_id",
-			"format",
-			"Format",
-			"format",
-			"feed_wrapper",
-			"$feed",
-			"show",
-			"feed_overview_meta",
-			"Feed_List_Table",
-			"\\Format",
-			"show",
-			"contents",
-			"show",
-			"sh",
-			"drop",
-			"podcast",
-			"::$",
-			"::",
-			"static",
-			"$this->pr",
-			",",
-			"podcast",
-			"media_format",
-			"media_location",
-			"episode",
-			"media_format",
-			"release_id"
+			"Feed"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1047,20 +1053,292 @@
 		"selected_items":
 		[
 			[
-				"modmedloc",
+				"feedrss",
+				"podlove/templates/feed-rss2.php"
+			],
+			[
+				"plug",
+				"podlove/plugin.php"
+			],
+			[
+				"po",
+				"podlove/podlove.php"
+			],
+			[
+				"epis.js",
+				"podlove/js/admin/episode.js"
+			],
+			[
+				"pwppwppwp",
+				"podlove/lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php"
+			],
+			[
+				"metabox",
+				"podlove/lib/podcast_post_meta_box.php"
+			],
+			[
+				"libshort",
+				"podlove/lib/shortcodes.php"
+			],
+			[
+				"mediafile",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"feedbase",
+				"podlove/lib/feeds/base.php"
+			],
+			[
+				"podl",
+				"podlove/podlove.php"
+			],
+			[
+				"settmedloc",
+				"podlove/lib/settings/media_location.php"
+			],
+			[
+				"versio",
+				"podlove/lib/version.php"
+			],
+			[
+				"medloc",
 				"podlove/lib/model/media_location.php"
 			],
 			[
-				"modulebase",
-				"podlove/lib/modules/base.php"
+				"modelepiso",
+				"podlove/lib/model/episode.php"
+			],
+			[
+				"podloepis.js",
+				"podlove/js/admin/episode.js"
+			],
+			[
+				"plu",
+				"podlove/plugin.php"
+			],
+			[
+				"medfi",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"modelmedf",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"modelloc",
+				"podlove/lib/model/media_location.php"
+			],
+			[
+				"modepodcas",
+				"podlove/lib/model/podcast.php"
+			],
+			[
+				"modelep",
+				"podlove/lib/model/episode.php"
+			],
+			[
+				"metabo",
+				"podlove/lib/podcast_post_meta_box.php"
+			],
+			[
+				"format",
+				"podlove/lib/model/media_format.php"
+			],
+			[
+				"modelmedlo",
+				"podlove/lib/model/media_location.php"
+			],
+			[
+				"modelmedloc",
+				"podlove/lib/model/media_location.php"
+			],
+			[
+				"settingspla",
+				"podlove/lib/settings/web_player.php"
+			],
+			[
+				"modele",
+				"podlove/lib/model/episode.php"
+			],
+			[
+				"modelpod",
+				"podlove/lib/model/podcast.php"
+			],
+			[
+				"vers",
+				"podlove/lib/version.php"
+			],
+			[
+				"modelloca",
+				"podlove/lib/model/media_location.php"
+			],
+			[
+				"mediaf",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"podmetabox",
+				"podlove/lib/podcast_post_meta_box.php"
+			],
+			[
+				"libatom",
+				"podlove/lib/feeds/atom.php"
+			],
+			[
+				"libfeed",
+				"podlove/lib/feeds.php"
+			],
+			[
+				"podatom",
+				"podlove/lib/feeds/atom.php"
+			],
+			[
+				"feedato",
+				"podlove/templates/feed-atom.php"
+			],
+			[
+				"podloverss",
+				"podlove/templates/feed-rss2.php"
+			],
+			[
+				"feed",
+				"podlove/lib/feeds/base.php"
+			],
+			[
+				"modelepis",
+				"podlove/lib/model/episode.php"
+			],
+			[
+				"postmetabox",
+				"podlove/lib/podcast_post_meta_box.php"
+			],
+			[
+				"podpostty",
+				"podlove/lib/podcast_post_type.php"
+			],
+			[
+				"epi.js",
+				"podlove/js/admin/episode.js"
+			],
+			[
+				"modelfile",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"podloveplugin",
+				"podlove/plugin.php"
+			],
+			[
+				"podlove.js",
+				"podlove/js/admin/episode.js"
+			],
+			[
+				"short",
+				"podlove/lib/shortcodes.php"
+			],
+			[
+				"setfeed",
+				"podlove/lib/settings/feed.php"
+			],
+			[
+				"modelfee",
+				"podlove/lib/model/feed.php"
+			],
+			[
+				"settfeed",
+				"podlove/lib/settings/feed.php"
+			],
+			[
+				"sepodcast",
+				"podlove/lib/settings/podcast.php"
+			],
+			[
+				"settingsfor",
+				"podlove/lib/settings/format.php"
+			],
+			[
+				"plugin",
+				"podlove/plugin.php"
+			],
+			[
+				"podlovesetting",
+				"podlove/lib/settings/podcast.php"
+			],
+			[
+				"pod",
+				"podlove/podlove.php"
+			],
+			[
+				"rea",
+				"podlove/readme.txt"
 			],
 			[
 				"read",
 				"podlove/readme.txt"
 			],
 			[
-				"vers",
-				"podlove/lib/version.php"
+				"readme",
+				"podlove/readme.txt"
+			],
+			[
+				"podlvsettings",
+				"podlove/lib/settings/settings.php"
+			],
+			[
+				"posttype",
+				"podlove/lib/podcast_post_type.php"
+			],
+			[
+				"p",
+				"podlove/plugin.php"
+			],
+			[
+				"postty",
+				"podlove/lib/podcast_post_type.php"
+			],
+			[
+				"podpos",
+				"podlove/lib/podcast_post_type.php"
+			],
+			[
+				"libhel",
+				"podlove/lib/helper.php"
+			],
+			[
+				"modelmedfil",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"podlshortc",
+				"podlove/lib/shortcodes.php"
+			],
+			[
+				"medialoc",
+				"podlove/lib/settings/media_location.php"
+			],
+			[
+				"podlovejs",
+				"podlove/js/admin.js"
+			],
+			[
+				"valijs",
+				"podlove/js/admin/dashboard_validation.js"
+			],
+			[
+				"medfor",
+				"podlove/lib/model/media_format.php"
+			],
+			[
+				"medf",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"modmedloc",
+				"podlove/lib/model/media_location.php"
+			],
+			[
+				"modulebase",
+				"podlove/lib/modules/base.php"
 			],
 			[
 				"epassi",
@@ -1091,10 +1369,6 @@
 				"podlove/lib/modules/episode_assistant/episode_assistant.php"
 			],
 			[
-				"po",
-				"podlove/podlove.php"
-			],
-			[
 				"settifeed",
 				"podlove/lib/settings/feed.php"
 			],
@@ -1105,10 +1379,6 @@
 			[
 				"libat",
 				"podlove/lib/feeds/atom.php"
-			],
-			[
-				"modelfile",
-				"podlove/lib/model/media_file.php"
 			],
 			[
 				"modelepi",
@@ -1143,14 +1413,6 @@
 				"podlove/lib/model/show.php"
 			],
 			[
-				"modelep",
-				"podlove/lib/model/episode.php"
-			],
-			[
-				"modelpod",
-				"podlove/lib/model/podcast.php"
-			],
-			[
 				"epass.js",
 				"podlove/lib/modules/episode_assistant/js/episode_assistant.js"
 			],
@@ -1183,19 +1445,7 @@
 				"podlove/lib/settings/show.php"
 			],
 			[
-				"modelmedloc",
-				"podlove/lib/model/media_location.php"
-			],
-			[
-				"modelmedlo",
-				"podlove/lib/model/media_location.php"
-			],
-			[
 				"medfile",
-				"podlove/lib/model/media_file.php"
-			],
-			[
-				"modelmedf",
 				"podlove/lib/model/media_file.php"
 			],
 			[
@@ -1235,24 +1485,8 @@
 				"podlove/lib/model/feed.php"
 			],
 			[
-				"plugin",
-				"podlove/plugin.php"
-			],
-			[
 				"base",
 				"podlove/lib/model/base.php"
-			],
-			[
-				"mediafile",
-				"podlove/lib/model/media_file.php"
-			],
-			[
-				"podl",
-				"podlove/podlove.php"
-			],
-			[
-				"postty",
-				"podlove/lib/podcast_post_type.php"
 			],
 			[
 				"settshow",
@@ -1287,20 +1521,8 @@
 				"podlove/lib/model/show.php"
 			],
 			[
-				"modelfee",
-				"podlove/lib/model/feed.php"
-			],
-			[
 				"feedbas",
 				"podlove/lib/feeds/base.php"
-			],
-			[
-				"posttype",
-				"podlove/lib/podcast_post_type.php"
-			],
-			[
-				"versio",
-				"podlove/lib/version.php"
 			],
 			[
 				"giti",
@@ -1341,222 +1563,6 @@
 			[
 				"modulebae",
 				"lib/modules/base.php"
-			],
-			[
-				"feedsrss",
-				"lib/feeds/rss.php"
-			],
-			[
-				"modsh",
-				"lib/model/show.php"
-			],
-			[
-				"modelmedfo",
-				"lib/model/media_format.php"
-			],
-			[
-				"plu",
-				"plugin.php"
-			],
-			[
-				"wor",
-				"draft/wordpress-best-practices.md"
-			],
-			[
-				"best",
-				"draft/wordpress-best-practices.md"
-			],
-			[
-				"class.wpde",
-				"wp-includes/class.wp-dependencies.php"
-			],
-			[
-				"classwpdep",
-				"wp-includes/class.wp-dependencies.php"
-			],
-			[
-				"classwpscri",
-				"wp-includes/class.wp-scripts.php"
-			],
-			[
-				"scrip",
-				"wp-includes/script-loader.php"
-			],
-			[
-				"tab",
-				"lib/form/input/table_wrapper.php"
-			],
-			[
-				"buil",
-				"lib/form/input/builder.php"
-			],
-			[
-				"bui",
-				"lib/form/input/builder.php"
-			],
-			[
-				"form",
-				"lib/form/input/wrapper.php"
-			],
-			[
-				"forminb",
-				"lib/form/input/builder.php"
-			],
-			[
-				"inputbu",
-				"lib/form/input/builder.php"
-			],
-			[
-				"tablew",
-				"lib/form/input/table_wrapper.php"
-			],
-			[
-				"postyp",
-				"lib/podcast_post_type.php"
-			],
-			[
-				"help",
-				"adminimize-2/inc/helpers.php"
-			],
-			[
-				"hlp",
-				"adminimize-2/inc/helpers.php"
-			],
-			[
-				"api",
-				"adminimize-2/inc/api.php"
-			],
-			[
-				"2/dashb",
-				"adminimize-2/features/adminimize-part-dashboard-options.php"
-			],
-			[
-				"helper",
-				"adminimize-2/inc/helpers.php"
-			],
-			[
-				"medfor",
-				"lib/model/media_format.php"
-			],
-			[
-				"medloc",
-				"lib/model/media_location.php"
-			],
-			[
-				"modelmed",
-				"lib/model/media_file.php"
-			],
-			[
-				"feedbase",
-				"lib/feeds/base.php"
-			],
-			[
-				"release",
-				"lib/model/release.php"
-			],
-			[
-				"modelrele",
-				"lib/model/release.php"
-			],
-			[
-				"mode",
-				"lib/model/episode.php"
-			],
-			[
-				"incquer",
-				"wp-includes/query.php"
-			],
-			[
-				"query",
-				"wp-includes/query.php"
-			],
-			[
-				"index",
-				"index.html"
-			],
-			[
-				"fun",
-				"functions.php"
-			],
-			[
-				"inde",
-				"index.php"
-			],
-			[
-				"partglo",
-				"adminimize-2/features/adminimize-part-global-options.php"
-			],
-			[
-				"modshow",
-				"lib/model/show.php"
-			],
-			[
-				"rss",
-				"lib/feeds/rss.php"
-			],
-			[
-				"func",
-				"functions.php"
-			],
-			[
-				"conf",
-				"wp-config.php"
-			],
-			[
-				"arch",
-				"archive.php"
-			],
-			[
-				"single",
-				"single.php"
-			],
-			[
-				"au",
-				"author.php"
-			],
-			[
-				"sty",
-				"style.css"
-			],
-			[
-				"mainna",
-				"css/mainNav/mainNav.css"
-			],
-			[
-				"libhel",
-				"lib/helper.php"
-			],
-			[
-				"setting",
-				"lib/settings/settings.php"
-			],
-			[
-				"libformbui",
-				"lib/form/input/builder.php"
-			],
-			[
-				"setti",
-				"lib/settings/settings.php"
-			],
-			[
-				"hel",
-				"lib/helper.php"
-			],
-			[
-				"autol",
-				"bootstrap/autoload.php"
-			],
-			[
-				"aut",
-				"bootstrap/autoload.php"
-			],
-			[
-				"moshow",
-				"lib/model/show.php"
-			],
-			[
-				"episodejs",
-				"lib/modules/episode_assistant/js/episode_assistant.js"
 			]
 		],
 		"width": 0.0
@@ -1573,6 +1579,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 242.0,
+	"side_bar_width": 232.0,
 	"status_bar_visible": true
 }
