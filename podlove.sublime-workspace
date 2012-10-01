@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"bacl",
+				"background-color"
+			],
+			[
+				"pod",
+				"podcast_errors"
+			],
+			[
+				"req",
+				"required_attributes"
+			],
+			[
+				"err",
+				"errors"
+			],
+			[
 				"pos",
 				"post_id"
 			],
@@ -248,10 +264,6 @@
 				"checkboxes"
 			],
 			[
-				"req",
-				"req_locations"
-			],
-			[
 				"media_location",
 				"media_location_id"
 			],
@@ -306,10 +318,6 @@
 			[
 				"da",
 				"data"
-			],
-			[
-				"pod",
-				"podlove_podcast"
 			],
 			[
 				"pa",
@@ -506,14 +514,6 @@
 			[
 				"zip",
 				"zip_path"
-			],
-			[
-				"padding",
-				"padding-left"
-			],
-			[
-				"ob",
-				"object_key"
 			]
 		]
 	},
@@ -673,24 +673,26 @@
 	},
 	"file_history":
 	[
-		"/Users/ericteubert/Desktop/crash report.txt",
+		"/Users/ericteubert/code/podlove/podlove.php",
 		"/Users/ericteubert/code/podlove/readme.txt",
+		"/tmp/subl stdin tFSJGy.txt",
+		"/Users/ericteubert/code/podlove/lib/model/podcast.php",
+		"/Users/ericteubert/code/podlove/lib/settings/dashboard.php",
+		"/Users/ericteubert/code/podlove/lib/settings/settings.php",
+		"/Users/ericteubert/code/podlove/.git/COMMIT_EDITMSG",
+		"/Users/ericteubert/Desktop/crash report.txt",
 		"/Users/ericteubert/code/podlove/lib/format_list_table.php",
 		"/Users/ericteubert/code/podlove/plugin.php",
 		"/Users/ericteubert/code/podlove/lib/version.php",
 		"/Users/ericteubert/code/podlove/lib/model/media_file.php",
 		"/Users/ericteubert/code/podlove/lib/model/episode.php",
 		"/Users/ericteubert/code/podlove/lib/shortcodes.php",
-		"/Users/ericteubert/code/podlove/.git/COMMIT_EDITMSG",
-		"/Users/ericteubert/code/podlove/lib/settings/settings.php",
-		"/Users/ericteubert/code/podlove/lib/settings/dashboard.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/pluggable.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/edit-tags.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/category-template.php",
 		"/Users/ericteubert/code/podlove/lib/podcast_post_type.php",
 		"/Users/ericteubert/code/podlove/lib/settings/podcast.php",
 		"/Users/ericteubert/code/podlove/lib/episode_routing.php",
-		"/Users/ericteubert/code/podlove/podlove.php",
 		"/Users/ericteubert/code/podlove/.git/MERGE_MSG",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/class-wp.php",
 		"/Users/ericteubert/code/podlove/lib/feed_list_table.php",
@@ -709,7 +711,6 @@
 		"/Users/ericteubert/code/Sites/wordpress-veturilo/wp-settings.php",
 		"/Users/ericteubert/code/Sites/wordpress-veturilo/wp-includes/rewrite.php",
 		"/Users/ericteubert/code/podlove/templates/feed-rss2.php",
-		"/Users/ericteubert/code/podlove/lib/model/podcast.php",
 		"/Users/ericteubert/code/podlove/lib/modules/podlove_web_player/player/podlove-web-player/podlove-web-player.php",
 		"/Users/ericteubert/code/podlove/css/frontend.css",
 		"/Users/ericteubert/code/podlove/lib/settings/media_location.php",
@@ -799,8 +800,7 @@
 		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-07-10-the-perfect-editor-eclipse.md",
 		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-07-13-how-to-be-an-indispensable-programmer.md",
 		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-07-17-pair-programming-the-holy-grail-for-software-development.md",
-		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-06-03-what-this-is-about.md",
-		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-06-04-why-are-you-a-programmer.md"
+		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-06-03-what-this-is-about.md"
 	],
 	"find":
 	{
@@ -808,7 +808,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"-*.po,-.tags,-.tags_sorted_by_file,-*.html,-*.css",
@@ -853,6 +853,9 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"$errors",
+			"$error",
+			"podcast_errors",
 			"supports_cover_art",
 			"$t",
 			"contents",
@@ -977,10 +980,7 @@
 			"edited_",
 			"contributor_settings",
 			"_edit_form_fields",
-			"redirect",
-			"Writer",
-			"writers",
-			"Writers"
+			"redirect"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1052,6 +1052,26 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"podlreadme.txt",
+				"podlove/readme.txt"
+			],
+			[
+				"podread.txt",
+				"podlove/readme.txt"
+			],
+			[
+				"podsettsett",
+				"podlove/lib/settings/settings.php"
+			],
+			[
+				"modelpodc",
+				"podlove/lib/model/podcast.php"
+			],
+			[
+				"podlove/lib/das.php",
+				"podlove/lib/settings/dashboard.php"
+			],
 			[
 				"modelpod",
 				"podlove/lib/model/podcast.php"
@@ -1543,26 +1563,6 @@
 			[
 				"version",
 				"podlove/lib/version.php"
-			],
-			[
-				"modelmeloc",
-				"podlove/lib/model/media_location.php"
-			],
-			[
-				"modelpo",
-				"podlove/lib/model/podcast.php"
-			],
-			[
-				"sshow",
-				"podlove/lib/settings/show.php"
-			],
-			[
-				"feedtable",
-				"podlove/lib/feed_list_table.php"
-			],
-			[
-				"modefeed",
-				"podlove/lib/model/feed.php"
 			]
 		],
 		"width": 0.0
