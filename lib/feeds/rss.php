@@ -14,8 +14,8 @@ class RSS {
 
 		$podcast        = Model\Podcast::get_instance();
 		$feed           = Model\Feed::find_one_by_slug( $feed_slug );
-		$media_location = $feed->media_location();
-		$format         = $media_location->media_format();
+		$episode_asset  = $feed->episode_asset();
+		$file_type      = $episode_asset->file_type();
 
 		add_filter( 'podlove_feed_enclosure', function ( $enclosure, $enclosure_url, $enclosure_file_size, $mime_type ) {
 			return sprintf( '<enclosure url="%s" length="%s" type="%s" />', $enclosure_url, $enclosure_file_size, $mime_type );
@@ -24,8 +24,8 @@ class RSS {
 		mute_feed_title();
 		override_feed_title( $feed );
 		override_feed_language( $feed );
-		override_feed_head( 'rss2_head', $podcast, $feed, $format );
-		override_feed_entry( 'rss2_item', $podcast, $feed, $format );
+		override_feed_head( 'rss2_head', $podcast, $feed, $file_type );
+		override_feed_entry( 'rss2_item', $podcast, $feed, $file_type );
 
 		$this->do_feed( $feed );
 	}

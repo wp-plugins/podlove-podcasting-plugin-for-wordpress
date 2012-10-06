@@ -39,7 +39,7 @@
 
 namespace Podlove;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 13 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 18 );
 
 add_action( 'init', function () {
 	
@@ -86,7 +86,7 @@ function run_migrations_for_version( $version ) {
 		case 4:
 			$sql = sprintf(
 				'ALTER TABLE `%s` ADD COLUMN `title` VARCHAR(255) AFTER `id`',
-				\Podlove\Model\MediaLocation::table_name()
+				\Podlove\Model\EpisodeAsset::table_name()
 			);
 			$wpdb->query( $sql );
 			break;
@@ -97,17 +97,17 @@ function run_migrations_for_version( $version ) {
 			// title column is "int" for some people. this migration fixes that
 			$sql = sprintf(
 				'SHOW COLUMNS FROM `wp_podlove_medialocation` WHERE Field = "title"',
-				\Podlove\Model\MediaLocation::table_name()
+				\Podlove\Model\EpisodeAsset::table_name()
 			);
 			$row = $wpdb->get_row( $sql );
 			if ( strtolower(substr($row->Type, 0, 3)) === 'int' ) {
 				$wpdb->query( sprintf(
 					'UPDATE `%s` SET title = NULL',
-					\Podlove\Model\MediaLocation::table_name()
+					\Podlove\Model\EpisodeAsset::table_name()
 				) );
 				$wpdb->query( sprintf(
 					'ALTER TABLE `%s` MODIFY COLUMN `title` VARCHAR(255)',
-					\Podlove\Model\MediaLocation::table_name()
+					\Podlove\Model\EpisodeAsset::table_name()
 				) );
 			}
 			break;
@@ -218,7 +218,7 @@ function run_migrations_for_version( $version ) {
 			// remove suffix
 			$sql = sprintf(
 				'ALTER TABLE `%s` DROP COLUMN `suffix`',
-				\Podlove\Model\MediaLocation::table_name()
+				\Podlove\Model\EpisodeAsset::table_name()
 			);
 			$wpdb->query( $sql );
 
@@ -231,7 +231,7 @@ function run_migrations_for_version( $version ) {
 			);
 			
 			foreach ( $default_formats as $format ) {
-				$f = new Model\MediaFormat;
+				$f = new Model\FileType;
 				foreach ( $format as $key => $value ) {
 					$f->{$key} = $value;
 				}
@@ -245,7 +245,7 @@ function run_migrations_for_version( $version ) {
 			$assistant->update_module_option( 'title_template', $template );
 
 			// update media locations
-			$media_locations = \Podlove\Model\MediaLocation::all();
+			$media_locations = \Podlove\Model\EpisodeAsset::all();
 			foreach ( $media_locations as $media_location ) {
 				$media_location->url_template = str_replace( '%suffix%', '', $media_location->url_template );
 				$media_location->save();
@@ -261,24 +261,61 @@ function run_migrations_for_version( $version ) {
 		case 11:
 			$sql = sprintf(
 				'ALTER TABLE `%s` ADD COLUMN `downloadable` INT',
-				\Podlove\Model\MediaLocation::table_name()
+				\Podlove\Model\EpisodeAsset::table_name()
 			);
 			$wpdb->query( $sql );
 		break;
 		case 12:
 			$sql = sprintf(
 				'UPDATE `%s` SET `downloadable` = 1',
-				\Podlove\Model\MediaLocation::table_name()
+				\Podlove\Model\EpisodeAsset::table_name()
 			);
 			$wpdb->query( $sql );
 		break;
 		case 13:
 			$opus = array( 'name' => 'Opus Audio', 'type' => 'audio', 'mime_type' => 'audio/opus', 'extension' => 'opus' );
-			$f = new \Podlove\Model\MediaFormat;
+			$f = new \Podlove\Model\FileType;
 			foreach ( $opus as $key => $value ) {
 				$f->{$key} = $value;
 			}
 			$f->save();
+		break;
+		case 14:
+			$sql = sprintf(
+				'ALTER TABLE `%s` RENAME TO `%s`',
+				$wpdb->prefix . 'podlove_medialocation',
+				\Podlove\Model\EpisodeAsset::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
+		case 15:
+			$sql = sprintf(
+				'ALTER TABLE `%s` CHANGE `media_location_id` `episode_asset_id` INT',
+				\Podlove\Model\MediaFile::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
+		case 16:
+			$sql = sprintf(
+				'ALTER TABLE `%s` CHANGE `media_location_id` `episode_asset_id` INT',
+				\Podlove\Model\Feed::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
+		case 17:
+			$sql = sprintf(
+				'ALTER TABLE `%s` RENAME TO `%s`',
+				$wpdb->prefix . 'podlove_mediaformat',
+				\Podlove\Model\FileType::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
+		case 18:
+			$sql = sprintf(
+				'ALTER TABLE `%s` CHANGE `media_format_id` `file_type_id` INT',
+				\Podlove\Model\EpisodeAsset::table_name()
+			);
+			$wpdb->query( $sql );
 		break;
 	}
 

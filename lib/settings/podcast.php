@@ -150,11 +150,11 @@ class Podcast {
 						'0'      => __( 'None', 'podlove' ),
 						'manual' => __( 'Manual Entry', 'podlove' ),
 					);
-					$media_locations = Model\MediaLocation::all();
-					foreach ( $media_locations as $media_location ) {
-						$media_format = $media_location->media_format();
-						if ( $media_format && $media_format->type === 'image' ) {
-							$artwork_options[ $media_location->id ] = sprintf( __( 'Media File: %s', 'podlove' ), $media_location->title );
+					$episode_assets = Model\EpisodeAsset::all();
+					foreach ( $episode_assets as $episode_asset ) {
+						$file_type = $episode_asset->file_type();
+						if ( $file_type && $file_type->type === 'image' ) {
+							$artwork_options[ $episode_asset->id ] = sprintf( __( 'Media File: %s', 'podlove' ), $episode_asset->title );
 						}
 					}
 
