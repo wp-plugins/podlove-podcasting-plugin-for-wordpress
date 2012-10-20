@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"pod",
+				"podcast"
+			],
+			[
+				"ASS",
+				"ASSET_STATUS_ERROR"
+			],
+			[
+				"ASSETSTA",
+				"ASSET_STATUS_INACTIVE"
+			],
+			[
+				"me",
+				"media_files"
+			],
+			[
+				"array_fi",
+				"array_filter"
+			],
+			[
 				"episo",
 				"episodes"
 			],
@@ -58,10 +78,6 @@
 			[
 				"cont",
 				"contributor"
-			],
-			[
-				"pod",
-				"podlove_contributors"
 			],
 			[
 				"def",
@@ -250,10 +266,6 @@
 			[
 				"as",
 				"assistant"
-			],
-			[
-				"me",
-				"media_location"
 			],
 			[
 				"for",
@@ -502,18 +514,6 @@
 			[
 				"qe_in",
 				"qe_inline_edit_left"
-			],
-			[
-				"option",
-				"option_namespace"
-			],
-			[
-				"sl",
-				"slug"
-			],
-			[
-				"dir",
-				"dirname"
 			]
 		]
 	},
@@ -673,18 +673,23 @@
 	},
 	"file_history":
 	[
+		"/Users/ericteubert/code/podlove/podlove.php",
+		"/Users/ericteubert/code/podlove/lib/shortcodes.php",
+		"/Users/ericteubert/code/podlove/lib/settings/dashboard.php",
+		"/Users/ericteubert/code/podlove/lib/settings/web_player.php",
 		"/Users/ericteubert/code/podlove/lib/model/episode_asset.php",
+		"/Users/ericteubert/code/podlove/lib/settings/podcast.php",
 		"/Users/ericteubert/code/podlove/readme.txt",
-		"/Users/ericteubert/code/podlove/lib/model/episode.php",
+		"/Users/ericteubert/code/podlove/plugin.php",
 		"/Users/ericteubert/code/podlove/lib/model/media_file.php",
+		"/Users/ericteubert/code/podlove/lib/podcast_post_meta_box.php",
+		"/Users/ericteubert/code/podlove/lib/model/episode.php",
+		"/Users/ericteubert/code/podlove/license.txt",
 		"/Users/ericteubert/code/podlove/.git/COMMIT_EDITMSG",
 		"/Users/ericteubert/code/podlove/js/admin/episode_asset_settings.js",
 		"/Users/ericteubert/code/podlove/lib/feed_list_table.php",
 		"/Users/ericteubert/code/podlove/lib/feeds/rss.php",
-		"/Users/ericteubert/code/podlove/lib/podcast_post_meta_box.php",
 		"/Users/ericteubert/code/podlove/lib/settings/episode_asset.php",
-		"/Users/ericteubert/code/podlove/plugin.php",
-		"/Users/ericteubert/code/podlove/lib/shortcodes.php",
 		"/Users/ericteubert/code/podlove/lib/model/feed.php",
 		"/Users/ericteubert/code/podlove/lib/modules/open_graph/open_graph.php",
 		"/Users/ericteubert/code/podlove/lib/feeds/atom.php",
@@ -698,21 +703,17 @@
 		"/Users/ericteubert/code/podlove/lib/format_list_table.php",
 		"/Users/ericteubert/code/podlove/lib/model/file_type.php",
 		"/Users/ericteubert/code/podlove/.git/rebase-merge/git-rebase-todo",
-		"/Users/ericteubert/code/podlove/lib/settings/web_player.php",
 		"/Users/ericteubert/code/podlove/lib/settings/show.php",
-		"/Users/ericteubert/code/podlove/lib/settings/podcast.php",
 		"/Users/ericteubert/code/podlove/lib/settings/feed.php",
 		"/Users/ericteubert/code/podlove/lib/modules/episode_assistant/js/episode_assistant.js",
 		"/Users/ericteubert/code/podlove/lib/modules/episode_assistant/episode_assistant.php",
 		"/Users/ericteubert/code/podlove/lib/feeds/base.php",
-		"/Users/ericteubert/code/podlove/lib/settings/dashboard.php",
 		"/Users/ericteubert/code/podlove/lib/media_location_list_table.php",
 		"/Users/ericteubert/code/podlove/js/admin/episode.js",
 		"/Users/ericteubert/code/podlove/js/admin.js",
 		"/Users/ericteubert/code/podlove/lib/model/base.php",
 		"/Users/ericteubert/code/podlove/lib/settings/media_location.php",
 		"/Users/ericteubert/code/podlove/lib/episode_routing.php",
-		"/Users/ericteubert/code/podlove/podlove.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-admin/includes/meta-boxes.php",
 		"/Users/ericteubert/code/Sites/wordpress/wp-includes/post-template.php",
 		"/Users/ericteubert/code/podlove/lib/modules/contributors/js/admin.js",
@@ -799,8 +800,7 @@
 		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2011-04-20-rails-how-to-combine-cucumber-rspec-and-rcov.md",
 		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2011-05-01-rails-user-authentication-using-has_secure_password.md",
 		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_site/404.html",
-		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-07-24-10-terminal-tricks-to-improve-your-productivity.md",
-		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2011-04-24-consider-the-retina-display.md"
+		"/Users/ericteubert/code/Sites/farbeyondprogramming.com/_posts/2010-07-24-10-terminal-tricks-to-improve-your-productivity.md"
 	],
 	"find":
 	{
@@ -808,7 +808,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			"-*.po,-.tags,-.tags_sorted_by_file,-*.html",
@@ -856,6 +856,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"media_format",
+			"podlove roc",
 			"Episode::all",
 			"ion releases",
 			"releases",
@@ -981,9 +983,7 @@
 			"media_location",
 			"AUTOSAVE",
 			"extension",
-			".extension",
-			"podlove_feed_enclosure",
-			"media_locations'"
+			".extension"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1060,6 +1060,58 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"shortcode",
+				"podlove/lib/shortcodes.php"
+			],
+			[
+				"podl.txt",
+				"podlove/readme.txt"
+			],
+			[
+				"setpodcast",
+				"podlove/lib/settings/podcast.php"
+			],
+			[
+				"modeledass",
+				"podlove/lib/model/episode_asset.php"
+			],
+			[
+				"setwebpla",
+				"podlove/lib/settings/web_player.php"
+			],
+			[
+				"read",
+				"podlove/readme.txt"
+			],
+			[
+				"medfile",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"modelass",
+				"podlove/lib/model/episode_asset.php"
+			],
+			[
+				"modelepi",
+				"podlove/lib/model/episode.php"
+			],
+			[
+				"podmeta",
+				"podlove/lib/podcast_post_meta_box.php"
+			],
+			[
+				"readmetxt",
+				"podlove/readme.txt"
+			],
+			[
+				"modelmed",
+				"podlove/lib/model/media_file.php"
+			],
+			[
+				"dashb",
+				"podlove/lib/settings/dashboard.php"
+			],
 			[
 				"modelasset",
 				"podlove/lib/model/episode_asset.php"
@@ -1141,10 +1193,6 @@
 				"podlove/lib/model/file_type.php"
 			],
 			[
-				"read",
-				"podlove/readme.txt"
-			],
-			[
 				"opengra",
 				"podlove/lib/modules/open_graph/open_graph.php"
 			],
@@ -1159,10 +1207,6 @@
 			[
 				"vers",
 				"podlove/lib/version.php"
-			],
-			[
-				"medfile",
-				"podlove/lib/model/media_file.php"
 			],
 			[
 				"podmetabox",
@@ -1327,10 +1371,6 @@
 			[
 				"modbase",
 				"podlove/lib/model/base.php"
-			],
-			[
-				"modelepi",
-				"podlove/lib/model/episode.php"
 			],
 			[
 				"metabo",
@@ -1531,46 +1571,6 @@
 			[
 				"sepodcast",
 				"podlove/lib/settings/podcast.php"
-			],
-			[
-				"settingsfor",
-				"podlove/lib/settings/format.php"
-			],
-			[
-				"pod",
-				"podlove/podlove.php"
-			],
-			[
-				"rea",
-				"podlove/readme.txt"
-			],
-			[
-				"podlvsettings",
-				"podlove/lib/settings/settings.php"
-			],
-			[
-				"p",
-				"podlove/plugin.php"
-			],
-			[
-				"podpos",
-				"podlove/lib/podcast_post_type.php"
-			],
-			[
-				"libhel",
-				"podlove/lib/helper.php"
-			],
-			[
-				"modelmedfil",
-				"podlove/lib/model/media_file.php"
-			],
-			[
-				"podlshortc",
-				"podlove/lib/shortcodes.php"
-			],
-			[
-				"medialoc",
-				"podlove/lib/settings/media_location.php"
 			]
 		],
 		"width": 0.0
@@ -1587,6 +1587,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 213.0,
+	"side_bar_width": 175.0,
 	"status_bar_visible": true
 }
