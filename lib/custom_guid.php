@@ -1,28 +1,89 @@
 <?php
-/**
- * Saves a custom guid for podlove episodes.
- *
- * Therefore we have to convince WordPress it's not a URL. Hence removing all
- * associated filters. Then we can save our own guid. For easy recognition 
- * prefixed with "plv-".
- */
 namespace Podlove;
 
-// right now we decided to deactivate the whole stuff
-// it's nice to have but doesn't allow GUID imports
-// maybe I find a nice solution for that at some point
+/**
+ * Add custom GUID to episodes.
+ * Display in all podcast feeds.
+ */
+class Custom_Guid {
 
-// remove_filter( 'pre_post_guid', 'wp_strip_all_tags' );
-// remove_filter( 'pre_post_guid', 'esc_url_raw' );
-// remove_filter( 'pre_post_guid', 'wp_filter_kses' );
-// remove_filter( 'post_guid',     'wp_strip_all_tags' );
-// remove_filter( 'post_guid',     'esc_url' );
-// remove_filter( 'post_guid',     'wp_kses_data' );
+	/**
+	 * Register hooks.
+	 */
+	public static function init() {
+		add_action( 'wp_insert_post', array( __CLASS__, 'generate_guid_for_episodes' ), 10, 2 );
+		add_filter( 'get_the_guid', array( __CLASS__, 'override_wordpress_guid' ), 100 );
+		add_action( 'podlove_episode_form', array( __CLASS__, 'add_guid_form_element' ), 10, 2 );
+		add_action( 'podlove_save_episode', array( __CLASS__, 'save_form'), 10, 2 );
+	}
 
-// todo: when we import a feed from somewhere, the guid must stay the same
-// add_filter( 'post_guid', function ( $guid ) {
-// 	if ( false === strpos( $guid, 'plv-' ) )
-// 		$guid = uniqid( 'plv-', true ); 
+	public static function add_guid_form_element( $form_wrapper, $episode ) {
 
-// 	return $guid; 
-// } );
+		$form_wrapper->string( 'guid', array(
+			'label'       => __( 'GUID', 'podlove' ),
+			'description' => __( 'Identifier for this episode. Change it to force podcatchers to redownload media files.', 'podlove' ),
+			'html'        => array( 'class' => 'large-text' ),
+			'default'     => get_the_guid()
+		));
+	}
+
+	public static function save_form( $post_id, $form_data ) {
+		
+		if ( isset( $form_data[ 'guid' ] ) )
+			update_post_meta( $post_id, 'podlove_guid', $form_data[ 'guid' ] );
+	}
+
+	/**
+	 * When an episode is created, generate and save a custom guid.
+	 *
+	 * @wp-hook wp_insert_post
+	 * @param  int $post_id
+	 * @param  object $post
+	 */
+	public static function generate_guid_for_episodes( $post_id, $post ) {
+		
+		if ( $post->post_type !== 'podcast' )
+			return;
+
+		if ( get_post_meta( $post->ID, 'podlove_guid', true ) )
+			return;
+
+		$guid = self::guid_for_post( $post );
+		update_post_meta( $post->ID, 'podlove_guid', $guid );
+	}
+
+	/**
+	 * Generate a guid for a WordPress post object.
+	 *
+	 * @param  object $post
+	 * @return string The GUID.
+	 */
+	public static function guid_for_post( $post ) {
+
+		$segments = array();
+
+		$segments[] = apply_filters( 'podlove_guid_prefix', 'podlove' );
+		$segments[] = apply_filters( 'podlove_guid_time', gmdate( 'c' ) );
+		$hash = substr( sha1( $post->ID . $post->post_title . time() ), 0, 15 );
+		$segments[] = apply_filters( 'podlove_guid_hash', $hash );
+
+		return apply_filters( 'podlove_guid', implode( '-', $segments ) );
+	}
+
+	/**
+	 * Whenever our GUID is available, use it. Fallback to WordPress GUID.
+	 *
+	 * @wp-hook get_the_guid
+	 * @param  string $guid WordPress GUID
+	 * @return string
+	 */
+	public static function override_wordpress_guid( $guid ) {
+		global $post;
+
+		if ( $podlove_guid = get_post_meta( $post->ID, 'podlove_guid', true ) )
+			return $podlove_guid;
+
+		return $guid;
+	}
+
+}

@@ -47,7 +47,7 @@ EOT;
 			'rewrite'              => true,
 			'capability_type'      => 'post',
 			'has_archive'          => true, 
-			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments', 'custom-fields', 'trackbacks' ),
+			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'custom-fields', 'trackbacks' ),
 			'register_meta_box_cb' => '\Podlove\Podcast_Post_Meta_Box::add_meta_box',
 			'menu_icon'            => PLUGIN_URL . '/images/episodes-icon-16x16.png',
 			'rewrite' => array(
@@ -143,6 +143,7 @@ EOT;
 		new \Podlove\Settings\EpisodeAsset( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Feed( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\WebPlayer( self::SETTINGS_PAGE_HANDLE );
+		new \Podlove\Settings\Templates( self::SETTINGS_PAGE_HANDLE );
 	}
 	
 	/**
@@ -177,7 +178,21 @@ EOT;
 		if ( $post->post_type !== 'podcast' )
 			return $post_content;
 
-		$post_content = $post_content . self::$default_post_content;
+		$post_content = self::get_default_post_content();
+
+		return $post_content;
+	}
+
+	public static function get_default_post_content( $post_content = '' ) {
+
+		$default_templates = Model\Template::find_all_by_autoinsert(1);
+		if ( count( $default_templates ) > 0 ) {
+			foreach ( $default_templates as $template ) {
+				$post_content .= '[podlove-template title="' . $template->title . '"]';
+			}
+		} else {
+			$post_content .= self::$default_post_content;
+		}
 
 		return $post_content;
 	}
