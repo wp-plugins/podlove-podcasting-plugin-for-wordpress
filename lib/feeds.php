@@ -15,7 +15,6 @@ function add_feed_routes() {
 	} );
 
 	add_filter( 'query_vars', function ( $qv ) {
-		$qv[] = 'show_slug';
 		$qv[] = 'feed_slug';
 		return $qv;
 	} );
@@ -37,8 +36,8 @@ add_action( 'wp', function () {
 	$is_feedburner_bot = preg_match( "/feedburner|feedsqueezer/i", $_SERVER['HTTP_USER_AGENT'] );
 	$is_manual_redirect = ! isset( $_REQUEST['redirect'] ) || $_REQUEST['redirect'] != "no";
 
-	if ( strlen( $feed->redirect_url ) > 0 && $is_manual_redirect && ! $is_feedburner_bot ) {
-		header( sprintf( "Location: %s", $feed->redirect_url ), TRUE, 302 );
+	if ( strlen( $feed->redirect_url ) > 0 && $is_manual_redirect && ! $is_feedburner_bot && $feed->redirect_http_status > 0 ) {
+		header( sprintf( "Location: %s", $feed->redirect_url ), TRUE, $feed->redirect_http_status );
 		exit;
 	} else {
 

@@ -47,13 +47,14 @@ EOT;
 			'rewrite'              => true,
 			'capability_type'      => 'post',
 			'has_archive'          => true, 
-			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'custom-fields', 'trackbacks' ),
+			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'trackbacks' ),
 			'register_meta_box_cb' => '\Podlove\Podcast_Post_Meta_Box::add_meta_box',
 			'menu_icon'            => PLUGIN_URL . '/images/episodes-icon-16x16.png',
 			'rewrite' => array(
 				'slug'       => strlen( $slug ) ? $slug : 'podcast',
 				'with_front' => false
-			)
+			),
+			'taxonomies' => array( 'category', 'post_tag' )
 		);
 
 		if ( strlen( $slug ) === 0 )
@@ -112,7 +113,7 @@ EOT;
 		add_filter( 'request', array( $this, 'add_post_type_to_feeds' ) );
 
 		add_filter( 'get_the_excerpt', array( $this, 'default_excerpt_to_episode_summary' ) );
-		
+
 		\Podlove\Feeds\init();
 	}
 
@@ -137,13 +138,14 @@ EOT;
 		);
 
 		new \Podlove\Settings\Dashboard( self::SETTINGS_PAGE_HANDLE );
-		new \Podlove\Settings\Settings( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Podcast( self::SETTINGS_PAGE_HANDLE );
-		new \Podlove\Settings\FileType( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\EpisodeAsset( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Feed( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\WebPlayer( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Templates( self::SETTINGS_PAGE_HANDLE );
+		new \Podlove\Settings\FileType( self::SETTINGS_PAGE_HANDLE );
+		new \Podlove\Settings\Modules( self::SETTINGS_PAGE_HANDLE );
+		new \Podlove\Settings\Settings( self::SETTINGS_PAGE_HANDLE );
 	}
 	
 	/**

@@ -12,8 +12,11 @@ function activate_for_current_blog() {
 	Model\EpisodeAsset::build();
 	Model\MediaFile::build();
 	Model\Episode::build();
-	Model\Release::build();
 	Model\Template::build();
+
+	$podcast = Model\Podcast::get_instance();
+	$podcast->url_template = '%media_file_base_url%%episode_slug%%suffix%.%format_extension%';
+	$podcast->save();
 
 	if ( ! Model\FileType::has_entries() ) {
 		$default_types = array(
@@ -29,7 +32,7 @@ function activate_for_current_blog() {
 			array( 'name' => 'WebM Audio',             'type' => 'audio',    'mime_type' => 'audio/webm',  'extension' => 'webm' ),
 			array( 'name' => 'WebM Video',             'type' => 'video',    'mime_type' => 'video/webm',  'extension' => 'webm' ),
 			array( 'name' => 'FLAC Audio',             'type' => 'audio',    'mime_type' => 'audio/flac',  'extension' => 'flac' ),
-			array( 'name' => 'Opus Audio',             'type' => 'audio',    'mime_type' => 'audio/opus',  'extension' => 'opus' ),
+			array( 'name' => 'Opus Audio',             'type' => 'audio',    'mime_type' => 'audio/ogg;codecs=opus',  'extension' => 'opus' ),
 			array( 'name' => 'Matroska Audio',         'type' => 'audio',    'mime_type' => 'audio/x-matroska',  'extension' => 'mka' ),
 			array( 'name' => 'Matroska Video',         'type' => 'video',    'mime_type' => 'video/x-matroska',  'extension' => 'mkv' ),
 			array( 'name' => 'Matroska Video',         'type' => 'video',    'mime_type' => 'video/x-matroska',  'extension' => 'mkv' ),
@@ -38,6 +41,7 @@ function activate_for_current_blog() {
 			array( 'name' => 'PNG Image',              'type' => 'image',    'mime_type' => 'image/png',   'extension' => 'png' ),
 			array( 'name' => 'JPEG Image',             'type' => 'image',    'mime_type' => 'image/jpeg',  'extension' => 'jpg' ),
 			array( 'name' => 'mp4chaps Chapter File',  'type' => 'chapters', 'mime_type' => 'text/plain',  'extension' => 'txt' ),
+			array( 'name' => 'Podlove Simple Chapters','type' => 'chapters', 'mime_type' => 'application/xml',  'extension' => 'psc' ),
 		);
 		
 		foreach ( $default_types as $file_type ) {
@@ -49,7 +53,7 @@ function activate_for_current_blog() {
 		}
 	}
 
-	$default_modules = array( 'podlove_web_player', 'episode_assistant', 'open_graph' );
+	$default_modules = array( 'podlove_web_player', 'episode_assistant', 'open_graph', 'twitter_summary_card' );
 	foreach ( $default_modules as $module ) {
 		\Podlove\Modules\Base::activate( $module );
 	}
@@ -153,7 +157,6 @@ function uninstall_for_current_blog() {
 	Model\EpisodeAsset::destroy();
 	Model\MediaFile::destroy();
 	Model\Episode::destroy();
-	Model\Release::destroy();
 	Model\Template::destroy();
 }
 
@@ -318,6 +321,24 @@ function clear_all_caches() {
 
 namespace Podlove\AJAX;
 use \Podlove\Model;
+
+function get_new_guid() {
+	$post_id = $_REQUEST['post_id'];
+
+	$post = get_post( $post_id );
+	$guid = \Podlove\Custom_Guid::guid_for_post( $post );
+
+	$result = array( 'guid' => $guid );
+
+	header('Cache-Control: no-cache, must-revalidate');
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+	header('Content-type: application/json');
+	echo json_encode($result);
+
+	die();
+}
+
+add_action( 'wp_ajax_podlove-get-new-guid', '\Podlove\AJAX\get_new_guid' );
 
 function validate_file() {
 	$file_id = $_REQUEST['file_id'];

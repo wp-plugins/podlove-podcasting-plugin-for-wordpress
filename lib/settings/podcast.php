@@ -10,8 +10,8 @@ class Podcast {
 		
 		Podcast::$pagehook = add_submenu_page(
 			/* $parent_slug*/ $handle,
-			/* $page_title */ 'Podcast',
-			/* $menu_title */ 'Podcast',
+			/* $page_title */ 'Podcast Settings',
+			/* $menu_title */ 'Podcast Settings',
 			/* $capability */ 'administrator',
 			/* $menu_slug  */ 'podlove_settings_podcast_handle',
 			/* $function   */ array( $this, 'page' )
@@ -72,6 +72,12 @@ class Podcast {
 						'html'        => array( 'class' => 'regular-text required' )
 					) );
 
+					$wrapper->string( 'media_file_base_uri', array(
+						'label'       => __( 'Media File Base URL', 'podlove' ),
+						'description' => __( 'Example: http://cdn.example.com/pod/', 'podlove' ),
+						'html' => array( 'class' => 'regular-text required' )
+					) );
+
 					$wrapper->image( 'cover_image', array(
 						'label'        => __( 'Cover Art URL', 'podlove' ),
 						'description'  => __( 'JPEG or PNG. At least 1400 x 1400 pixels.', 'podlove' ),
@@ -83,6 +89,30 @@ class Podcast {
 					$wrapper->string( 'author_name', array(
 						'label'       => __( 'Author Name', 'podlove' ),
 						'description' => __( 'Publicly displayed in Podcast directories.', 'podlove' ),
+						'html' => array( 'class' => 'regular-text' )
+					) );
+
+					$wrapper->string( 'publisher_name', array(
+						'label'       => __( 'Publisher Name', 'podlove' ),
+						'description' => __( '', 'podlove' ),
+						'html' => array( 'class' => 'regular-text' )
+					) );
+
+					$wrapper->string( 'publisher_url', array(
+						'label'       => __( 'Publisher URL', 'podlove' ),
+						'description' => __( '', 'podlove' ),
+						'html' => array( 'class' => 'regular-text' )
+					) );
+
+					$wrapper->string( 'license_name', array(
+						'label'       => __( 'License Name', 'podlove' ),
+						'description' => __( 'Example: CC BY 3.0', 'podlove' ),
+						'html' => array( 'class' => 'regular-text' )
+					) );
+
+					$wrapper->string( 'license_url', array(
+						'label'       => __( 'License URL', 'podlove' ),
+						'description' => __( 'Example: http://creativecommons.org/licenses/by/3.0/', 'podlove' ),
 						'html' => array( 'class' => 'regular-text' )
 					) );
 			
@@ -140,10 +170,10 @@ class Podcast {
 		                'options'  => array(0 => 'no', 1 => 'yes', 2 => 'clean')
 					) );
 
-					$wrapper->string( 'media_file_base_uri', array(
-						'label'       => __( 'Media File Base URL', 'podlove' ),
-						'description' => __( 'Example: http://cdn.example.com/pod/', 'podlove' ),
-						'html' => array( 'class' => 'regular-text required' )
+					$wrapper->string( 'url_template', array(
+						'label'       => __( 'Episode Asset URL Template', 'podlove' ),
+						'description' => __( 'You probably don\'t want to change this.', 'podlove' ),
+						'html' => array( 'class' => 'large-text required' )
 					) );
 
 					$artwork_options = array(
@@ -154,13 +184,29 @@ class Podcast {
 					foreach ( $episode_assets as $episode_asset ) {
 						$file_type = $episode_asset->file_type();
 						if ( $file_type && $file_type->type === 'image' ) {
-							$artwork_options[ $episode_asset->id ] = sprintf( __( 'Media File: %s', 'podlove' ), $episode_asset->title );
+							$artwork_options[ $episode_asset->id ] = sprintf( __( 'Asset: %s', 'podlove' ), $episode_asset->title );
 						}
 					}
 
 					$wrapper->select( 'supports_cover_art', array(
-						'label'   => __( 'Episode Artwork Media File', 'podlove' ),
+						'label'   => __( 'Episode Image', 'podlove' ),
 						'options' => $artwork_options
+					) );
+
+					$chapter_file_options = array(
+						'0'      => __( 'None', 'podlove' ),
+						'manual' => __( 'Manual Entry', 'podlove' )
+					);
+					$episode_assets = Model\EpisodeAsset::all();
+					foreach ( $episode_assets as $episode_asset ) {
+						$file_type = $episode_asset->file_type();
+						if ( $file_type && $file_type->type === 'chapters' ) {
+							$chapter_file_options[ $episode_asset->id ] = sprintf( __( 'Asset: %s', 'podlove' ), $episode_asset->title );
+						}
+					}
+					$wrapper->select( 'chapter_file', array(
+						'label'   => __( 'Episode Chapters', 'podlove' ),
+						'options' => $chapter_file_options
 					) );
 				});
 				?>

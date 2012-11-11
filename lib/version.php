@@ -39,7 +39,7 @@
 
 namespace Podlove;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 19 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 22 );
 
 add_action( 'init', function () {
 	
@@ -320,7 +320,30 @@ function run_migrations_for_version( $version ) {
 		case 19:
 			\Podlove\Model\Template::build();
 		break;
+		case 20:
+			$sql = sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `suffix` VARCHAR(255)',
+				\Podlove\Model\EpisodeAsset::table_name()
+			);
+			$wpdb->query( $sql );
+			$sql = sprintf(
+				'ALTER TABLE `%s` DROP COLUMN `url_template`',
+				\Podlove\Model\EpisodeAsset::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
+		case 21:
+			$podcast = Model\Podcast::get_instance();
+			$podcast->url_template = '%media_file_base_url%%episode_slug%%suffix%.%format_extension%';
+			$podcast->save();
+		break;
+		case 22:
+			$sql = sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `redirect_http_status` INT AFTER `redirect_url`',
+				\Podlove\Model\Feed::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
 	}
 
 }
-

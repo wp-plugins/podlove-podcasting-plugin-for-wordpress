@@ -61,8 +61,8 @@ function episode_downloads_shortcode( $options ) {
 
 	$episode = Model\Episode::find_or_create_by_post_id( $post->ID );
 	$media_files = $episode->media_files();
+	$downloads = array();
 
-	$html = '<ul class="episode_download_list">';
 	foreach ( $media_files as $media_file ) {
 
 		$episode_asset = $media_file->episode_asset();
@@ -75,14 +75,24 @@ function episode_downloads_shortcode( $options ) {
 		$download_link_url  = get_bloginfo( 'url' ) . '?download_media_file=' . $media_file->id;
 		$download_link_name = str_replace( " ", "&nbsp;", $episode_asset->title );
 
-		$html .= '<li class="' . $file_type->extension . '">';
+		$downloads[] = array(
+			'url'  => $download_link_url,
+			'name' => $download_link_name,
+			'size' => \Podlove\format_bytes( $media_file->size, 0 ),
+			'file' => $media_file
+		);
+	}
+
+	$html  = '<ul class="episode_download_list">';
+	foreach ( $downloads as $download ) {
+		$html .= '  <li>';
 		$html .= sprintf(
 			'<a href="%s">%s%s</a>',
-			apply_filters( 'podlove_download_link_url', $download_link_url, $media_file ),
-			apply_filters( 'podlove_download_link_name', $download_link_name, $media_file ),
-			'<span class="size">' . \Podlove\format_bytes( $media_file->size, 0 ) . '</span>'
+			apply_filters( 'podlove_download_link_url', $download['url'], $download['file'] ),
+			apply_filters( 'podlove_download_link_name', $download['name'], $download['file'] ),
+			'<span class="size">' . $download['size'] . '</span>'
 		);
-		$html .= '</li>';
+		$html .= '  </li>';
 	}
 	$html .= '</ul>';
 
@@ -130,14 +140,23 @@ function webplayer_shortcode( $options ) {
 	}
 
 	$chapters = '';
-	if ( $episode->chapters ) {
+	if ( $podcast->chapter_file === 'manual' && $episode->chapters ) {
 		$chapters = 'chapters="_podlove_chapters"';
+	} elseif ( $podcast->chapter_file > 0 ) {
+		$chapter_asset = Model\EpisodeAsset::find_by_id( $podcast->chapter_file );
+		$media_file = Model\MediaFile::find_by_episode_id_and_episode_asset_id( $episode->id, $chapter_asset->id );
+		if ( $media_file ) {
+			$chapters = 'chapters="' . $media_file->get_file_url() . '"';
+		}
 	}
 
 	return do_shortcode( '[podloveaudio ' . implode( ' ', $available_formats ) . ' ' . $chapters . ']' );
 }
 add_shortcode( 'podlove-web-player', '\Podlove\webplayer_shortcode' );
 
+/**
+ * @deprecated since 1.2.18-alpha
+ */
 $podlove_public_episode_attributes = array( 'subtitle', 'summary', 'slug', 'duration', 'chapters' );
 foreach ( $podlove_public_episode_attributes as $attr ) {
 	add_shortcode( 'podlove-episode-' . $attr, function() use ( $attr ) {
@@ -145,6 +164,38 @@ foreach ( $podlove_public_episode_attributes as $attr ) {
 		return nl2br( Model\Episode::find_or_create_by_post_id( $post->ID )->$attr );
 	} );
 }
+
+function episode_data_shortcode( $attributes ) {
+	global $post;
+
+	$defaults = array( 'field' => '' );
+	$attributes = shortcode_atts( $defaults, $attributes );
+
+	$allowed_fields = array( 'subtitle', 'summary', 'slug', 'duration', 'chapters' );
+
+	if ( in_array( $attributes['field'], $allowed_fields ) ) {
+		return nl2br( Model\Episode::find_or_create_by_post_id( $post->ID )->$attributes['field'] );
+	} else {
+		return sprintf( __( 'Podlove Error: Unknown episode field "%s"', 'podcast' ), $attributes['field'] );
+	}
+}
+add_shortcode( 'podlove-episode', '\Podlove\episode_data_shortcode' );
+
+function podcast_data_shortcode( $attributes ) {
+
+	$defaults = array( 'field' => '' );
+	$attributes = shortcode_atts( $defaults, $attributes );
+
+	$podcast = Model\Podcast::get_instance();
+
+	if ( $podcast->has_property( $attributes['field'] ) ) {
+		return $podcast->$attributes['field'];
+	} else {
+		return sprintf( __( 'Podlove Error: Unknown podcast field "%s"', 'podcast' ), $attributes['field'] );
+	}
+}
+add_shortcode( 'podlove-podcast', '\Podlove\podcast_data_shortcode' );
+add_shortcode( 'podlove-show', '\Podlove\podcast_data_shortcode' );
 
 /**
  * Provides shortcode to display episode template.

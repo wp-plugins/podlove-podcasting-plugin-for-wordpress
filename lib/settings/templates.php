@@ -222,20 +222,22 @@ class Templates {
 
 			$f->text( 'content', array(
 				'label'       => __( 'HTML Template', 'podlove' ),
-				'description' => __( '', 'podlove' ),
+				'description' => __( 'Have a look at the <a href="https://github.com/eteubert/podlove/wiki/Shortcodes" target="_blank">Shortcode documentation</a> for all available options.', 'podlove' ),
 				'html' => array( 'class' => 'large-text required', 'rows' => 20 ),
 				'default' => <<<EOT
 Type "[" to see a list of available shortcodes. HTML is allowed.
 Example Template:
 
-<h4 class="podlove-subtitle">[podlove-episode-subtitle]</h4>
+<h4 class="podlove-subtitle">[podlove-episode-data field="subtitle"]</h4>
 
-<span class="podlove-duration">Duration: [podlove-episode-duration]</span>
+<span class="podlove-duration">Duration: [podlove-episode-data field="duration"]</span>
 
 [podlove-episode-summary]
 
 [podlove-web-player]
 [podlove-episode-downloads]
+
+Published by <a href="[podlove-podcast-data field="publisher_url"]" target="_blank">[podlove-podcast-data field="publisher_name"]</a> under <a href="[podlove-podcast-data field="license_url"]" target="_blank">[podlove-podcast-data field="license_name"]</a>.
 EOT
 			) );
 
@@ -254,6 +256,7 @@ EOT
 			lineNumbers: true,
 			theme: "default",
 			indentUnit: 4,
+			lineWrapping: true,
 			extraKeys: {
 				"'>'": function(cm) { cm.closeTag(cm, '>'); },
 				"'/'": function(cm) { cm.closeTag(cm, '/'); },
@@ -263,11 +266,8 @@ EOT
 							list:[
 								"[podlove-episode-downloads]",
 								"[podlove-web-player]",
-								"[podlove-episode-subtitle]",
-								"[podlove-episode-summary]",
-								"[podlove-episode-slug]",
-								"[podlove-episode-duration]",
-								"[podlove-episode-chapters]",
+								"[podlove-episode field=\"\"]",
+								"[podlove-podcast field=\"\"]",
 								"[podlove-contributors]"
 							],
 							from: cm.getCursor()
@@ -279,6 +279,8 @@ EOT
 				podlove_template_editor.matchHighlight("CodeMirror-matchhighlight");
 			}
 		});		
+
+		podlove_template_editor.setSize(null, "350");
 
 		jQuery(function($){
 			$("#podlove_template_title").bind("keyup", function(e) {

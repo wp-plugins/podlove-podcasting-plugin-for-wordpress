@@ -9,8 +9,8 @@ class Feed {
 		
 		self::$pagehook = add_submenu_page(
 			/* $parent_slug*/ $handle,
-			/* $page_title */ 'Feeds',
-			/* $menu_title */ 'Feeds',
+			/* $page_title */ 'Podcast Feeds',
+			/* $menu_title */ 'Podcast Feeds',
 			/* $capability */ 'administrator',
 			/* $menu_slug  */ 'podlove_feeds_settings_handle',
 			/* $function   */ array( $this, 'page' )
@@ -178,6 +178,17 @@ class Feed {
 				'label'       => __( 'Redirect Url', 'podlove' ),
 				'description' => __( 'e.g. Feedburner URL', 'podlove' ),
 				'html' => array( 'class' => 'regular-text' )
+			) );
+
+			$wrapper->select( 'redirect_http_status', array(
+				'label'       => __( 'Redirect Method', 'podlove' ),
+				'description' => __( '', 'podlove' ),
+				'options' => array(
+					'0'   => 'Don\'t redirect', 
+					'307' => 'Temporary Redirect (HTTP Status 307)',
+					'301' => 'Permanent Redirect (HTTP Status 301)'
+				),
+				'default' => 0
 			) );
 			
 			$wrapper->checkbox( 'enable', array(

@@ -88,15 +88,17 @@ class Podcast_Post_Meta_Box {
 					));
 				}
 
-				$wrapper->text( 'chapters', array(
-					'label'       => __( 'Chapter Marks', 'podlove' ),
-					'description' => __( 'One timepoint (hh:mm:ss[.mmm]) and the chapter title per line.', 'podlove' ),
-					'html'        => array(
-						'class'       => 'large-text code',
-						'placeholder' => '00:00:00.000 Intro',
-						'rows'        => max( 2, count( explode( "\n", $episode->chapters ) ) )
-					)
-				));
+				if ( $podcast->chapter_file === 'manual' ) {
+					$wrapper->text( 'chapters', array(
+						'label'       => __( 'Chapter Marks', 'podlove' ),
+						'description' => __( 'One timepoint (hh:mm:ss[.mmm]) and the chapter title per line.', 'podlove' ),
+						'html'        => array(
+							'class'       => 'large-text code',
+							'placeholder' => '00:00:00.000 Intro',
+							'rows'        => max( 2, count( explode( "\n", $episode->chapters ) ) )
+						)
+					));
+				}
 
 				do_action( 'podlove_episode_form', $wrapper, $episode );
 
@@ -157,9 +159,10 @@ class Podcast_Post_Meta_Box {
 				$file     = \Podlove\Model\MediaFile::find_by_episode_id_and_episode_asset_id( $episode->id, $asset->id );
 				
 				$attributes = array(
-					'data-template'  => $asset->url_template,
+					'data-template'  => \Podlove\Model\Podcast::get_instance()->url_template,
 					'data-extension' => $format->extension,
 					'data-size' => ( is_object( $file ) ) ? $file->size : 0,
+					'data-suffix' => $asset->suffix,
 					'data-episode-asset-id' => $asset->id,
 					'data-episode-id' => $episode->id
 				);

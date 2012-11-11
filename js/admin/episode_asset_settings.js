@@ -8,6 +8,15 @@ var PODLOVE = PODLOVE || {};
 		// private
 		var o = {};
 
+		function filter_file_formats_by_asset_type() {
+			$('select[name=podlove_episode_asset_type]', container).on('change', function() {
+				var $container = $(this).closest('table');
+			
+				$("#option_storage option").remove().appendTo($("#podlove_episode_asset_file_type_id"));
+				$("#podlove_episode_asset_file_type_id option[data-type!='" + $(this).val() + "']").remove().appendTo($("#option_storage"));
+			});
+		}
+
 		// default title = extension
 		// only set if title is empty
 		function generate_default_episode_asset_title() {
@@ -32,13 +41,14 @@ var PODLOVE = PODLOVE || {};
 
 		// public
 		o.update_preview = function () {
-			$('input[name*="url_template"]', container).each(function() {
-				var template = $(this).val();
-				var $preview = $(this).closest('td').find('.url_template_preview');
+			$('#url_preview', container).each(function() {
+				var template = $("#url_template").html();
+				var $preview = $("#url_preview");
 				var $container = $(this).closest('table');
 
 				var media_file_base_uri = $('#podlove_show_media_file_base_uri').val();
 				var episode_slug        = 'example-episode';
+				var suffix              = $('input[name*="suffix"]').val();
 
 				var selected_file_type  = $container.find('[name*="file_type_id"] option:selected').text();
 				var match               = selected_file_type.match(/\((.*)\)/);
@@ -49,6 +59,7 @@ var PODLOVE = PODLOVE || {};
 
 				template = template.replace( '%media_file_base_url%', media_file_base_uri );
 				template = template.replace( '%episode_slug%', episode_slug );
+				template = template.replace( '%suffix%', suffix );
 				template = template.replace( '%format_extension%', format_extension );
 
 				$preview.html(template);	
@@ -56,6 +67,7 @@ var PODLOVE = PODLOVE || {};
 		}
 
 		generate_default_episode_asset_title();
+		filter_file_formats_by_asset_type();
 		generate_live_preview();
 
 		return o;

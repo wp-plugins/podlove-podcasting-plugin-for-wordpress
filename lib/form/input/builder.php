@@ -87,6 +87,15 @@ class Builder {
 		<?php
 	}
 
+	public function hidden( $object_key, $arguments ) {
+		$this->build_input_values( $object_key, $arguments );
+		?>
+		<div>
+			<input type="hidden" name="<?php echo $this->field_name; ?>" id="<?php echo $this->field_id; ?>" value="<?php echo $this->field_value; ?>" <?php echo $this->html_attributes; ?>>
+		</div>
+		<?php
+	}
+
 	public function text( $object_key, $arguments ) {
 		$this->build_input_values( $object_key, $arguments );
 		?>
@@ -110,7 +119,15 @@ class Builder {
 		<select name="<?php echo $this->field_name; ?>" id="<?php echo $this->field_id; ?>" <?php echo $this->html_attributes; ?>>
 			<option value=""><?php echo __( 'Please choose ...', 'podlove' ); ?></option>
 			<?php foreach ( $this->arguments['options'] as $key => $value ): ?>
-				<option value="<?php echo $key; ?>"<?php if ( $key == $this->field_value ): ?> selected="selected"<?php endif; ?>><?php echo $value; ?></option>
+				<?php 
+				if ( is_array( $value ) ) {
+					$attributes = $value['attributes'];
+					$value = $value['value'];
+				} else {
+					$attributes = '';
+				}
+				?>
+				<option value="<?php echo $key; ?>" <?php echo $attributes ?> <?php if ( $key == $this->field_value ): ?> selected="selected"<?php endif; ?>><?php echo $value; ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
