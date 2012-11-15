@@ -22,6 +22,9 @@ Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
 
+= 1.2.24-alpha =
+* Bugfix: don't show milliseconds in feed so feedvalidator.org stops complaining
+
 = 1.2.22/23-alpha =
 * Fix deployment bug, delete unused files from SVN
 
