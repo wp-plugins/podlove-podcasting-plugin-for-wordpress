@@ -28,12 +28,14 @@ class FileType {
 		if ( ! isset( $_POST['podlove_file_type'] ) || ! is_array( $_POST['podlove_file_type'] ) )
 			return;
 			
-		foreach ( $_POST['podlove_file_type'] as $key => $value )
+		foreach ( $_POST['podlove_file_type'] as $key => $value ) {
+			$value = trim( $value );
+			$value = $key === 'extension' ? trim( $value, '.' ) : $value;
 			$format->{$key} = $value;
-
+		}
+			
 		$format->save();
-		
-		$this->redirect( 'edit', $format->id );
+		$this->redirect( 'index', $format->id );
 	}
 	
 	/**
@@ -72,7 +74,7 @@ class FileType {
 	 */
 	private function redirect( $action, $format_id = NULL ) {
 		$page   = 'admin.php?page=' . $_REQUEST['page'];
-		$show   = ( $format_id ) ? '&format=' . $format_id : '';
+		$show   = ( $format_id ) ? '&file_type=' . $format_id : '';
 		$action = '&action=' . $action;
 		
 		wp_redirect( admin_url( $page . $show . $action ) );

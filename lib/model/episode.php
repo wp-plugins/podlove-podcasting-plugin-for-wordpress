@@ -76,6 +76,11 @@ class Episode extends Base {
 		}
 	}
 
+	public function get_duration( $format = 'HH:MM:SS' ) {
+		$duration = new \Podlove\Duration( $this->duration );
+		return $duration->get( $format );
+	}
+
 }
 
 Episode::property( 'id', 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY' );

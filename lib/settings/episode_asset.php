@@ -48,11 +48,17 @@ class EpisodeAsset {
 	 * Process form: delete a format
 	 */
 	private function delete() {
+
 		if ( ! isset( $_REQUEST['episode_asset'] ) )
 			return;
 
-		$asset = Model\EpisodeAsset::find_by_id( $_REQUEST['episode_asset'] );
-		if ( count( $asset->media_files() ) === 0 ) {
+		$podcast = Model\Podcast::get_instance();
+		$asset   = Model\EpisodeAsset::find_by_id( $_REQUEST['episode_asset'] );
+		$can_delete =	count( $asset->media_files() ) === 0
+					&&	$podcast->supports_cover_art != $asset->id
+					&&	$podcast->chapter_file != $asset->id;
+
+		if ( $can_delete ) {
 			$asset->delete();
 			$this->redirect( 'index' );
 		} else {
@@ -146,7 +152,7 @@ class EpisodeAsset {
 		$format_optionlist = array_map( function ( $f ) {
 			return array(
 				'value'      => $f['title'],
-				'attributes' => 'data-type="' . $f['type'] . '"'
+				'attributes' => 'data-type="' . $f['type'] . '" data-extension="' . $f['extension'] . '"'
 			);
 		}, $formats );
 

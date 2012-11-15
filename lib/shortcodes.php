@@ -7,6 +7,10 @@ function handle_direct_download() {
 	if ( ! isset( $_GET['download_media_file'] ) )
 		return;
 
+	// tell WP Super Cache to not cache download links
+	if ( ! defined( 'DONOTCACHEPAGE' ) )
+		define( 'DONOTCACHEPAGE', true );
+
 	$media_file_id = (int) $_GET['download_media_file'];
 	$media_file    = Model\MediaFile::find_by_id( $media_file_id );
 
@@ -21,10 +25,6 @@ function handle_direct_download() {
 		status_header( 404 );
 		exit;
 	}
-
-	// tell WP Super Cache to not cache download links
-	if ( ! defined( 'DONOTCACHEPAGE' ) )
-		define( 'DONOTCACHEPAGE', true );
 
 	header( "Expires: 0" );
 	header( 'Cache-Control: must-revalidate' );
@@ -168,19 +168,21 @@ foreach ( $podlove_public_episode_attributes as $attr ) {
 function episode_data_shortcode( $attributes ) {
 	global $post;
 
-	$defaults = array( 'field' => '' );
+	$defaults = array( 'field' => '', 'format' => 'HH:MM:SS' );
 	$attributes = shortcode_atts( $defaults, $attributes );
 
 	$episode = Model\Episode::find_or_create_by_post_id( $post->ID );
 	if ( ! $episode )
 		return;
 
-	$allowed_fields = array( 'subtitle', 'summary', 'slug', 'duration', 'chapters' );
+	$allowed_fields = array( 'subtitle', 'summary', 'slug', 'chapters' );
 
 	if ( in_array( $attributes['field'], $allowed_fields ) ) {
 		return nl2br( $episode->$attributes['field'] );
 	} elseif ( $attributes['field'] == 'image' ) {
 		return $episode->get_cover_art();
+	} elseif ( $attributes['field'] == 'duration' ) {
+		return $episode->get_duration( $attributes['format'] );
 	} else {
 		return sprintf( __( 'Podlove Error: Unknown episode field "%s"', 'podcast' ), $attributes['field'] );
 	}
