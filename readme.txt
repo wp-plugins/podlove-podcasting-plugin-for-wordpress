@@ -22,6 +22,9 @@ Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
 
+= 1.2.22-alpha =
+* Fix deployment bug, delete unused files from SVN
+
 = 1.2.21-alpha =
 * Bugfix: check for asset relations (not just media file relations) when trying to delete assets
 * Bugfix: asset form can handle file types using brackets now
