@@ -22,7 +22,7 @@ Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
 
-= 1.2.22-alpha =
+= 1.2.22/23-alpha =
 * Fix deployment bug, delete unused files from SVN
 
 = 1.2.21-alpha =
