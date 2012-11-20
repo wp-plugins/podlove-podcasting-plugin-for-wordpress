@@ -3,8 +3,8 @@ Contributors: gerritvanaaken
 Donate link: http://podlove.org/
 Tags: podcasting, podlove, html5audio, audio, video, podcast, player
 Requires at least: 3.4.0
-Tested up to: 3.4.1
-Stable tag: 1.1.2
+Tested up to: 3.4.2
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ HTML5 based audio/video player, focused on podcasts and similar media blogs. It 
 
 == Description ==
 
-**Please note: As of version 1.1, the usage of [audio] and [video] is deprecated. Please use [podloveaudio] or [podlovevideo] instead.**
+**Please note: Since version 1.1, the usage of [audio] and [video] is deprecated. Please use [podloveaudio] or [podlovevideo] instead.**
 
 Use a simple shortcode in your posts and pages, and the Podlove Web Player will appear, playing any media file you want to assign. It tries to use native HTML5 browser playback, but will smoothly fall back to Flash if necessary.
 
@@ -95,6 +95,12 @@ The location of a Ogg/Theora or a Ogg/Vorbis source:
     [podlovevideo ogg="http://mysite.com/mymedia.ogv"]
     [podloveaudio ogg="http://mysite.com/mymedia.oga"]
 
+= opus =
+
+The location of an Opus sound file:
+
+    [podloveaudio opus="http://mysite.com/mymedia.opus"]
+
 = webm =
 
 The location of a VP8/WebM source for the video:
@@ -103,9 +109,10 @@ The location of a VP8/WebM source for the video:
 
 = poster = 
 
-The location of the poster frame for the video:
+The location of the poster frame for the video (or cover image for the rich audio player):
 
     [podlovevideo poster="http://mysite.com/mymedia.png"]
+    [podloveaudio poster="http://mysite.com/mymedia.png"]
 
 = width = 
 
@@ -180,6 +187,22 @@ Takes chapter string from the defined custom field (the standard WordPress ones)
     [podloveaudio chapters="http://mychapters.com/chapters.txt"]                
 
 
+= chapterlinks = 
+
+Option for the jumplink behaviour in chapter table
+
+    [podloveaudio chapterlinks="all"] (default, all chapter links are clickable)
+    [podloveaudio chapterlinks="buffered"] (only buffered chapters are clickable)
+    [podloveaudio chapterlinks="false"] (chapters are not linked)
+
+
+= Rich Podlove Web Player player with meta information =
+
+If you have an audio file and use one of the following attributes, the player will sport a richer visual experience: "title", "subtitle", "summary", "poster", "permalink". Full example:
+
+    [podloveaudio mp3="http://mysite.com/mymedia.mp3" ogg="http://mysite.com/mymedia.ogg" title="PWP – First show" subtitle="We talk about this and that" summary="Here goes a summary of the episode which should be about 256 characters long" poster="http://mysite.com/mymedia.jpg" permalink="http://mysite.com/my-first-episode/"]
+
+
 = All attributes video example =
 
 All options enabled:
@@ -190,7 +213,7 @@ All options enabled:
 
 All options enabled:
 
-    [podloveaudio mp3="http://mysite.com/mymedia.mp3" ogg="http://mysite.com/mymedia.ogg" preload="true" autoplay="true"]
+    [podloveaudio mp4="http://mysite.com/mymedia.m4a" mp3="http://mysite.com/mymedia.mp3" ogg="http://mysite.com/mymedia.ogg" opus="http://mysite.com/mymedia.opus" width="640" preload="true" autoplay="true" title="PWP – First show" subtitle="We talk about this and that" summary="Here goes a summary of the episode which should be about 256 characters long" poster="http://mysite.com/mymedia.jpg" permalink="http://mysite.com/my-first-episode/"]
 
 ### Deprecated usage
 
@@ -201,6 +224,17 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 1. Podlove Web Player in full swing, using the chapters table to jump to different section of the audio source.
 
 == Changelog ==
+
+= 1.2 =
+* added: Rich player with meta information (title, subtitle, summary, cover image)
+* added: Opus audio codec support
+* added: Chapter duration display
+* added: Chapter deeplinking
+* added: optional listening to WordPress enclosures
+* new settings area
+* fixed some issues with flash fallback
+* freshest version of mediaelement.js
+* lots of bugfixes and improvements
 
 = 1.1.2 =
 * prevents activation conflicts with other instances of the plugin
@@ -214,5 +248,5 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 * Implements W3C Media Fragements with start and end time
 
 = 1.0 =
-* First version on wordpress.org. 
-* Full of bugs.
+* First version on wordpress.org
+* Full of bugs

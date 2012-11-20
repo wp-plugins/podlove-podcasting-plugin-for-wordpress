@@ -2,7 +2,7 @@
 	font: normal 11px/1.25 helvetica, arial, sans-serif;
 }
 
-.mejs-container {
+.mejs-container.mejs-audio {
 	min-height: 30px;
 }
 
@@ -45,26 +45,84 @@
 
 
 .mediaelementjs_player_container .pwp_chapters tr.active {
-	background: whiteSmoke;
+	background: #a9cbdf;
 }
 
 .mediaelementjs_player_container .pwp_chapters tr td {
 	padding: 6px;
+	vertical-align: middle;
+}
+
+.mediaelementjs_player_container .pwp_chapters tr td.title {
+	padding-top: 7px;
+}
+
+.mediaelementjs_player_container .pwp_chapters tr td.timecode {
+	text-align: right;
+}
+
+.mediaelementjs_player_container .pwp_chapters a.deeplink {
+	background: url(img/deeplink.png) 50% 30% no-repeat;
+	background-size: 85%;
+	float: right;
+	width: 1em;
+	margin-left: 0.5em;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.mediaelementjs_player_container .pwp_chapters a.deeplink:focus,
+.mediaelementjs_player_container .pwp_chapters a.deeplink:hover,
+.mediaelementjs_player_container .pwp_chapters a.deeplink:active {
+	opacity: 0.5;
 }
 
 .podlovemeta {
+	position: relative;
+	overflow: hidden;
 	background: #000;
 	height: 100px;
 	margin-bottom: 1px;
-	-webkit-border-top-right-radius: 10px;
-	-moz-border-radius-topright: 10px;
-	border-top-right-radius: 10px;
+	-webkit-border-top-left-radius: 15px;
+	-webkit-border-top-right-radius: 15px;
+	-moz-border-radius-topleft: 15px;
+	-moz-border-radius-topright: 15px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background: #111;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50, 50, 50, 0.9)), to(rgba(0, 0, 0, 0.9)));
+	background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.9), rgba(0, 0, 0, 0.9));
+	background: -moz-linear-gradient(top, rgba(50, 50, 50, 0.9), rgba(0, 0, 0, 0.9));
+	background: -o-linear-gradient(top, rgba(50, 50, 50, 0.9), rgba(0, 0, 0, 0.9));
+	background: -ms-linear-gradient(top, rgba(50, 50, 50, 0.9), rgba(0, 0, 0, 0.9));
+	background: linear-gradient(rgba(50, 50, 50, 0.9), rgba(0, 0, 0, 0.9));
+}
+
+.podlovemeta + .summary + .mejs-container .mejs-playpause-button,
+.podlovemeta + .mejs-container .mejs-playpause-button {
+	width: 10px;
+}
+
+.podlovemeta + .summary + .mejs-container .mejs-playpause-button *,
+.podlovemeta + .mejs-container .mejs-playpause-button * {
+	display: none;
+}
+
+.mejs-controls .mejs-button button:focus { 
+outline: 1px solid transparent!important;
+}
+
+.mejs-duration-container {
+	margin-right: 20px;
 }
 
 .podlovemeta .bigplay {
 	float: left;
 	width: 100px;
 	height: 100px;
+	position: relative;
+	z-index: 78;
 	text-indent: -100em;
 	background: url(img/bigplay.png) 0 0 no-repeat;
 }
@@ -98,14 +156,20 @@
 .podlovemeta h3 {
 	clear: none;
 	color: #eee!important;
-	padding: 5px 0 0 0;
-	font-size: 15px;
+	padding: 8px 0;
+	line-height: 1.25;
+	font-size: 16px;
 	font-weight: bold;
 	margin: 0!important;
+	text-transform: none;
+	letter-spacing: 0;
+	border: 0;
 }
 
 .podlovemeta .subtitle {
 	margin-right: 7px;
+	font-size: 12px;
+	color: #eee!important;
 }
 
 .podlovemeta .subtitle strong{
@@ -113,12 +177,131 @@
 	font-size: 13px!important;
 }
 
-.podlovemeta .summary {
-	margin-right: 7px;
-	color: #ccc;
-	margin-top: 8px;
+.podlovemeta + .summary {
+	overflow: hidden;
+	padding: 0px 10px;
+	margin-top: -1px;
+	height: 1px;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #000;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	background: #ccc;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(150, 150, 150, 0.9)), to(rgba(0, 0, 0, 0.9)));
+	background: -webkit-linear-gradient(top, rgba(220, 220, 220, 0.5), rgba(150, 150, 150, 0.9));
+	background: -moz-linear-gradient(top, rgba(220, 220, 220, 0.5), rgba(150, 150, 150, 0.9));
+	background: -o-linear-gradient(top, rgba(220, 220, 220, 0.5), rgba(150, 150, 150, 0.9));
+	background: -ms-linear-gradient(top, rgba(220, 220, 220, 0.5), rgba(150, 150, 150, 0.9));
+	background: linear-gradient(rgba(220, 220, 220, 0.5), rgba(150, 150, 150, 0.9));
 }
+
+.podlovemeta + .summary.active {
+	min-height: 38px;
+	height: auto;
+	padding: 20px 10px;
+}
+
+.podlovemeta .summary a.closewindow,
+.podlovemeta a.infowindow {
+	cursor: pointer;
+	z-index: 111;
+	padding: 0 10px;
+	margin: 0;
+	position: absolute;
+	right: 9px;
+	bottom: 7px;
+	display: block;
+	height: 16px;
+	background: #fff;
+	color: #000;
+	font-size: 12px;
+	text-transform: uppercase!important;
+	letter-spacing: 1px;
+	text-align: center;
+	line-height: 16px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-o-border-radius: 8px;
+	border-radius: 8px;
+	text-decoration: none;
+}
+
+.podlovemeta .summary a.closewindow:focus,
+.podlovemeta .summary a.closewindow:hover,
+.podlovemeta .summary a.closewindow:active,
+.podlovemeta a.infowindow:focus,
+.podlovemeta a.infowindow:hover,
+.podlovemeta a.infowindow.active {
+	background: #3a859a;
+	color: #fff;
+	text-decoration: none;
+}
+
 
 .pwp_chapters * {
 	font-size: 13px;
+}
+
+.pwp_chapters .chapterplay {
+	width: 25px;
+	padding-right: 0;
+}
+
+.pwp_chapters .chapterplay a[rel=player] {
+	display: block;
+
+	border: none;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+	background: #ddd;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	-o-border-radius: 13px;
+	border-radius: 13px;
+	cursor: pointer;
+}
+
+.pwp_chapters .loaded .chapterplay a[rel=player] {
+	background: #000;
+
+}
+
+.pwp_chapters .chapterplay a[rel=player]:focus,
+.pwp_chapters .chapterplay a[rel=player]:hover,
+.pwp_chapters .chapterplay a[rel=player]:active {
+	cursor: wait;
+}
+
+.pwp_chapters .loaded .chapterplay a[rel=player]:focus,
+.pwp_chapters .loaded .chapterplay a[rel=player]:hover,
+.pwp_chapters .loaded .chapterplay a[rel=player]:active,
+ .pwp_chapters .active .chapterplay a[rel=player] {
+	background: #3a859a;
+	cursor: pointer;
+}
+
+.pwp_chapters .chapterplay a[rel=player] span {
+	display: block;
+	width: 16px;
+	height: 16px;
+	overflow: hidden;
+	position: relative;
+	top: 4px;
+	text-indent: -1000px;
+	margin: 0 0 0 6px;
+	background: transparent url(mediaelement/controls.png) no-repeat 0 0;
+}
+
+.pwp_chapters .active .chapterplay a[rel=player] span {
+	background-position: -1px -16px;
+}
+
+.pwp_chapters .paused .chapterplay a[rel=player] span {
+	background-position: 0 0;
 }

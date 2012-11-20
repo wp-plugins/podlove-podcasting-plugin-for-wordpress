@@ -38,8 +38,9 @@
  */
 
 namespace Podlove;
+use \Podlove\Model;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 22 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 24 );
 
 add_action( 'init', function () {
 	
@@ -340,10 +341,25 @@ function run_migrations_for_version( $version ) {
 		case 22:
 			$sql = sprintf(
 				'ALTER TABLE `%s` ADD COLUMN `redirect_http_status` INT AFTER `redirect_url`',
-				\Podlove\Model\Feed::table_name()
+				Model\Feed::table_name()
 			);
 			$wpdb->query( $sql );
 		break;
+		case 23:
+			$sql = sprintf(
+				'ALTER TABLE `%s` DROP COLUMN `show_description`',
+				Model\Feed::table_name()
+			);
+			$wpdb->query( $sql );
+		break;
+		case 24:
+			$podcast = Model\Podcast::get_instance();
+			update_option( 'podlove_asset_assignment', array(
+				'image'    => $podcast->supports_cover_art,
+				'chapters' => $podcast->chapter_file
+			) );
+		break;
+
 	}
 
 }

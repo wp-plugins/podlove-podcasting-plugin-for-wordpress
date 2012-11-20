@@ -1,5 +1,6 @@
 <?php
 namespace Podlove\Feeds;
+use \Podlove\Model;
 
 function init() {
 	add_feed_routes();
@@ -8,29 +9,57 @@ function init() {
 function add_feed_routes() {
 
 	add_action( 'generate_rewrite_rules', function ( $wp_rewrite ) {
-		$new_rules = array( 
-			'feed/(.+)' => 'index.php?feed_slug=' . $wp_rewrite->preg_index( 1 )
-		);
-		$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
+		
+		if ( ! $feeds = Model\Feed::all() )
+			return;
+
+		foreach ( $feeds as $feed ) {
+			$rule = "feed/" . $feed->slug;
+			$new_rules = array( $rule => 'index.php?feed_slug=' . $feed->slug );
+			$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
+		}
 	} );
 
 	add_filter( 'query_vars', function ( $qv ) {
 		$qv[] = 'feed_slug';
 		return $qv;
 	} );
-
 }
+
+// set `is_feed()` correctly
+add_action( 'parse_query', function ( $wp_query ) {
+	if ( $feed = Model\Feed::find_one_by_slug( get_query_var( 'feed_slug' ) ) )
+		$wp_query->is_feed = true;
+} );
+
+function override_feed_item_limit( $limits ) {
+	global $wp_query;
+
+	if ( ! is_feed() )
+		return $limits;
+
+	if ( ! $feed = \Podlove\Model\Feed::find_one_by_slug( get_query_var( 'feed_slug' ) ) )
+		return $limits;
+
+	$custom_limit = (int) $feed->limit_items;
+
+	if ( $custom_limit > 0 ) {
+		return "LIMIT $custom_limit";	
+	} elseif ( $custom_limit == 0 ) {
+		return $limits; // WordPress default
+	} else {
+		return ''; // no limit
+	}
+}
+add_filter( 'post_limits', '\Podlove\Feeds\override_feed_item_limit', 20, 1 );
 
 // Hooks:
 // parse_query => query vars available
 // wp => query_posts done
 add_action( 'wp', function () {
 	global $wp_query;
-	
-	if ( ! $feed_slug = get_query_var( 'feed_slug' ) )
-		return;
 
-	if ( ! $feed = \Podlove\Model\Feed::find_one_by_slug( $feed_slug ) )
+	if ( ! $feed = Model\Feed::find_one_by_slug( get_query_var( 'feed_slug' ) ) )
 		return;
 
 	$is_feedburner_bot = preg_match( "/feedburner|feedsqueezer/i", $_SERVER['HTTP_USER_AGENT'] );
@@ -41,18 +70,12 @@ add_action( 'wp', function () {
 		exit;
 	} else {
 
-		// make sure is_feed() returns true
-		add_filter( 'the_content', function ( $content ) {
-			global $wp_query;
-			$wp_query->is_feed = true;
-			return $content;
-		} );
-
 		if ( $feed->format === "rss" ) {
-			new	\Podlove\Feeds\RSS( $feed_slug );
+			new	\Podlove\Feeds\RSS( $feed->slug );
 		} else {
-			new	\Podlove\Feeds\Atom( $feed_slug );
+			new	\Podlove\Feeds\Atom( $feed->slug );
 		}
 	}
+
 	
 } );

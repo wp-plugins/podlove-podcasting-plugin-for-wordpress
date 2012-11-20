@@ -18,6 +18,10 @@ class RSS {
 		$file_type      = $episode_asset->file_type();
 
 		add_filter( 'podlove_feed_enclosure', function ( $enclosure, $enclosure_url, $enclosure_file_size, $mime_type ) {
+
+			if ( $enclosure_file_size < 0 )
+				$enclosure_file_size = 0;
+
 			return sprintf( '<enclosure url="%s" length="%s" type="%s" />', $enclosure_url, $enclosure_file_size, $mime_type );
 		}, 10, 4 );
 
@@ -45,6 +49,7 @@ class RSS {
 			'post_type' => 'podcast',
 			'post__in'   => $feed->post_ids()
 		);
+		$args = array_merge( $wp_query->query_vars, $args );
 		query_posts( $args );
 		
 		if ( $wp_query->is_comment_feed )

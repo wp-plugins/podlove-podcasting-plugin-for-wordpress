@@ -1,9 +1,9 @@
-=== Podlove Podcasting Plugin for WordPress ===
+=== Podlove Podcast Publisher ===
 Contributors: eteubert
 Donate link: http://flattr.com/thing/728463/Podlove-Podcasting-Plugin-for-WordPress
 Tags: podcast, publishing
 Requires at least: 3.0
-Tested up to: 3.3.2
+Tested up to: 3.4.2
 Stable tag: 1.0
 
 Podcast plugin. Still in early stages of development. Don't use for production unless you know what you're doing.
@@ -21,6 +21,18 @@ http://github.com/eteubert/podlove
 Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
+
+= 1.3.0-alpha =
+* Feature: [Podlove Deep Linking](http://podlove.org/deep-link/) support
+* Feature: support for new web player
+* Bugfix: enable tag and category search results for all post types
+* Bugfix: Feed item limit setting works now
+* Bugfix: avoid rare curl warning
+* Bugfix: improve feed validity
+* Enhancement: remove unused feed setting `show description`
+* Enhancement: Podlove feeds don't override /feed/* WordPress feeds any more
+* Enhancement: Rename plugin to "Podlove Podcast Publisher"
+* Enhancement: Move asset assignments from podcast settings to asset settings
 
 = 1.2.24-alpha =
 * Bugfix: don't show milliseconds in feed so feedvalidator.org stops complaining
@@ -97,4 +109,4 @@ Feel free to contribute and to fix errors or send improvements via github.
 == Upgrade Notice ==
 
 = 1.2.0-alpha =
-Before you update, delete all shows but one to ensure your important data stays. Watch out: Your feed URLs will change! 
+Before you update, delete all shows but one to ensure your important data stays. Watch out: Your feed URLs will change!

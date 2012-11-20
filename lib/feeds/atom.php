@@ -22,6 +22,10 @@ class Atom {
 		$file_type      = $episode_asset->file_type();
 
 		add_filter( 'podlove_feed_enclosure', function ( $enclosure, $enclosure_url, $enclosure_file_size, $mime_type ) {
+			
+			if ( $enclosure_file_size < 0 )
+				$enclosure_file_size = 0;
+
 			return sprintf( '<link rel="enclosure" href="%s" length="%s" type="%s"/>', $enclosure_url, $enclosure_file_size, $mime_type );
 		}, 10, 4 );
 
@@ -29,20 +33,6 @@ class Atom {
 		override_feed_language( $feed );
 		override_feed_head( 'atom_head', $podcast, $feed, $file_type );
 		override_feed_entry( 'atom_entry', $podcast, $feed, $file_type );
-
-		add_action( 'atom_head', function () use ( $podcast, $feed, $file_type ) {
-			?>
-			<link rel="self" type="application/atom+xml" title="<?php echo $feed->title_for_discovery(); ?>" href="<?php echo $feed->get_subscribe_url() ?>" />
-			<?php
-			$feeds = Model\Feed::all();
-			foreach ( $feeds as $other_feed ) {
-				if ( $other_feed->id !== $feed->id ):
-					?>
-					<link rel="alternate" type="application/atom+xml" title="<?php echo $other_feed->title_for_discovery(); ?>" href="<?php echo $other_feed->get_subscribe_url() ?>" />
-					<?php
-				endif;
-			}
-		}, 9 );
 
 		add_action( 'atom_entry', function () {
 			if ( apply_filters( 'podlove_feed_show_summary', true ) ) {
@@ -81,6 +71,7 @@ class Atom {
 			'post_type' => 'podcast',
 			'post__in'   => $feed->post_ids()
 		);
+		$args = array_merge( $wp_query->query_vars, $args );
 		query_posts( $args );
 		
 		if ( $wp_query->is_comment_feed )
