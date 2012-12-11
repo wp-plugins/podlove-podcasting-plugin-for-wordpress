@@ -3,7 +3,7 @@ Contributors: eteubert
 Donate link: http://flattr.com/thing/728463/Podlove-Podcasting-Plugin-for-WordPress
 Tags: podcast, publishing
 Requires at least: 3.0
-Tested up to: 3.4.2
+Tested up to: 3.5
 Stable tag: 1.0
 
 Podcast plugin. Still in early stages of development. Don't use for production unless you know what you're doing.
@@ -21,6 +21,12 @@ http://github.com/eteubert/podlove
 Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
+
+= 1.3.6-alpha =
+* Bugfix: Minor WordPress 3.5 compatibility issue
+* Bugfix: Use correct shortcodes in default template
+* Enhancement: Add support for `[podlove-episode field="title"]`
+* Enhancement: Improve auto-updating of media files. It will now work correctly without the need to save the post after changing the media file slug. It updates every time you change the slug and lose focus of the input field.
 
 = 1.3.5-alpha =
 * Bugfix: pages and menu items don't appear unexpectedly in main loop any more
