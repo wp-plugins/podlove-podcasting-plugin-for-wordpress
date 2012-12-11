@@ -22,6 +22,11 @@ Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
 
+= 1.3.5-alpha =
+* Bugfix: pages and menu items don't appear unexpectedly in main loop any more
+* Bugfix: when using the WordPress importer, don't create new GUIDs
+* Enhancement: rename GUID meta so it doesn't appear as custom field
+
 = 1.3.4-alpha =
 * Hotfix: fix asset creation issue
 
