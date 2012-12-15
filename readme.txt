@@ -22,6 +22,10 @@ Feel free to contribute and to fix errors or send improvements via github.
 
 == Changelog ==
 
+= 1.3.9-alpha =
+* Enhancement: rectify feed generator title
+* Bugfix: add missing sql escaping
+
 = 1.3.8-alpha =
 * Bugfix: fix episode image fallback to podcast image
 
