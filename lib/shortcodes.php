@@ -126,9 +126,13 @@ function webplayer_shortcode( $options ) {
 		return;
 
 	$available_formats = array();
-	$audio_formats = array( 'mp3', 'mp4', 'ogg' );
+	$audio_formats = array( 'mp3', 'mp4', 'ogg', 'opus' );
 
 	foreach ( $audio_formats as $audio_format ) {
+
+		if ( ! isset( $formats_data['audio'][ $audio_format ] ) )
+			continue;
+
 		$episode_asset = Model\EpisodeAsset::find_by_id( $formats_data['audio'][ $audio_format ] );
 
 		if ( ! $episode_asset )
@@ -156,7 +160,8 @@ function webplayer_shortcode( $options ) {
 		'title'      => get_the_title(),
 		'subtitle'   => $episode->subtitle,
 		'summary'    => $episode->summary,
-		'poster'     => $episode->get_cover_art_with_fallback()
+		'poster'     => $episode->get_cover_art_with_fallback(),
+		'duration'   => $episode->get_duration()
 	);
 	$attr_string = '';
 	foreach ( $attributes as $key => $value ) {
@@ -238,13 +243,20 @@ function template_shortcode( $attributes ) {
 
 	$defaults = array(
 		'title' => '',
+		'id' => '',
 		'autop' => 'yes'
 	);
 
 	$attributes = shortcode_atts( $defaults, $attributes );
 
-	if ( ! $template = Model\Template::find_one_by_title( $attributes['title'] ) )
-		return sprintf( __( 'Podlove Error: Whoops, there is no template called "%s"', 'podlove' ), $attributes['title'] );
+	if ( $attributes['title'] !== '' )
+		_deprecated_argument( __FUNCTION__, '1.3.14-alpha', 'The "title" attribute for [podlove-template] shortcode is deprecated. Use "id" instead.' );
+
+	// backward compatibility
+	$template_id = $attributes['id'] ? $attributes['id'] : $attributes['title'];
+
+	if ( ! $template = Model\Template::find_one_by_title( $template_id ) )
+		return sprintf( __( 'Podlove Error: Whoops, there is no template with id "%s"', 'podlove' ), $template_id );
 
 	$html = $template->content;
 

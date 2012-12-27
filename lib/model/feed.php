@@ -15,7 +15,7 @@ class Feed extends Base {
 		$url = sprintf(
 			'%s/feed/%s/',
 			get_bloginfo( 'url' ),
-			$this->slug
+			\Podlove\slugify( $this->slug )
 		);
 
 		return apply_filters( 'podlove_subscribe_url', $url );
@@ -46,19 +46,17 @@ class Feed extends Base {
 
 		$podcast = Podcast::get_instance();
 
-		$episode_asset = $this->episode_asset();
-
-		if ( ! $episode_asset )
+		if ( ! $episode_asset = $this->episode_asset() )
 			return $this->name;
 
-		$file_type = $episode_asset->file_type();
-
-		if ( ! $file_type )
+		if ( ! $file_type = $episode_asset->file_type() )
 			return $this->name;
 
 		$file_extension = $file_type->extension;
 
-		$title = sprintf( __( 'Podcast Feed: %s (%s)', 'podcast' ), $podcast->title, $this->name );
+		$title_template = is_feed() ? '%s (%s)' : __( 'Podcast Feed: %s (%s)', 'podcast' );
+
+		$title = sprintf( $title_template, $podcast->title, $this->name );
 		$title = apply_filters( 'podlove_feed_title_for_discovery', $title, $this->title, $file_extension, $this->id );
 
 		return $title;
