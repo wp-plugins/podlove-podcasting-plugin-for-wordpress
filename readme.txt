@@ -86,6 +86,18 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.3.16-alpha =
+* Feature: new style for file downloads `[podlove-episode-downloads style="select"]`
+* Enhancement: Solve feed url issues:
+** ensure validity on save
+** support non-pretty url format
+* Enhancement: un-default some modules: episode assistant, twitter card summary
+* Enhancement: fix asset & feed setting redirect issue
+* Enhancement: add caption file types
+* Enhancement: new icons!
+* Enhancement: allow underscores and dots in slugs
+* Bugfix: fix issue with multiple backslash-escapings
+
 = 1.3.15-alpha =
 * Hotfix: fix 404 issue concerning episode prefixes and posts
 

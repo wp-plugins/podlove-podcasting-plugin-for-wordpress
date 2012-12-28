@@ -32,7 +32,7 @@ function activate_for_current_blog() {
 			array( 'name' => 'WebM Audio',             'type' => 'audio',    'mime_type' => 'audio/webm',  'extension' => 'webm' ),
 			array( 'name' => 'WebM Video',             'type' => 'video',    'mime_type' => 'video/webm',  'extension' => 'webm' ),
 			array( 'name' => 'FLAC Audio',             'type' => 'audio',    'mime_type' => 'audio/flac',  'extension' => 'flac' ),
-			array( 'name' => 'Opus Audio',             'type' => 'audio',    'mime_type' => 'audio/ogg;codecs=opus',  'extension' => 'opus' ),
+			array( 'name' => 'Opus Audio',             'type' => 'audio',    'mime_type' => 'audio/opus',  'extension' => 'opus' ),
 			array( 'name' => 'Matroska Audio',         'type' => 'audio',    'mime_type' => 'audio/x-matroska',  'extension' => 'mka' ),
 			array( 'name' => 'Matroska Video',         'type' => 'video',    'mime_type' => 'video/x-matroska',  'extension' => 'mkv' ),
 			array( 'name' => 'Matroska Video',         'type' => 'video',    'mime_type' => 'video/x-matroska',  'extension' => 'mkv' ),
@@ -42,6 +42,8 @@ function activate_for_current_blog() {
 			array( 'name' => 'JPEG Image',             'type' => 'image',    'mime_type' => 'image/jpeg',  'extension' => 'jpg' ),
 			array( 'name' => 'mp4chaps Chapter File',  'type' => 'chapters', 'mime_type' => 'text/plain',  'extension' => 'txt' ),
 			array( 'name' => 'Podlove Simple Chapters','type' => 'chapters', 'mime_type' => 'application/xml',  'extension' => 'psc' ),
+			array( 'name' => 'Subrip Captions',        'type' => 'captions', 'mime_type' => 'application/x-subrip',  'extension' => 'srt' ),
+			array( 'name' => 'WebVTT Captions',        'type' => 'captions', 'mime_type' => 'text/vtt',  'extension' => 'vtt' ),
 		);
 		
 		foreach ( $default_types as $file_type ) {
@@ -53,7 +55,7 @@ function activate_for_current_blog() {
 		}
 	}
 
-	$default_modules = array( 'podlove_web_player', 'episode_assistant', 'open_graph', 'twitter_summary_card' );
+	$default_modules = array( 'podlove_web_player', 'open_graph' );
 	foreach ( $default_modules as $module ) {
 		\Podlove\Modules\Base::activate( $module );
 	}
@@ -159,6 +161,86 @@ function uninstall_for_current_blog() {
 	Model\Episode::destroy();
 	Model\Template::destroy();
 }
+
+add_action( 'admin_head', '\Podlove\custom_admin_icons' );
+
+function custom_admin_icons() {
+    ?>
+    <style>
+
+    	/* PODLOVE EPISODE ICON */
+
+        /* Admin Menu - 16px */
+        #menu-posts-podcast .wp-menu-image {
+            background: url(<?php echo \Podlove\PLUGIN_URL ?>/images/episoden/icon-adminmenu16-sprite.png) no-repeat 6px 6px !important;
+        }
+		#menu-posts-podcast:hover .wp-menu-image, #menu-posts-podcast.wp-has-current-submenu .wp-menu-image {
+            background-position: 6px -24px !important;
+        }
+        /* Post Screen - 32px */
+        .icon32-posts-podcast {
+        	background: url(<?php echo \Podlove\PLUGIN_URL ?>/images/episoden/icon-adminpage32.png) no-repeat 0px 0px !important;
+        }
+        @media
+        only screen and (-webkit-min-device-pixel-ratio: 1.5),
+        only screen and (   min--moz-device-pixel-ratio: 1.5),
+        only screen and (     -o-min-device-pixel-ratio: 3/2),
+        only screen and (        min-device-pixel-ratio: 1.5),
+        only screen and (        		 min-resolution: 1.5dppx) {
+        	
+        	/* Admin Menu - 16px @2x */
+        	#menu-posts-podcast .wp-menu-image {
+        		background-image: url('<?php echo \Podlove\PLUGIN_URL ?>/images/episoden/icon-adminmenu16-sprite_2x.png') !important;
+        		-webkit-background-size: 16px 48px;
+        		-moz-background-size:    16px 48px;
+        		background-size:         16px 48px;
+        	}
+        	/* Post Screen - 32px @2x */
+        	.icon32-posts-podcast {
+        		background-image: url('<?php echo \Podlove\PLUGIN_URL ?>/images/episoden/icon-adminpage32_2x.png') no-repeat center !important;
+        		-webkit-background-size: 32px 32px !important;
+        		-moz-background-size:    32px 32px !important;
+        		background-size:         32px 32px !important;
+        	}         
+        }
+
+        /* PODLOVE SETTINGS ICON */
+
+        /* Admin Menu - 16px */
+        #toplevel_page_podlove_settings_handle .wp-menu-image {
+            background: url(<?php echo \Podlove\PLUGIN_URL ?>/images/podlove/icon-adminmenu16-sprite.png) no-repeat 6px 6px !important;
+        }
+		#toplevel_page_podlove_settings_handle:hover .wp-menu-image, #toplevel_page_podlove_settings_handle.wp-has-current-submenu .wp-menu-image {
+            background-position: 6px -26px !important;
+        }
+        /* Post Screen - 32px */
+        #icon-podlove-podcast {
+        	background: url(<?php echo \Podlove\PLUGIN_URL ?>/images/podlove/icon-adminpage32.png) no-repeat 0px 0px !important;
+        }
+        @media
+        only screen and (-webkit-min-device-pixel-ratio: 1.5),
+        only screen and (   min--moz-device-pixel-ratio: 1.5),
+        only screen and (     -o-min-device-pixel-ratio: 3/2),
+        only screen and (        min-device-pixel-ratio: 1.5),
+        only screen and (        		 min-resolution: 1.5dppx) {
+        	
+        	/* Admin Menu - 16px @2x */
+        	#toplevel_page_podlove_settings_handle .wp-menu-image {
+        		background-image: url('<?php echo \Podlove\PLUGIN_URL ?>/images/podlove/icon-adminmenu16-sprite_2x.png') !important;
+        		-webkit-background-size: 16px 48px;
+        		-moz-background-size:    16px 48px;
+        		background-size:         16px 48px;
+        	}
+        	/* Post Screen - 32px @2x */
+        	.icon-podlove-podcast {
+        		background-image: url('<?php echo \Podlove\PLUGIN_URL ?>/images/podlove/icon-adminpage32_2x.png') no-repeat center !important;
+        		-webkit-background-size: 32px 32px !important;
+        		-moz-background-size:    32px 32px !important;
+        		background-size:         32px 32px !important;
+        	}         
+        }
+    </style>
+<?php } 
 
 /**
  * Activate internal modules.

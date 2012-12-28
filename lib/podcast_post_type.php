@@ -49,7 +49,7 @@ EOT;
 			'has_archive'          => true,
 			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'trackbacks' ),
 			'register_meta_box_cb' => '\Podlove\Podcast_Post_Meta_Box::add_meta_box',
-			'menu_icon'            => PLUGIN_URL . '/images/episodes-icon-16x16.png',
+			// 'menu_icon'            => PLUGIN_URL . '/images/episodes-icon-16x16.png',
 			'rewrite' => array(
 				'slug'       => strlen( $slug ) ? $slug : 'podcast',
 				'with_front' => false
@@ -133,6 +133,17 @@ EOT;
 			);
 
 			wp_enqueue_script( 'podlove_admin' );
+		} else {
+			wp_register_script(
+				'podlove_frontend',
+				\Podlove\PLUGIN_URL . '/js/frontend.js',
+				array(
+					'jquery'
+				),
+				'1.0'
+			);
+
+			wp_enqueue_script( 'podlove_frontend' );
 		}
 
 		add_filter( 'request', array( $this, 'add_post_type_to_feeds' ) );
@@ -174,8 +185,8 @@ EOT;
 			/* $menu_title */ 'Podlove',
 			/* $capability */ 'administrator',
 			/* $menu_slug  */ self::SETTINGS_PAGE_HANDLE,
-			/* $function   */ function () { /* see \Podlove\Settings\Dashboard */ },
-			/* $icon_url   */ PLUGIN_URL . '/images/podlove-icon-16x16.png'
+			/* $function   */ function () { /* see \Podlove\Settings\Dashboard */ }
+			/* $icon_url   */ //PLUGIN_URL . '/images/podlove-icon-16x16.png'
 			/* $position   */
 		);
 

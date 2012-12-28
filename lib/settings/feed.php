@@ -28,7 +28,7 @@ class Feed {
 		$feed = \Podlove\Model\Feed::find_by_id( $_REQUEST['feed'] );
 		$feed->update_attributes( $_POST['podlove_feed'] );
 		
-		$this->redirect( 'edit', $feed->id );
+		$this->redirect( 'index', $feed->id );
 	}
 	
 	/**
@@ -86,7 +86,7 @@ class Feed {
 	public function page() {
 		?>
 		<div class="wrap">
-			<div id="icon-options-general" class="icon32"></div>
+			<?php screen_icon( 'podlove-podcast' ); ?>
 			<h2><?php echo __( 'Feeds', 'podlove' ); ?> <a href="?page=<?php echo $_REQUEST['page']; ?>&amp;action=new" class="add-new-h2"><?php echo __( 'Add New', 'podlove' ); ?></a></h2>
 			<?php
 			$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : NULL;

@@ -140,6 +140,10 @@ class Templates {
 			return;
 
 		$action = ( isset( $_REQUEST['action'] ) ) ? $_REQUEST['action'] : NULL;
+
+		// fix issue with multiple backslash-escapings
+		$_REQUEST = array_map( 'stripslashes_deep', $_REQUEST );
+		$_POST    = array_map( 'stripslashes_deep', $_POST );
 		
 		if ( $action === 'save' ) {
 			$this->save();
@@ -153,7 +157,7 @@ class Templates {
 	public function page() {
 		?>
 		<div class="wrap">
-			<div id="icon-options-general" class="icon32"></div>
+			<?php screen_icon( 'podlove-podcast' ); ?>
 			<h2><?php echo __( 'Templates', 'podlove' ); ?> <a href="?page=<?php echo $_REQUEST['page']; ?>&amp;action=new" class="add-new-h2"><?php echo __( 'Add New', 'podlove' ); ?></a></h2>
 			<?php
 			$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : NULL;
@@ -237,7 +241,7 @@ Example Template:
 
 <span class="podlove-duration">Duration: [podlove-episode field="duration"]</span>
 
-[podlove-episode-summary]
+[podlove-episode field="summary"]
 
 [podlove-web-player]
 [podlove-episode-downloads]

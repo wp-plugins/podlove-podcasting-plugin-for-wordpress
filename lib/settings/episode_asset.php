@@ -32,7 +32,7 @@ class EpisodeAsset {
 		$episode_asset = \Podlove\Model\EpisodeAsset::find_by_id( $_REQUEST['episode_asset'] );
 		$episode_asset->update_attributes( $_POST['podlove_episode_asset'] );
 		
-		$this->redirect( 'edit', $episode_asset->id );
+		$this->redirect( 'index', $episode_asset->id );
 	}
 	
 	/**
@@ -171,7 +171,7 @@ class EpisodeAsset {
 		}
 		?>
 		<div class="wrap">
-			<div id="icon-options-general" class="icon32"></div>
+			<?php screen_icon( 'podlove-podcast' ); ?>
 			<h2><?php echo __( 'Episode Assets', 'podlove' ); ?> <a href="?page=<?php echo $_REQUEST['page']; ?>&amp;action=new" class="add-new-h2"><?php echo __( 'Add New', 'podlove' ); ?></a></h2>
 			<?php
 			$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : NULL;
