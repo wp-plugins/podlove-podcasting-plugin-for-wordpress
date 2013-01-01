@@ -86,8 +86,17 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.3.18-alpha =
+* Feature: Module for Bitlove.org support! Adds links to torrent-files to the downloads-section of your episodes.
+* Feature: add video support for web player
+* Enhancement: fix a (possibly rare) memory bug when downloading files
+* Enhancement: enable episodes on home page by default
+* Enhancement: change default download widget style to the select-thingy
+* Bugfix: fix feed warning
+
 = 1.3.17-alpha =
 * Bugfix: fix issue with 3rd party custom post types
+* Enhancement: improve Feed Settings screen
 
 = 1.3.16-alpha =
 * Feature: new style for file downloads `[podlove-episode-downloads style="select"]`
