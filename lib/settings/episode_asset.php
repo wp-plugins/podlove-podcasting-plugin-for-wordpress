@@ -57,31 +57,12 @@ class EpisodeAsset {
 
 		$podcast = Model\Podcast::get_instance();
 		$asset   = Model\EpisodeAsset::find_by_id( $_REQUEST['episode_asset'] );
-		$asset_assignment = Model\AssetAssignment::get_instance();
-		$feed_exists      = (bool) Model\Feed::find_one_by_episode_asset_id( $_REQUEST['episode_asset'] );
 
-		$connected_to_web_player = false;
-		$web_player_formats = get_option( 'podlove_webplayer_formats', array() );
-		foreach ( $web_player_formats as $_ => $media_types ) {
-			foreach ( $media_types as $asset_id ) {
-				if ( $asset_id == $_REQUEST['episode_asset'] ) {
-					$connected_to_web_player = true;
-					break;
-				}
-			}
-		}
-
-		$can_delete =	count( $asset->media_files() ) === 0
-					&&	$asset_assignment->image != $asset->id
-					&&	$asset_assignment->chapters != $asset->id
-					&&  ! $feed_exists
-					&&  ! $connected_to_web_player;
-
-		if ( $can_delete ) {
+		if ( isset( $_REQUEST['force'] ) && $_REQUEST['force'] || $asset->is_deletable() ) {
 			$asset->delete();
 			$this->redirect( 'index' );
 		} else {
-			$this->redirect( 'index', NULL, 'media_file_relation_warning' );
+			$this->redirect( 'index', NULL, array( 'message' => 'media_file_relation_warning', 'deleted_id' => $asset->id ) );
 		}
 		
 	}
@@ -118,19 +99,20 @@ class EpisodeAsset {
 			}
 		}
 
-		$this->redirect( 'index', NULL, 'media_file_batch_enabled_notice' );
+		$this->redirect( 'index', NULL, array( 'message' => 'media_file_batch_enabled_notice' ) );
 	}
 
 	/**
 	 * Helper method: redirect to a certain page.
 	 */
-	private function redirect( $action, $episode_asset_id = NULL, $message = NULL ) {
+	private function redirect( $action, $episode_asset_id = NULL, $params = array() ) {
 		$page    = 'admin.php?page=' . $_REQUEST['page'];
 		$show    = ( $episode_asset_id ) ? '&episode_asset=' . $episode_asset_id : '';
 		$action  = '&action=' . $action;
-		$message = $message ? '&message=' . $message : '';
+
+		array_walk( &$params, function(&$value, $key) { $value = "&$key=$value"; } );
 		
-		wp_redirect( admin_url( $page . $show . $action . $message ) );
+		wp_redirect( admin_url( $page . $show . $action . implode( '', $params ) ) );
 		exit;
 	}
 	
@@ -162,9 +144,37 @@ class EpisodeAsset {
 				<?php
 			}
 			if ( $_REQUEST['message'] == 'media_file_relation_warning' ) {
+				$asset = Model\EpisodeAsset::find_one_by_id( (int) $_REQUEST['deleted_id'] );
 				?>
 				<div class="error">
-					<p><?php echo __( '<strong>Asset can\'t be deleted.</strong> It is used by at least one media file or feed or the web player.' ) ?></p>
+					<p>
+						<?php echo __( '<strong>The asset has not been deleted. Are you aware that the asset is still in use?</strong>', 'podlove' ) ?>
+						<ul class="ul-disc">
+							<?php if ( $asset->has_active_media_files() ): ?>
+								<li>
+									<?php echo sprintf( __( 'There are %s connected media files.', 'podlove' ), count( $asset->active_media_files() ) ) ?>
+								</li>
+							<?php endif; ?>
+							<?php if ( $asset->has_asset_assignments() ): ?>
+								<li>
+									<?php echo __( 'This asset is assigned to episode images or episode chapters.', 'podlove' ) ?>
+								</li>
+							<?php endif; ?>
+							<?php if ( $asset->is_connected_to_feed() ): ?>
+								<li>
+									<?php echo __( 'A feed uses this asset.', 'podlove' ) ?>
+								</li>
+							<?php endif; ?>
+							<?php if ( $asset->is_connected_to_web_player() ): ?>
+								<li>
+									<?php echo __( 'The web player uses this asset.', 'podlove' ) ?>
+								</li>
+							<?php endif; ?>
+						</ul>
+						<a href="?page=<?php echo $_REQUEST['page'] ?>&amp;action=delete&amp;episode_asset=<?php echo $asset->id ?>&amp;force=1">
+							<?php echo __( 'delete anyway', 'podlove' ) ?>
+						</a>
+					</p>
 				</div>
 				<?php
 			}
