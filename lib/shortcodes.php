@@ -212,7 +212,8 @@ function webplayer_shortcode( $options ) {
 		'subtitle'   => $episode->subtitle,
 		'summary'    => $episode->summary,
 		'poster'     => $episode->get_cover_art_with_fallback(),
-		'duration'   => $episode->get_duration()
+		'duration'   => $episode->get_duration(),
+		'chaptersVisible' => \Podlove\get_webplayer_setting( 'chaptersVisible' )
 	);
 	$attr_string = '';
 	foreach ( $attributes as $key => $value ) {
@@ -283,7 +284,7 @@ add_shortcode( 'podlove-show', '\Podlove\podcast_data_shortcode' );
  *
  * Usage:
  * 	
- * 	[podlove-template title="Template Title"]
+ * 	[podlove-template id="Template Title"]
  *
  * 	Parameters:
  * 		title: (required) Title of template to render.
