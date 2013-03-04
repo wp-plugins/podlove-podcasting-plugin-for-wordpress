@@ -1,7 +1,7 @@
 <?php
 /**
  * @package PodloveWebPlayer
- * @version 2.0.3
+ * @version 2.0.4
  */
 
 /*
@@ -9,22 +9,20 @@ Plugin Name: Podlove Web Player
 Plugin URI: http://podlove.org/podlove-web-player/
 Description: Video and audio plugin for WordPress built on the MediaElement.js HTML5 media player library.
 Author: Gerrit van Aaken and Simon Waldherr
-Version: 2.0.3
+Version: 2.0.4
 Author URI: http://praegnanz.de
-License: GPLv3, MIT
+License: BSD 2-Clause License
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
-published by the Free Software Foundation.
+Copyright (c) 2013, Podlove.org
+All rights reserved.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Forked from: http://mediaelementjs.com/ plugin
 which was adapted from: http://videojs.com/ plugin
@@ -73,7 +71,7 @@ function podlovewebplayer_add_scripts() {
 		wp_enqueue_script( 
 			'podlovewebplayer', 
 			plugins_url('podlove-web-player.js', __FILE__), 
-			array('jquery', 'mediaelementjs'), '2.0.3', false
+			array('jquery', 'mediaelementjs'), '2.0.4', false
 		);
 	}
 }
@@ -198,7 +196,7 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 	foreach ( $supported_sources as $source_extension => $source_type ) {
 		if ( ${$source_extension} ) {
 			$src       = htmlspecialchars( ${$source_extension} );
-			$sources[] = '<source src="' . $src . '" type="' . $source_type . '" />';
+			$sources[] = '<source src="' . $src . '" type=\'' . $source_type . '\' />';
 			$files[]   = $src;
 		}
 	}
@@ -219,26 +217,20 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 
 	// ------------------- prepare controls/features
 
-	if ( $tag_name == 'video' || ( !$poster && !$title && !$subtitle && !$summary ) ) {
-		$features[] = "'playpause'";
-	}
+	$features = array( "current", "progress", "duration", "tracks" );
 
-	$features[] = "'current'";
-	$features[] = "'progress'";
-	$features[] = "'duration'";
-	$features[] = "'tracks'";
-	
+	if ( $tag_name == 'video' || ( !$poster && !$title && !$subtitle && !$summary ) ) {
+		$features[] = "playpause";
+	}
 	if ( $loop ) {
-		$features[] .= "'loop'";
+		$features[] .= "loop";
 	}
 	if ( $fullscreen == 'true' ) {
-		$features[] = "'fullscreen'";
+		$features[] = "fullscreen";
 	}
 	if ( $volume == 'true' ) {
-		$features[] = "'volume'";
+		$features[] = "volume";
 	}
-	$temp[] = 'features: [' . implode(',', $features) . ']';
-	$features_string = !empty($temp) ? implode(',', $temp) : '';
 
 	// ------------------- prepare player dimensions
 	if ($tag_name == 'audio') {
@@ -262,57 +254,48 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 
 	// ------------------- prepare podlove call inits
 
-	$init_options = "";
+	$truthy = array( true, 'true', 'on', 1 );
+
+	$init_options = array(
+		'pluginPath'          => plugins_url( 'libs/mediaelement/build/', __FILE__),
+		'alwaysShowHours'     => in_array( $alwaysshowhours, $truthy, true ),
+		'alwaysShowControls'  => in_array( $alwaysshowcontrols, $truthy, true ),
+		'chaptersVisible'     => in_array( $chaptersvisible, $truthy, true ),
+		'timecontrolsVisible' => in_array( $timecontrolsvisible, $truthy, true ),
+		'summaryVisible'      => in_array( $summaryvisible, $truthy, true ),
+		'loop'                => in_array( $loop, $truthy, true ),
+		'chapterlinks'        => $chapterlinks
+	);
 	if ( $poster ) {
-		$init_options .= "\n  poster: '" . htmlspecialchars($poster, ENT_QUOTES) . "',";
+		$init_options['poster'] = htmlspecialchars( $poster, ENT_QUOTES );
 	}
 	if ( $title ) {
-		$init_options .= "\n  title: '" . htmlspecialchars($title, ENT_QUOTES) . "',";
+		$init_options['title'] = $title;
 	}
-	if (( $permalink )&&(filter_var($permalink, FILTER_VALIDATE_URL) !== FALSE)) {
-		$init_options .= "\n  permalink: '" . $permalink . "',";
+	if ( $permalink && ( filter_var( $permalink, FILTER_VALIDATE_URL ) !== FALSE ) ) {
+		$init_options['permalink'] = $permalink;
 	} else {
-		$init_options .= "\n  permalink: '" . get_permalink() . "',";
+		$init_options['permalink'] = get_permalink();
 	}
 	if ( $subtitle ) {
-		$init_options .= "\n  subtitle: '" . htmlspecialchars($subtitle, ENT_QUOTES) . "',";
+		$init_options['subtitle'] = $subtitle;
 	}
 	if ( $chapters ) {
-		$init_options .= "\n  chapters: '" . podlovewebplayer_render_chapters($chapters) . "',";
+		$init_options['chapters'] = podlovewebplayer_render_chapters( $chapters );
 	}
 	if ( $summary ) {
-		$init_options .= "\n  summary: '" . preg_replace("(\r?\n)", "'\n".'+"\n"+\'', htmlspecialchars($summary, ENT_QUOTES)) . "',";
+		$init_options['summary'] = nl2br( $summary );
 	}
 	if ( $duration ) {
-		$init_options .= "\n  duration: '" . $duration . "',";
-	}
-	if ( $loop ) {
-		$init_options .= "\n  loop: " . $loop . ",";
+		$init_options['duration'] = $duration;
 	}
 	if ( $tag_name == 'audio' ) {
-		$init_options .= "\n  audioWidth: '". $width . "',";
-		$init_options .= "\n  audioHeight: '" . $height . "',";
+		$init_options['audioWidth'] = $width;
+		$init_options['audioHeight'] = $height;
 	}
-	if ( $alwaysshowhours ) {
-		$init_options .= "\n  alwaysShowHours: " . $alwaysshowhours . ",";	
+	if ( count( $features ) ) {
+		$init_options['features'] = $features;
 	}
-	if ( $alwaysshowcontrols ) {
-		$init_options .= "\n  alwaysShowControls: " . $alwaysshowcontrols . ",";	
-	}
-	if ( $chaptersvisible ) {
-		$init_options .= "\n  chaptersVisible: " . $chaptersvisible . ",";	
-	}
-	if ( $timecontrolsvisible ) {
-		$init_options .= "\n  timecontrolsVisible: " . $timecontrolsvisible . ",";	
-	}
-	if ( $summaryvisible ) {
-		$init_options .= "\n  summaryVisible: " . $summaryvisible . ",";	
-	}
-	if ( !empty( $features_string ) ) {
-		$init_options .= "\n  " . $features_string . ",";
-	}
-	$init_options .= "\n  chapterlinks: '".$chapterlinks."'";
-
 
 	// ------------------- build actual html player code
 	
@@ -322,7 +305,7 @@ function podlovewebplayer_render_player( $tag_name, $atts ) {
 		{$fallback}
 	</{$tag_name}>
 _end_;
-	$return .= "\n\n<script>jQuery('#podlovewebplayer_{$podlovewebplayer_index}').podlovewebplayer({{$init_options}});</script>\n";
+	$return .= "\n\n<script>jQuery('#podlovewebplayer_{$podlovewebplayer_index}').podlovewebplayer(" . json_encode( $init_options ) . ");</script>\n";
 	$podlovewebplayer_index++;
 	return $return;
 }
@@ -344,7 +327,7 @@ function podlovewebplayer_render_chapters( $input ) {
 			$chapters = $chapters[0];
 		}
 	}
-	$chapters = preg_replace("(\r?\n)", "'\n".'+"\n"+\'', htmlspecialchars($chapters, ENT_QUOTES));
+	$chapters = preg_replace("(\r?\n)", "\n".'+"\n"', htmlspecialchars($chapters, ENT_QUOTES));
 	return $chapters;
 }
 
