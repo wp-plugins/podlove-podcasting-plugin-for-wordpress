@@ -123,6 +123,22 @@ class Podcast_Post_Meta_Box {
 
 				$wrapper->multiselect( 'episode_assets', Podcast_Post_Meta_Box::episode_assets_form( $episode ) );
 
+				if ( \Podlove\get_setting( 'enable_episode_record_date' ) ) {
+					$wrapper->string( 'record_date', array(
+						'label'       => __( 'Record Date', 'podlove' ),
+						'description' => '',
+						'html'        => array( 'class' => 'regular-text' )
+					));
+				}
+
+				if ( \Podlove\get_setting( 'enable_episode_publication_date' ) ) {
+					$wrapper->string( 'publication_date', array(
+						'label'       => __( 'Publication Date', 'podlove' ),
+						'description' => '',
+						'html'        => array( 'class' => 'regular-text' )
+					));
+				}
+
 				do_action( 'podlove_episode_form', $wrapper, $episode );
 
 			} );
@@ -245,7 +261,7 @@ class Podcast_Post_Meta_Box {
 				$file     = \Podlove\Model\MediaFile::find_by_episode_id_and_episode_asset_id( $episode->id, $asset->id );
 				
 				$attributes = array(
-					'data-template'  => \Podlove\Model\Podcast::get_instance()->url_template,
+					'data-template'  => \Podlove\Model\Podcast::get_instance()->get_url_template(),
 					'data-extension' => $format->extension,
 					'data-size' => ( is_object( $file ) ) ? $file->size : 0,
 					'data-suffix' => $asset->suffix,

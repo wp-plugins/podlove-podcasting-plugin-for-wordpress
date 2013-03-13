@@ -206,11 +206,13 @@ function webplayer_shortcode( $options ) {
 		}
 	}
 
+	
+
 	$attributes = array(
 		'permalink'  => get_permalink(),
-		'title'      => htmlspecialchars( get_the_title(), ENT_COMPAT ),
-		'subtitle'   => htmlspecialchars( $episode->subtitle, ENT_COMPAT ),
-		'summary'    => htmlspecialchars( $episode->summary, ENT_COMPAT ),
+		'title'      => get_the_title(),
+		'subtitle'   => wptexturize( convert_chars( trim( $episode->subtitle ) ) ),
+		'summary'    => wptexturize( convert_chars( trim( $episode->summary ) ) ),
 		'poster'     => $episode->get_cover_art_with_fallback(),
 		'duration'   => $episode->get_duration(),
 		'chaptersVisible' => \Podlove\get_webplayer_setting( 'chaptersVisible' )
@@ -241,7 +243,11 @@ foreach ( $podlove_public_episode_attributes as $attr ) {
 function episode_data_shortcode( $attributes ) {
 	global $post;
 
-	$defaults = array( 'field' => '', 'format' => 'HH:MM:SS' );
+	$defaults = array(
+		'field' => '',
+		'format' => 'HH:MM:SS',
+		'date_format' => get_option( 'date_format' ) . ' ' . get_option( 'time_format' )
+	);
 	$attributes = shortcode_atts( $defaults, $attributes );
 
 	$episode = Model\Episode::find_or_create_by_post_id( $post->ID );
@@ -258,6 +264,8 @@ function episode_data_shortcode( $attributes ) {
 		return $episode->get_duration( $attributes['format'] );
 	} elseif ( $attributes['field'] == 'title' ) {
 		return get_the_title( $episode->post_id );
+	} elseif ( stristr( $attributes['field'], '_date' ) !== false ) {
+		return date( $attributes['date_format'], strtotime( $episode->$attributes['field'] ) );
 	} else {
 		return sprintf( __( 'Podlove Error: Unknown episode field "%s"', 'podcast' ), $attributes['field'] );
 	}
