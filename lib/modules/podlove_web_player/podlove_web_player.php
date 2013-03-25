@@ -9,6 +9,7 @@ class Podlove_Web_Player extends \Podlove\Modules\Base {
 	public function load() {
 
 		add_action( 'podlove_dashboard_meta_boxes', array( $this, 'register_meta_boxes' ) );
+		add_filter( 'the_content', array( $this, 'autoinsert_into_content' ) );
 
 		if ( defined( 'PODLOVEWEBPLAYER_DIR' ) ) {
 			define( 'PODLOVE_MEDIA_PLAYER', 'external' );
@@ -18,6 +19,25 @@ class Podlove_Web_Player extends \Podlove\Modules\Base {
 		}
 
 		include_once 'player/podlove-web-player/podlove-web-player.php';
+	}
+
+	public function autoinsert_into_content( $content ) {
+
+		if ( get_post_type() !== 'podcast' )
+			return $content;
+
+		if ( self::there_is_a_player_in_the_content( $content ) )
+			return $content;
+
+		$inject = \Podlove\get_webplayer_setting( 'inject' );
+
+		if ( $inject == 'beginning' ) {
+			$content = '[podlove-web-player]' . $content;
+		} elseif ( $inject == 'end' ) {
+			$content = $content . '[podlove-web-player]';
+		}
+
+		return $content;
 	}
 
 	public function register_meta_boxes() {
@@ -35,6 +55,17 @@ class Podlove_Web_Player extends \Podlove\Modules\Base {
 			echo __( 'It looks like you have installed an <strong>external plugin</strong> using mediaelement.js.<br>That\'s what\'s used.', 'podlove' );
 		else
 			echo __( 'Podlove ships with its <strong>own webplayer</strong>.<br>That\'s what\'s used.', 'podlove' );
+	}
+
+	public static function there_is_a_player_in_the_content( $content ) {
+		return (
+			stripos( $content, '[podloveaudio' ) !== false OR 
+			stripos( $content, '[podlovevideo' ) !== false OR
+			stripos( $content, '[audio' ) !== false OR 
+			stripos( $content, '[video' ) !== false OR
+			stripos( $content, '[podlove-web-player' ) !== false OR
+			stripos( $content, '[podlove-template' ) !== false
+		);
 	}
 
 }
