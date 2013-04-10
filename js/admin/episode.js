@@ -4,7 +4,7 @@ var PODLOVE = PODLOVE || {};
  * Handles all logic in Create/Edit Episode screen.
  */
 (function($){
-	 PODLOVE.Episode = function (container) {
+	PODLOVE.Episode = function (container) {
 
 	 	var o = {};
 	 	var ajax_requests = [];
@@ -57,6 +57,7 @@ var PODLOVE = PODLOVE || {};
 	 		}
 
 	 		o.slug_field.data('prev-slug', current_slug);
+	 		o.slug_field.trigger('slugHasChanged');
 	 	};
 
 	 	function generate_live_preview() {
@@ -127,8 +128,8 @@ var PODLOVE = PODLOVE || {};
 	 						$row.find(".status").html('<span style="color: green">✓</span>');
 	 					}
 	 					$row.find(".size").html(size_html);
-	 					$row.find(".url").html('<span title="' + url + '">' + filename + '</span>');
-	 					$row.find(".update").html('<a href="#" class="update_media_file">update</a>');
+	 					$row.find(".url").html('<a href="' + url + '" target="_blank">' + filename + '</a>');
+	 					$row.find(".update").html('<a href="#" class="button update_media_file">update</a>');
  					}
 
  				} else {

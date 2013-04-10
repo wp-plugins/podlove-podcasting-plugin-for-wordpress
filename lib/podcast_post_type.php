@@ -9,13 +9,6 @@ class Podcast_Post_Type {
 
 	const SETTINGS_PAGE_HANDLE = 'podlove_settings_handle';
 
-	public static $default_post_content = <<<EOT
-
-[podlove-web-player]
-
-[podlove-episode-downloads]
-EOT;
-
 	public function __construct() {
 
 		$labels = array(
@@ -34,8 +27,6 @@ EOT;
 			'menu_name'          => __( 'Episodes', 'podlove' ),
 		);
 
-		$slug = trim( \Podlove\get_setting( 'custom_episode_slug' ) );
-
 		$args = array(
 			'labels'               => $labels,
 			'public'               => true,
@@ -44,21 +35,18 @@ EOT;
 			'show_in_menu'         => true,
 			'menu_position'        => 5, // below "Posts"
 			'query_var'            => true,
-			'rewrite'              => true,
+			'rewrite'              => false,
 			'capability_type'      => 'post',
 			'has_archive'          => true,
 			'supports'             => array( 'title', 'editor', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'trackbacks' ),
 			'register_meta_box_cb' => '\Podlove\Podcast_Post_Meta_Box::add_meta_box',
 			// 'menu_icon'            => PLUGIN_URL . '/images/episodes-icon-16x16.png',
-			'rewrite' => array(
-				'slug'       => strlen( $slug ) ? $slug : 'podcast',
-				'with_front' => false
-			),
+			// 'rewrite' => array(
+			// 	'slug'       => '',
+			// 	'with_front' => false
+			// ),
 			'taxonomies' => array( 'post_tag' )
 		);
-
-		if ( strlen( $slug ) === 0 )
-			\Podlove\Episode_Routing::init();
 
 		new \Podlove\Podcast_Post_Meta_Box();
 
@@ -67,7 +55,7 @@ EOT;
 		register_post_type( 'podcast', $args );
 
 		add_action( 'admin_menu', array( $this, 'create_menu' ) );
-		add_filter( 'default_content', array( $this, 'set_default_episode_content' ), 20, 2 );
+		add_action( 'admin_menu', array( $this, 'create_support_menu_entry' ), 100 ); // make sure it's at the bottom
 		add_action( 'after_delete_post', array( $this, 'delete_trashed_episodes' ) );
 		add_filter( 'pre_get_posts', array( $this, 'enable_tag_and_category_search' ) );
 		add_filter( 'post_class', array( $this, 'add_post_class' ) );
@@ -152,8 +140,6 @@ EOT;
 		add_filter( 'request', array( $this, 'add_post_type_to_feeds' ) );
 
 		add_filter( 'get_the_excerpt', array( $this, 'default_excerpt_to_episode_summary' ) );
-
-		\Podlove\Feeds\init();
 	}
 
 	/**
@@ -217,6 +203,10 @@ EOT;
 		new \Podlove\Settings\FileType( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Modules( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Settings( self::SETTINGS_PAGE_HANDLE );
+		
+	}
+
+	public function create_support_menu_entry() {
 		new \Podlove\Settings\Support( self::SETTINGS_PAGE_HANDLE );
 	}
 
@@ -245,30 +235,6 @@ EOT;
 		}
 
 		return $query_var;
-	}
-
-	public function set_default_episode_content( $post_content, $post ) {
-
-		if ( $post->post_type !== 'podcast' )
-			return $post_content;
-
-		$post_content = self::get_default_post_content();
-
-		return $post_content;
-	}
-
-	public static function get_default_post_content( $post_content = '' ) {
-
-		$default_templates = Model\Template::find_all_by_autoinsert(1);
-		if ( count( $default_templates ) > 0 ) {
-			foreach ( $default_templates as $template ) {
-				$post_content .= '[podlove-template id="' . $template->title . '"]';
-			}
-		} else {
-			$post_content .= self::$default_post_content;
-		}
-
-		return $post_content;
 	}
 
 	/**

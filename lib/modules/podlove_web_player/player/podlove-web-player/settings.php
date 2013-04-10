@@ -5,7 +5,6 @@ if ( is_admin() ){
 	add_action( 'admin_init', 'podlovewebplayer_register_settings' );
 }
 
-
 function podlovewebplayer_settings_page() { ?>
 	<div class="wrap">
 		<h2>Podlove Web Player Options</h2>
@@ -35,33 +34,41 @@ function podlovewebplayer_register_settings() {
 
 	$settings = array(
 		'audio' => array(
-			'title' => 'Audio player defaults',
+			'title'  => 'Audio player defaults',
 			'fields' => array(
-				'width' => 'Audio width',
+				'width'  => 'Audio width',
 				'height' => 'Audio height',
-				'type' => 'Default MIME type'
+				'type'   => 'Default MIME type'
 			)
 		),
 		'video' => array(
-			'title' => 'Video player defaults',
+			'title'  => 'Video player defaults',
 			'fields' => array(
-				'width' => 'Video width',
+				'width'  => 'Video width',
 				'height' => 'Video height',
-				'type' => 'Default MIME type'
+				'type'   => 'Default MIME type'
 			)
 		),
 		'enclosure' => array(
-			'title' => 'WordPress “enclosures”',
+			'title'    => 'WordPress “enclosures”',
 			'function' => true,
-			'fields' => array(
-				'detect' => 'Turn enclosures to players:',
-				'force' => 'Force enclosure:',
+			'fields'   => array(
+				'detect'     => 'Turn enclosures to players:',
+				'force'      => 'Force enclosure:',
 				'richplayer' => 'Advanced player:',
-				'bottom' => 'Put player to bottom of post:'
+				'bottom'     => 'Put player to bottom of post:'
+			)
+		),
+		'buttons' => array(
+			'title'    => 'PWP buttons',
+			'function' => true,
+			'fields'   => array(
+				'time'      => 'Hide time buttons:',
+				'share'     => 'Hide share buttons:',
 			)
 		),
 		'info' => array(
-			'title' => 'Information',
+			'title'    => 'Information',
 			'function' => true
 		)
 	);
@@ -70,8 +77,9 @@ function podlovewebplayer_register_settings() {
 
 	foreach($settings as $sectionname => $section) {
 		$function = false;
-		if ( isset( $section['function'] ) )
+		if ( isset( $section['function'] ) ) {
 			$function = $pwp.'_'.$sectionname;
+		}
 		add_settings_section( $pwp.'_'.$sectionname, $section['title'], $function, $pwp );
 		if ( isset( $section['fields'] ) ) {
 			$i = 0;
@@ -92,7 +100,7 @@ function podlovewebplayer_register_settings() {
 function podlovewebplayer_audio_width(){
 	$options = get_option('podlovewebplayer_options');
 	if ( !isset( $options['audio_width'] ) )
-		$options['audio_width'] = "";
+		$options['audio_width'] = '';
 	print "<input id='pwpaudio1' name='podlovewebplayer_options[audio_width]' 
 		value='".$options['audio_width']."' style='width:3em;' /> px&nbsp;&nbsp;(keep blank for automatic width)";
 }
@@ -107,10 +115,10 @@ function podlovewebplayer_audio_height() {
 
 function podlovewebplayer_audio_type() { 
 	$options = get_option('podlovewebplayer_options');
-	if ( !isset( $options['audio_type'] ) )
-		$options['audio_type'] = "audio/mp3";
+	if (( !isset( $options['audio_type'] ) ) || ( $options['audio_type'] == 'audio/mp3' ))
+		$options['audio_type'] = 'audio/mpeg';
 	print "<input id='pwpaudio3' name='podlovewebplayer_options[audio_type]' 
-		value='".$options['audio_type']."' style='width:6em;' />&nbsp;&nbsp;(such as \"audio/mp3\")";
+		value='".$options['audio_type']."' style='width:6em;' />&nbsp;&nbsp;(such as \"audio/mpeg\")";
 }
 
 function podlovewebplayer_video_width() { 
@@ -192,12 +200,38 @@ function podlovewebplayer_enclosure_bottom() {
 		(instead of the top)";
 }
 
+function podlovewebplayer_buttons() {
+	print "<p>Here you can select, which buttons will be displayd. The Chapter-Toggle- and Summary-Info-Button are not configurable here, because they automaticle hidden, when no chapters/summary are provided.</p>\n\n";
+}
+
+function podlovewebplayer_buttons_time() { 
+	$options = get_option('podlovewebplayer_options');
+	$checked = "";
+	if ( isset( $options['buttons_time'] ) )
+		$checked = "checked ";
+	print "<input id='pwpbuttons1' name='podlovewebplayer_options[buttons_time]' 
+		$checked type='checkbox' value='1' />&nbsp;&nbsp;";
+}
+
+function podlovewebplayer_buttons_share() { 
+	$options = get_option('podlovewebplayer_options');
+	$checked = "";
+	if ( isset( $options['buttons_share'] ) )
+		$checked = "checked ";
+	print "<input id='pwpbuttons3' name='podlovewebplayer_options[buttons_share]' 
+		$checked type='checkbox' value='1' />&nbsp;&nbsp;";
+}
+
 function podlovewebplayer_info() {
 	$scriptname = explode('/wp-admin', $_SERVER["SCRIPT_FILENAME"]);
 	$dirname    = explode('/wp-content', dirname(__FILE__));
-	print "<p>This is <strong>Version 2.0.5</strong> of the <strong>Podlove Web Player</strong>.<br>
-	The <strong>Including file</strong> is: <code>wp-admin".$scriptname[1]."</code><br>
-	The <strong>PWP-directory</strong> is: <code>wp-content".$dirname[1]."</code></p>";
+	print '<p>This is <strong>Version 2.0.7</strong> of the <strong>Podlove Web Player</strong>.<br>
+	The <strong>Including file</strong> is: <code>wp-admin'.$scriptname[1].'</code><br>
+	The <strong>PWP-directory</strong> is: <code>wp-content'.$dirname[1].'</code></p>
+	<p>Want to contribute? Found a bug? Need some help? <br/>you can found our github repo/page at
+	<a href="https://github.com/podlove/podlove-web-player">github.com/podlove/podlove-web-player</a></p>
+	<p>If you found a bug, please tell us your WP- and PWP- (and PPP- if you use PPP) Version. <br/>Also your 
+	Browser version, your PHP version and the URL of your Podcast can help us, find the bug.</p>';
 }
 
 ?>

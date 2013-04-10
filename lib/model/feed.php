@@ -94,6 +94,7 @@ class Feed extends Base {
 			return array();
 
 		// fetch releases
+		$media_files = array_filter( $media_files, function($mf){ return $mf->size > 0; });
 		$episode_ids = array_map( function ( $v ) { return $v->episode_id; }, $media_files );
 		$episodes = Episode::find_all_by_where( "id IN (" . implode( ',', $episode_ids ) . ")" );
 
@@ -105,12 +106,20 @@ class Feed extends Base {
 	}
 
 	public function get_self_link() {
+
+		$href = $this->get_subscribe_url();
+
+		$current_page = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+		if ( $current_page > 1 ) {
+			$href .= "?paged=" . $current_page;
+		}
+
 		return self::get_link_tag( array(
 			'prefix' => 'atom',
 			'rel'    => 'self',
 			'type'   => $this->get_content_type(),
 			'title'  => \Podlove\Feeds\prepare_for_feed( $this->title_for_discovery() ),
-			'href'   => $this->get_subscribe_url()
+			'href'   => $href
 		) );
 	}
 
@@ -174,3 +183,4 @@ Feed::property( 'redirect_http_status', 'INT' );
 Feed::property( 'enable', 'INT' );
 Feed::property( 'discoverable', 'INT' );
 Feed::property( 'limit_items', 'INT' );
+Feed::property( 'embed_content_encoded', 'INT' );

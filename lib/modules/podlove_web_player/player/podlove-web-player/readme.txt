@@ -4,11 +4,11 @@ Donate link: http://podlove.org/
 Tags: podcasting, podlove, html5audio, audio, video, podcast, player
 Requires at least: 3.4.0
 Tested up to: 3.5.1
-Stable tag: 2.0.5
+Stable tag: 2.0.7
 License: BSD 2-Clause License
 License URI: http://opensource.org/licenses/BSD-2-Clause
 
-HTML5 based audio/video player, focused on podcasts and similar media blogs. It supports chapters, deeplinks, captions and even more.
+HTML5 based audio/video player, focused on podcasts and similar media blogs. It supports chapters, deeplinks, captions, social media buttons and more.
 
 == Description ==
 
@@ -37,9 +37,11 @@ This player is bundled with the <a href="http://podlove.org/podlove-podcast-publ
 
 == Credits ==
 
-The Podlove Web Player is built upon the MediaElement.js library. Check out <a href="http://mediaelementjs.com/">mediaElementjs.com</a> for more information on that.
+The Podlove Web Player is built from the <a href="http://podlove.org/">Podlove Team</a>.
 
-We also make use of the fantastic <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a> project.
+It uses sources from <a href="http://mediaelementjs.com/">MediaElement.js</a>, <a href="http://jquery.com/">jQuery</a> and <a href="http://benalman.com/projects/jquery-hashchange-plugin/">jQuery hashchange event</a>.
+
+The used icons are built in as fonts and provided by <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a>, <a href="http://zocial.smcllns.com/">Zocial</a>, <a href="http://somerandomdude.com/work/iconic/">Iconic</a>, <a href="http://aristeides.com/">Elusive</a>, <a href="http://designmodo.com/linecons-free/">Linecons</a>, <a href="http://www.entypo.com">Entypo</a>, <a href="http://www.justbenicestudio.com/studio/websymbols/">Web Symbols</a>, <a href="http://thedesignoffice.org/project/modern-pictograms/">Modern Pictograms</a>.
 
 == Installation ==
 
@@ -186,6 +188,7 @@ If you have an audio file and use one of the following attributes, the player wi
 
 ### Deprecated usage
 
+Chapters now handed over as JSON, please take a look at the standalone-json.html. The previous solution will still work, however we recommend to use the new solution, as it offers some more features.
 Earlier versions of this plugin could handle alternative shortcodes, too: [audio] and [video]. As of version 1.1, these are deprecated as they conflict with other plugins.
 
 == Screenshots ==
@@ -194,6 +197,21 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 2. Podlove Web Player in chapters hidden and timecontrol-bar visible view.
 
 == Changelog ==
+
+= 2.0.7 =
+* Download bar added
+* Button config added
+* PHP Warnings removed
+* various small changes
+
+= 2.0.6 =
+* podPress compatibility
+* chapterbox height fix
+* summary height fix
+* infobutton style fixes
+* jshint and jslint valid
+* various small fixes
+* Chapter hand over via JSON
 
 = 2.0.5 =
 * fixed Blubrry PowerPress compatibility
