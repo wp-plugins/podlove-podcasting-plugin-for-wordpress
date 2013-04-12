@@ -119,6 +119,7 @@ function activate() {
 	}
 
 	set_transient( 'podlove_needs_to_flush_rewrite_rules', true );
+	\Podlove\run_system_report();
 }
 
 /**
@@ -134,7 +135,7 @@ add_action( 'admin_init', function () {
 } );
 
 function deactivate() {
-
+	flush_rewrite_rules();
 }
 
 /**
@@ -378,6 +379,49 @@ add_action( 'plugins_loaded', function () {
 	}
 } );
 
+function show_critical_errors() {
+
+	$errors = get_option( 'podlove_global_messages', array() );
+
+	if ( ! isset( $errors['errors'] ) && ! isset( $errors['notices'] ) )
+		return;
+
+	if ( count( $errors['errors'] ) + count( $errors['notices'] ) === 0 )
+		return;
+
+    ?>
+    <div class="error">
+        
+    	<?php if ( isset( $errors['errors'] ) ): ?>
+			<h3>
+				<?php echo __( 'Critical Podlove Warnings', 'podlove' ) ?>
+			</h3>
+    		<ul>
+    			<?php foreach ( $errors['errors'] as $error ): ?>
+    				<li><?php echo $error ?></li>
+    			<?php endforeach; ?>
+    			<?php foreach ( $errors['notices'] as $error ): ?>
+    				<li><?php echo $error ?></li>
+    			<?php endforeach; ?>
+    		</ul>
+    	<?php endif; ?>
+
+    </div>
+    <?php
+}
+add_action( 'admin_notices', '\Podlove\show_critical_errors' );
+
+/**
+ * System Report needs to be run whenever a setting has changed that could effect something critical.
+ */
+function run_system_report() {
+	$report = new SystemReport;
+	$report->run();
+}
+
+add_action( 'update_option_permalink_structure', '\Podlove\run_system_report' );
+add_action( 'update_option_podlove', '\Podlove\run_system_report' );
+
 /**
  * Simple method to allow support for multiple urls per post.
  *
@@ -391,10 +435,18 @@ function override404() {
 
 	// check for global redirects
 	$parsed_request = parse_url($_SERVER['REQUEST_URI']);
+	$parsed_request_url = $parsed_request['path'];
+	if ( isset( $parsed_request['query'] ) )
+		$parsed_request_url .= "?" . $parsed_request['query'];
 
 	foreach ( \Podlove\get_setting( 'podlove_setting_redirect' ) as $redirect ) {
 		$parsed_url = parse_url($redirect['from']);
-		if ( untrailingslashit( $parsed_url['path'] ) === untrailingslashit( $parsed_request['path'] ) ) {
+		
+		$parsed_redirect_url = $parsed_url['path'];
+		if ( isset( $parsed_url['query'] ) )
+			$parsed_redirect_url .= "?" . $parsed_url['query'];
+
+		if ( untrailingslashit( $parsed_redirect_url ) === untrailingslashit( $parsed_request_url ) ) {
 			status_header( 301 );
 			$wp_query->is_404 = false;
 			\wp_redirect( $redirect['to'], 301 );
