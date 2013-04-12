@@ -386,9 +386,26 @@ add_action( 'plugins_loaded', function () {
 function override404() {
 	global $wpdb, $wp_query;
 
+	if ( is_admin() )
+		return;
+
+	// check for global redirects
+	$parsed_request = parse_url($_SERVER['REQUEST_URI']);
+
+	foreach ( \Podlove\get_setting( 'podlove_setting_redirect' ) as $redirect ) {
+		$parsed_url = parse_url($redirect['from']);
+		if ( untrailingslashit( $parsed_url['path'] ) === untrailingslashit( $parsed_request['path'] ) ) {
+			status_header( 301 );
+			$wp_query->is_404 = false;
+			\wp_redirect( $redirect['to'], 301 );
+			exit;
+		}
+	}
+
 	if ( ! $wp_query->is_404 )
 		return;
 
+	// check for episode redirects
 	$rows = $wpdb->get_results( "
 		SELECT
 			post_id, meta_value url
@@ -463,7 +480,7 @@ add_filter( 'the_content', '\Podlove\autoinsert_templates_into_content' );
  *
  * @uses $wp_rewrite
  */
-add_action( 'after_setup_theme', function() {
+function modify_permalink_for_podcast_post_type() {
 	global $wp_rewrite;
 	
 	// Get permalink structure
@@ -485,22 +502,23 @@ add_action( 'after_setup_theme', function() {
 	} else {
 		$wp_rewrite->add_permastruct( "podcast", $permastruct, false, EP_PERMALINK );
 	}
-}, 99 );
+}
 
 /**
  * Disable verbose page rules mode after startup
  *
  * @uses $wp_rewrite
  */
-add_action( 'wp', function() {
-	global $wp_rewrite;	
+function no_verbose_page_rules() {
+	global $wp_rewrite;
 	$wp_rewrite->use_verbose_page_rules = false;
-} );
+}
 
 /**
  * Replace placeholders in permalinks with the correct values
  */
 function generate_custom_post_link( $post_link, $id, $leavename = false, $sample = false ) {
+
 	// Get post
 	$post = &get_post($id);
 	$draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
@@ -553,8 +571,12 @@ function generate_custom_post_link( $post_link, $id, $leavename = false, $sample
 
 	return $post_link;
 }
-		
-add_filter( 'post_type_link', '\Podlove\generate_custom_post_link', 10, 4 );
+
+if ( get_option( 'permalink_structure' ) != '' ) {
+	add_action( 'after_setup_theme', '\Podlove\modify_permalink_for_podcast_post_type', 99 );
+	add_action( 'wp', '\Podlove\no_verbose_page_rules' );		
+	add_filter( 'post_type_link', '\Podlove\generate_custom_post_link', 10, 4 );
+}
 
 namespace Podlove\AJAX;
 use \Podlove\Model;

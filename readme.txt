@@ -76,6 +76,14 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.4.4-alpha =
+* Feature: configure permanent redirects in Expert Settings
+* Bugfix: fix feed url generation for "default style" permalinks
+* Bugfix: migration assistant shows enclosure errors/warnings
+* Bugfix: add missing atom prefix in feed link elements
+* Bugfix: generate valid episode permalinks for "Default"/"Not Pretty" permalink settings
+* Bugfix: change default episode permalink structure from `%podcast%` to `podcast/%podcast%` to avoid conflicts with those setups using %postname% as WordPress permalink — which is quite common.
+
 = 1.4.3-alpha =
 * Bugfix: fix system report issue
 * Bugfix: fix feed setting "No limit. Include all items."
