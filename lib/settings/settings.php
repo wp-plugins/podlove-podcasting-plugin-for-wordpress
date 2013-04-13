@@ -107,7 +107,7 @@ class Settings {
 			/* $id       */ 'podlove_setting_episode_record_date',
 			/* $title    */ sprintf(
 				'<label for="enable_episode_record_date">%s</label>',
-				__( 'Enable record date field.', 'podlove' )
+				__( 'Enable recording date field.', 'podlove' )
 			),
 			/* $callback */ function () {
 				?>
@@ -208,6 +208,9 @@ class Settings {
 
 				<p>
 					<a href="#" id="podlove_add_new_rule" class="button"><?php echo __( 'Add new rule' ); ?></a>
+				</p>
+				<p class="description">
+					<?php echo __( 'Create custom permanent redirects. URLs can be absolute like <code>http://example.com/feed</code> or relative to the website like <code>/feed</code>.', 'podlove' ) ?>
 				</p>
 
 				<script type="text/javascript">

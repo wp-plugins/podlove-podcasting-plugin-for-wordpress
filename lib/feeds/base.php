@@ -49,12 +49,6 @@ function prepare_for_feed( $content ) {
 	return trim( htmlspecialchars( $content ) );
 }
 
-// todo: description
-// podlove_rss_feed_description
-// description = summary; fallback: subtitle; fallback: title
-
-// todo: new line for each tag
-// todo: hide tags without content
 function override_feed_head( $hook, $podcast, $feed, $format ) {
 
 	$filter_hooks = array(
@@ -234,9 +228,12 @@ function override_feed_entry( $hook, $podcast, $feed, $format ) {
 		echo apply_filters( 'podlove_feed_itunes_image', $cover_art );
 
 		if ( $feed->embed_content_encoded ) {
+			add_filter( 'the_content_feed', function( $content, $feed_type ) {
+				return preg_replace('#<style(.*?)>(.*?)</style>#is', '', $content );
+			}, 10, 2 );
 			$content_encoded = '<content:encoded><![CDATA[' . get_the_content_feed( 'rss2' ) . ']]></content:encoded>';
 			echo apply_filters( 'podlove_feed_content_encoded', $content_encoded );
 		}
 
-	} );
+	}, 11 );
 }
