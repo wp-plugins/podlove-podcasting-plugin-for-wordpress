@@ -65,7 +65,10 @@ function activate_for_current_blog() {
 		$settings = array(
 			'merge_episodes'         => 'on',
 			'hide_wp_feed_discovery' => 'off',
-			'custom_episode_slug'    => ''
+			'use_post_permastruct'   => 'on',
+			'episode_archive'        => 'on',
+			'episode_archive_slug'   => '/podcast/',
+			'custom_episode_slug'    => '/podcast/%podcast%/'
 		);
 		update_option( 'podlove', $settings );
 	}
@@ -329,7 +332,7 @@ add_action( 'plugins_loaded', function () {
  */
 add_filter( 'pre_get_posts', function ( $wp_query ) {
 
-	if ( is_home() && $wp_query->is_main_query() && \Podlove\get_setting( 'merge_episodes' ) === 'on' ) {
+	if ( is_home() && $wp_query->is_main_query() && \Podlove\get_setting( 'merge_episodes' ) === 'on' && !isset( $wp_query->query_vars["post_type"] ) ) {
 		$wp_query->set( 'post_type', array( 'post', 'podcast' ) );
 		return $wp_query;
 	}
@@ -389,6 +392,8 @@ function show_critical_errors() {
 	if ( count( $errors['errors'] ) + count( $errors['notices'] ) === 0 )
 		return;
 
+	// if there are errors, always run the system report to see if they are gone
+	run_system_report();
     ?>
     <div class="error">
         
@@ -536,7 +541,7 @@ add_filter( 'the_content', '\Podlove\autoinsert_templates_into_content' );
  *
  * @uses $wp_rewrite
  */
-function modify_permalink_for_podcast_post_type() {
+function add_podcast_rewrite_rules() {
 	global $wp_rewrite;
 	
 	// Get permalink structure
@@ -544,9 +549,14 @@ function modify_permalink_for_podcast_post_type() {
 
 	// Add rewrite tag
 	$wp_rewrite->add_rewrite_tag( "%podcast%", '([^/]+)', "post_type=podcast&name=" );
+	
+	// Use same permastruct as post_type 'post'
+	$use_post_permastruct = \Podlove\get_setting( 'use_post_permastruct' );
+	if ( 'on' == $use_post_permastruct )
+		$permastruct = str_replace( '%postname%', '%podcast%', get_option( 'permalink_structure' ) );
 
 	// Enable generic rules for pages if permalink structure doesn't begin with a wildcard
-	if ( "%podcast%" == $permastruct ) {
+	if ( "/%podcast%" == $permastruct && 'on' != $use_post_permastruct ) {
 		// Generate custom rewrite rules
 		$wp_rewrite->matches = 'matches';
 		$wp_rewrite->extra_rules = array_merge( $wp_rewrite->extra_rules, $wp_rewrite->generate_rewrite_rules( "%podcast%", EP_PERMALINK, true, true, false, true, true ) );
@@ -558,6 +568,29 @@ function modify_permalink_for_podcast_post_type() {
 	} else {
 		$wp_rewrite->add_permastruct( "podcast", $permastruct, false, EP_PERMALINK );
 	}
+	
+	// Add archive pages
+	if ( 'on' == \Podlove\get_setting( 'episode_archive' ) ) {
+		$archive_slug = trim( \Podlove\get_setting( 'episode_archive_slug' ), '/' );
+
+		$blog_prefix = \Podlove\get_blog_prefix();
+		$blog_prefix = $blog_prefix ? trim( $blog_prefix, '/' ) . '/' : '';
+
+		$wp_rewrite->add_rule( "{$blog_prefix}{$archive_slug}/?$", "index.php?post_type=podcast", 'top' );
+		$wp_rewrite->add_rule( "{$blog_prefix}{$archive_slug}/{$wp_rewrite->pagination_base}/([0-9]{1,})/?$", 'index.php?post_type=podcast&paged=$matches[1]', 'top' );
+	}
+}
+
+/**
+ * Filters the request query vars to search for posts with type 'post' and 'podcast'
+ */
+function podcast_permalink_proxy($query_vars) {
+	// No post request
+	if ( false == ( isset( $query_vars["name"] ) || isset( $query_vars["p"] ) ) )
+		return $query_vars;
+		
+	$query_vars["post_type"] = array("post", "podcast");
+	return $query_vars;
 }
 
 /**
@@ -574,7 +607,6 @@ function no_verbose_page_rules() {
  * Replace placeholders in permalinks with the correct values
  */
 function generate_custom_post_link( $post_link, $id, $leavename = false, $sample = false ) {
-
 	// Get post
 	$post = &get_post($id);
 	$draft_or_pending = isset( $post->post_status ) && in_array( $post->post_status, array( 'draft', 'pending', 'auto-draft' ) );
@@ -583,8 +615,12 @@ function generate_custom_post_link( $post_link, $id, $leavename = false, $sample
 	if ( $sample )
 		$post->post_name = "%pagename%";
 	
-	// Only post_name in URL
+	// Get permastruct
 	$permastruct = \Podlove\get_setting( 'custom_episode_slug' );
+	if ( 'on' == \Podlove\get_setting( 'use_post_permastruct' ) )
+		$permastruct = str_replace( '%postname%', '%podcast%', get_option( 'permalink_structure' ) );
+	
+	// Only post_name in URL
 	if ( "%podcast%" == $permastruct && ( !$draft_or_pending || $sample ) )
 		return home_url( user_trailingslashit( $post->post_name ) );
 	
@@ -628,216 +664,16 @@ function generate_custom_post_link( $post_link, $id, $leavename = false, $sample
 	return $post_link;
 }
 
-function custom_podcast_archive_page( $rules ) {
-    $custom_rules = array();
-    $custom_rules['podcast/?$'] = 'index.php?post_type=podcast';
-    $custom_rules['podcast/page/?([0-9]{1,})/?$'] = 'index.php?post_type=podcast&paged=$matches[1]';
-
-    return $custom_rules + $rules;
-}
-
 if ( get_option( 'permalink_structure' ) != '' ) {
-	add_action( 'after_setup_theme', '\Podlove\modify_permalink_for_podcast_post_type', 99 );
+	add_action( 'after_setup_theme', '\Podlove\add_podcast_rewrite_rules', 99 );
+	add_action( 'permalink_structure_changed', '\Podlove\add_podcast_rewrite_rules' );
 	add_action( 'wp', '\Podlove\no_verbose_page_rules' );		
 	add_filter( 'post_type_link', '\Podlove\generate_custom_post_link', 10, 4 );
-	add_filter( 'rewrite_rules_array', '\Podlove\custom_podcast_archive_page' );
 
-}
-
-namespace Podlove\AJAX;
-use \Podlove\Model;
-
-function get_new_guid() {
-	$post_id = $_REQUEST['post_id'];
-
-	$post = get_post( $post_id );
-	$guid = \Podlove\Custom_Guid::guid_for_post( $post );
-
-	$result = array( 'guid' => $guid );
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Content-type: application/json');
-	echo json_encode($result);
-
-	die();
-}
-
-add_action( 'wp_ajax_podlove-get-new-guid', '\Podlove\AJAX\get_new_guid' );
-
-function validate_file() {
-	$file_id = $_REQUEST['file_id'];
-
-	$file = \Podlove\Model\MediaFile::find_by_id( $file_id );
-	$info = $file->curl_get_header();
-
-	$result = array();
-	$result['file_id']   = $file_id;
-	$result['reachable'] = ( $info['http_code'] >= 200 && $info['http_code'] < 300 );
-	$result['file_size'] = $info['download_content_length'];
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Content-type: application/json');
-	echo json_encode( $result );
-
-	die();
-}
-
-add_action( 'wp_ajax_podlove-validate-file', '\Podlove\AJAX\validate_file' );
-
-function validate_url() {
-	$file_url = $_REQUEST['file_url'];
-
-	$info = \Podlove\Model\MediaFile::curl_get_header_for_url( $file_url );
-
-	$result = array();
-	$result['file_url']  = $file_url;
-	$result['reachable'] = ( $info['http_code'] >= 200 && $info['http_code'] < 300 );
-	$result['file_size'] = $info['download_content_length'];
-
-	$validation_cache = get_option( 'podlove_migration_validation_cache', array() );
-	$validation_cache[ $file_url ] = $result['reachable'];
-	update_option( 'podlove_migration_validation_cache', $validation_cache );
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Content-type: application/json');
-	echo json_encode( $result );
-
-	die();
-}
-add_action( 'wp_ajax_podlove-validate-url', '\Podlove\AJAX\validate_url' );
-
-function update_file() {
-	$file_id = $_REQUEST['file_id'];
-
-	$file = \Podlove\Model\MediaFile::find_by_id( $file_id );
-
-	if ( isset( $_REQUEST['slug'] ) ) {
-		// simulate a not-saved-yet slug
-		add_filter( 'podlove_file_url_template', function ( $template ) {
-			return str_replace( '%episode_slug%', $_REQUEST['slug'], $template );;
-		} );
+	if ( 'on' == \Podlove\get_setting( 'use_post_permastruct' ) ) {
+		add_filter( 'request', '\Podlove\podcast_permalink_proxy' );
 	}
-
-	$info = $file->determine_file_size();
-	$file->save();
-
-	$result = array();
-	$result['file_id']   = $file_id;
-	$result['reachable'] = ( $info['http_code'] >= 200 && $info['http_code'] < 300 );
-	$result['file_size'] = $info['download_content_length'];
-
-	if ( ! $result['reachable'] ) {
-		unset( $info['certinfo'] );
-		$info['php_open_basedir'] = ini_get( 'open_basedir' );
-		$info['php_safe_mode'] = ini_get( 'safe_mode' );
-		$info['php_curl'] = in_array( 'curl', get_loaded_extensions() );
-		$info['curl_exec'] = function_exists( 'curl_exec' );
-		$result['message'] = "--- # Can't reach {$file->get_file_url()}\n";
-		$result['message'].= "--- # Please include this output when you report a bug\n";
-		foreach ( $info as $key => $value ) {
-			$result['message'] .= "$key: $value\n";
-		}
-	}
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Content-type: application/json');
-	echo json_encode($result);
-
-	die();
 }
-add_action( 'wp_ajax_podlove-update-file', '\Podlove\AJAX\update_file' );
 
-function create_file() {
-	$episode_id        = $_REQUEST['episode_id'];
-	$episode_asset_id  = $_REQUEST['episode_asset_id'];
-
-	if ( ! $episode_id || ! $episode_asset_id )
-		die();
-
-	if ( isset( $_REQUEST['slug'] ) ) {
-		// simulate a not-saved-yet slug
-		add_filter( 'podlove_file_url_template', function ( $template ) {
-			return str_replace( '%episode_slug%', $_REQUEST['slug'], $template );;
-		} );
-	}
-
-	$file = Model\MediaFile::find_or_create_by_episode_id_and_episode_asset_id( $episode_id, $episode_asset_id );
-
-	$result = array();
-	$result['file_id']   = $file->id;
-	$result['file_size'] = $file->size;
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Content-type: application/json');
-	echo json_encode($result);
-
-	die();
-}
-add_action( 'wp_ajax_podlove-create-file', '\Podlove\AJAX\create_file' );
-
-function create_episode() {
-
-	$slug  = isset( $_REQUEST['slug'] )  ? $_REQUEST['slug']  : NULL;
-	$title = isset( $_REQUEST['title'] ) ? $_REQUEST['title'] : NULL;
-
-	if ( ! $slug || ! $title )
-		die();
-
-	$args = array(
-		'post_type' => 'podcast',
-		'post_title' => $title,
-		'post_content' => \Podlove\Podcast_Post_Type::get_default_post_content()
-	);
-
-	// create post
-	$post_id = wp_insert_post( $args );
-
-	// link episode and release
-	$episode = \Podlove\Model\Episode::find_or_create_by_post_id( $post_id );
-	$episode->slug = $slug;
-	$episode->enable = true;
-	$episode->active = true;
-	$episode->save();
-
-	// activate all media files
-	$episode_assets = Model\EpisodeAsset::all();
-	foreach ( $episode_assets as $episode_asset ) {
-		$media_file = new \Podlove\Model\MediaFile();
-		$media_file->episode_id = $episode->id;
-		$media_file->episode_asset_id = $episode_asset->id;
-		$media_file->save();
-	}
-
-	// generate response
-	$result = array();
-	$result['post_id'] = $post_id;
-	$result['post_edit_url'] = get_edit_post_link( $post_id );
-
-	header('Cache-Control: no-cache, must-revalidate');
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Content-type: application/json');
-	echo json_encode( $result );
-
-	die();
-}
-add_action( 'wp_ajax_podlove-create-episode', '\Podlove\AJAX\create_episode' );
-
-function update_asset_position() {
-
-	$asset_id = (int)   $_REQUEST['asset_id'];
-	$position = (float) $_REQUEST['position'];
-
-	$asset = Model\EpisodeAsset::find_by_id( $asset_id );
-	if ( $asset ) {
-		$asset->position = $position;
-		$asset->save();
-	}
-
-	die();
-}
-add_action( 'wp_ajax_podlove-update-asset-position', '\Podlove\AJAX\update_asset_position' );
+// register ajax actions
+new \Podlove\AJAX\Ajax;
