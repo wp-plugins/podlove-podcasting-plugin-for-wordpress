@@ -76,6 +76,11 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.5.4-alpha =
+* Feature: PubSubHubbub support via new module
+* Enhancement: Check for iconv availability in system report
+* Turn permalink compatibility up to eleven
+
 = 1.5.3-alpha =
 * Bugfix: more robust permalink fix
 

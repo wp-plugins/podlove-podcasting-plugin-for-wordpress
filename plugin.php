@@ -594,7 +594,7 @@ function add_podcast_rewrite_rules() {
  */
 function podcast_permalink_proxy($query_vars) {
 	// No post request
-	if ( false == ( isset( $query_vars["name"] ) || isset( $query_vars["p"] ) ) )
+	if ( isset( $query_vars["preview"] ) || false == ( isset( $query_vars["name"] ) || isset( $query_vars["p"] ) ) )
 		return $query_vars;
 		
 	$query_vars["post_type"] = array("post", "podcast");
@@ -630,7 +630,7 @@ function generate_custom_post_link( $post_link, $id, $leavename = false, $sample
 		$permastruct = str_replace( '%postname%', '%podcast%', get_option( 'permalink_structure' ) );
 	
 	// Only post_name in URL
-	if ( "/%podcast%" == $permastruct && ( !$draft_or_pending || $sample ) )
+	if ( "/%podcast%" == untrailingslashit( $permastruct ) && ( !$draft_or_pending || $sample ) )
 		return home_url( user_trailingslashit( $post->post_name ) );
 	
 	//
@@ -679,7 +679,7 @@ if ( get_option( 'permalink_structure' ) != '' ) {
 	add_action( 'wp', '\Podlove\no_verbose_page_rules' );		
 	add_filter( 'post_type_link', '\Podlove\generate_custom_post_link', 10, 4 );
 
-	if ( 'on' == \Podlove\get_setting( 'use_post_permastruct' ) ) {
+	if ( podlove_and_wordpress_permastructs_are_equal() ) {
 		add_filter( 'request', '\Podlove\podcast_permalink_proxy' );
 	}
 }
