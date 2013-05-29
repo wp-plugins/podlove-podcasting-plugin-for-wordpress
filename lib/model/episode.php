@@ -1,5 +1,7 @@
 <?php
 namespace Podlove\Model;
+use Podlove\Log;
+use Podlove\ChaptersManager;
 
 /**
  * We could use simple post_meta instead of a table here
@@ -100,16 +102,35 @@ class Episode extends Base {
 		if ( ! $file = MediaFile::find_by_episode_id_and_episode_asset_id( $this->id, $asset->id ) )
 			return false;
 
-		return $file->get_file_url();
+		return ( $file->size > 0 ) ? $file->get_file_url() : false;
+	}
+
+	/**
+	 * Get episode chapters.
+	 * 
+	 * @param  string $format object, psc, mp4chaps, json. Default: object
+	 * @return mixed
+	 */
+	public function get_chapters( $format = 'object' ) {
+		$chapters_manager = new ChaptersManager( $this );
+		return $chapters_manager->get( $format );
 	}
 
 	public function refetch_files() {
+
+		$valid_files = array();
 		foreach ( EpisodeAsset::all() as $asset ) {
 			if ( $file = MediaFile::find_by_episode_id_and_episode_asset_id( $this->id, $asset->id ) ) {
 				$file->determine_file_size();
 				$file->save();
+				
+				if ( $file->is_valid() )
+					$valid_files[] = $file->id;
 			}
 		}
+
+		if ( empty( $valid_files ) && get_post_status( $this->post_id ) == 'publish' )
+			Log::get()->addAlert( 'All assets for this episode are invalid!', array( 'episode_id' => $this->id ) );
 	}
 
 	public function get_duration( $format = 'HH:MM:SS' ) {

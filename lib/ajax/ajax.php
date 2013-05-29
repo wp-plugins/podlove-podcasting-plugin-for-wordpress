@@ -65,7 +65,8 @@ class Ajax {
 		$file_url = $_REQUEST['file_url'];
 
 		$info = \Podlove\Model\MediaFile::curl_get_header_for_url( $file_url );
-		$reachable = $info['http_code'] >= 200 && $info['http_code'] < 300;
+		$header = $info['header'];
+		$reachable = $header['http_code'] >= 200 && $header['http_code'] < 300;
 
 		$validation_cache = get_option( 'podlove_migration_validation_cache', array() );
 		$validation_cache[ $file_url ] = $reachable;
@@ -74,7 +75,7 @@ class Ajax {
 		$this->respond_with_json( array(
 			'file_url'	=> $file_url,
 			'reachable'	=> $reachable,
-			'file_size'	=> $info['download_content_length']
+			'file_size'	=> $header['download_content_length']
 		) );
 	}
 
@@ -91,8 +92,8 @@ class Ajax {
 
 		$result = array();
 		$result['file_id']   = $file_id;
-		$result['reachable'] = ( $info['http_code'] >= 200 && $info['http_code'] < 300 );
-		$result['file_size'] = $info['download_content_length'];
+		$result['reachable'] = ( $info['http_code'] >= 200 && $info['http_code'] < 300 || $info['http_code'] == 304 );
+		$result['file_size'] = ( $info['http_code'] == 304 ) ? $file->size : $info['download_content_length'];
 
 		if ( ! $result['reachable'] ) {
 			unset( $info['certinfo'] );

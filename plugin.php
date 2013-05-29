@@ -54,7 +54,7 @@ function activate_for_current_blog() {
 	}
 
 	// set default modules
-	$default_modules = array( 'podlove_web_player', 'open_graph' );
+	$default_modules = array( 'podlove_web_player', 'open_graph', 'asset_validation', 'logging' );
 	foreach ( $default_modules as $module ) {
 		\Podlove\Modules\Base::activate( $module );
 	}
@@ -320,37 +320,19 @@ add_action( 'plugins_loaded', function () {
 } );
 
 /**
- * This helps to get your blog tidy.
- * It's all about "Settings > Reading > Front page displays"
- *
- * Default: Check "Your latest posts" and we won't change anything.
- * However, if you check "A static page", we assume you'd like to separate
- * blog and podcast by moving your blog away and the podcast directory to "/".
- * That's what we do here.
- *
- * It's magic. Okay, I should probably document this publicly at some point.
+ * Checking "merge_episodes" allows to see episodes on the front page.
  */
 add_filter( 'pre_get_posts', function ( $wp_query ) {
 
-	if ( is_home() && $wp_query->is_main_query() && \Podlove\get_setting( 'merge_episodes' ) === 'on' && !isset( $wp_query->query_vars["post_type"] ) ) {
-		$wp_query->set( 'post_type', array( 'post', 'podcast' ) );
-		return $wp_query;
-	}
-
-	if ( get_option( 'show_on_front' ) === 'posts' )
+	if ( \Podlove\get_setting( 'merge_episodes' ) !== 'on' )
 		return $wp_query;
 
-	/*
-	// deactivated as it defeats the ability to use static pages as front page
-	if ( $wp_query->get( 'page_id' ) == get_option( 'page_on_front' ) ) {
-		$wp_query->set( 'post_type', array( 'podcast' ) );
-
-		// fix conditional functions
-		$wp_query->set( 'page_id', '' );
-		$wp_query->is_page = 0;
-		$wp_query->is_singular = 0;
+	if ( is_home() && $wp_query->is_main_query() && ! isset( $wp_query->query_vars["post_type"] ) ) {
+		$wp_query->set(
+			'post_type',
+			array_merge( (array) $wp_query->get( 'post_type' ), array( 'podcast' ) )
+		);
 	}
-	*/
 
 	return $wp_query;
 } );
@@ -381,6 +363,28 @@ add_action( 'plugins_loaded', function () {
 		}
 	}
 } );
+
+// fire activation and deactivation hooks for modules
+add_action( 'update_option_podlove_active_modules', function( $old_val, $new_val ) {
+	$deactivated_module = current( array_keys( array_diff_assoc( $old_val, $new_val ) ) );
+	$activated_module   = current( array_keys( array_diff_assoc( $new_val, $old_val ) ) );
+
+	if ( $deactivated_module ) {
+		Log::get()->addInfo( 'Deactivate module "' . $deactivated_module . '"' );
+		do_action( 'podlove_module_was_deactivated', $deactivated_module );
+		do_action( 'podlove_module_was_deactivated_' . $deactivated_module );
+	} elseif ( $activated_module ) {
+		Log::get()->addInfo( 'Activate module "' . $activated_module . '"' );
+
+		// init module before firing hooks
+		$class = Modules\Base::get_class_by_module_name( $activated_module );
+		if ( class_exists( $class ) )
+			$class::instance()->load();
+
+		do_action( 'podlove_module_was_activated', $activated_module );
+		do_action( 'podlove_module_was_activated_' . $activated_module );
+	}
+}, 10, 2 );
 
 function show_critical_errors() {
 
@@ -521,14 +525,19 @@ function autoinsert_templates_into_content( $content ) {
 	if ( get_post_type() !== 'podcast' )
 		return $content;
 
-	foreach ( Model\Template::all() as $template ) {
-		$shortcode = '[podlove-template id="' . $template->title . '"]';
+	$template_assignments = Model\TemplateAssignment::get_instance();
+
+	if ( $template_assignments->top ) {
+		$shortcode = '[podlove-template id="' . Model\Template::find_by_id( $template_assignments->top )->title . '"]';
 		if ( stripos( $content, $shortcode ) === false ) {
-			if ( $template->autoinsert == 'beginning' ) {
-				$content = $shortcode . $content;
-			} elseif ( $template->autoinsert == 'end' ) {
-				$content = $content . $shortcode;
-			}
+			$content = $shortcode . $content;
+		}
+	}
+
+	if ( $template_assignments->bottom ) {
+		$shortcode = '[podlove-template id="' . Model\Template::find_by_id( $template_assignments->bottom )->title . '"]';
+		if ( stripos( $content, $shortcode ) === false ) {
+			$content = $content . $shortcode;
 		}
 	}
 
@@ -596,8 +605,10 @@ function podcast_permalink_proxy($query_vars) {
 	// No post request
 	if ( isset( $query_vars["preview"] ) || false == ( isset( $query_vars["name"] ) || isset( $query_vars["p"] ) ) )
 		return $query_vars;
-		
-	$query_vars["post_type"] = array("post", "podcast");
+	
+	if ( ! isset( $query_vars["post_type"] ) || $query_vars["post_type"] == "post" )
+		$query_vars["post_type"] = array( "podcast", "post" );
+
 	return $query_vars;
 }
 
@@ -683,6 +694,47 @@ if ( get_option( 'permalink_structure' ) != '' ) {
 		add_filter( 'request', '\Podlove\podcast_permalink_proxy' );
 	}
 }
+
+// devalidate caches when media file has changed
+add_action( 'podlove_media_file_content_has_changed', function ( $media_file_id ) {
+	if ( $media_file = Model\MediaFile::find_by_id( $media_file_id ) ) {
+		$episode = $media_file->episode();
+		delete_transient( 'podlove_chapters_string_' . $episode->id );
+	}
+} );
+
+add_action( 'podlove_episode_content_has_changed', function( $episode_id ) {
+	delete_transient( 'podlove_chapters_string_' . $episode_id );
+} );
+
+// enable chapters pages
+add_action( 'wp', function() {
+
+	if ( ! isset( $_REQUEST['chapters_format'] ) )
+		return;
+
+	if ( ! $episode = Model\Episode::find_or_create_by_post_id( get_the_ID() ) )
+		return;
+
+	if ( ! in_array( $_REQUEST['chapters_format'], array( 'psc', 'json', 'mp4chaps' ) ) )
+		$_REQUEST['chapters_format'] = 'psc';
+
+	switch ( $_REQUEST['chapters_format'] ) {
+		case 'psc':
+			header( "Content-Type: application/xml" );
+			echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+			break;
+		case 'mp4chaps':
+			header( "Content-Type: text/plain" );
+			break;
+		case 'json':
+			header( "Content-Type: application/json" );
+			break;
+	}	
+	
+	echo $episode->get_chapters( $_REQUEST['chapters_format'] );
+	exit;
+} );
 
 // register ajax actions
 new \Podlove\AJAX\Ajax;

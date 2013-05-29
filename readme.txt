@@ -76,6 +76,18 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.6.0-alpha =
+* Feature: New modules "Asset Validation" and "Logging". Automatically verify assets once in a while (fresh posts will be validated more often than old posts). Detailed logging in Podlove dashboard. Receive an email when all episode assets are unavailable.
+* Feature: always print PSC in feed if any chapter format is available (psc, mp4chaps, json)
+* Feature: upgrade web player to v2.0.10
+* Enhancement: template autoinsert settings are on templates page now
+* Enhancement: correctly fall back to podcast image when episode image is activated but missing
+* Enhancement: various UI fixes (thanks @MaZderMind)
+* Enhancement: improve feed deletion dialogue
+* Enhancement: default title for episode assets is file format title
+* Bugfix: solve permalink issue after migrations
+* Bugfix: migrate comment hierarchy correctly
+
 = 1.5.4-alpha =
 * Feature: PubSubHubbub support via new module
 * Enhancement: Check for iconv availability in system report

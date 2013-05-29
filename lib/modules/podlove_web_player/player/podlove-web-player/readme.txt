@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== Podlove Web Player ===
 Contributors: gerritvanaaken, simonwaldherr
 Donate link: http://podlove.org/
 Tags: podcasting, podlove, html5audio, audio, video, podcast, player
 Requires at least: 3.4.0
 Tested up to: 3.5.1
-Stable tag: 2.0.7
+Stable tag: 2.0.10
 License: BSD 2-Clause License
 License URI: http://opensource.org/licenses/BSD-2-Clause
 
@@ -59,19 +59,19 @@ Just use the shortcode options that are described on this FAQ page!
 = src =
 
 This location of any audio or video file, local ore remote:
-    
+
     [podloveaudio src="http://mysite.com/mymedia.mp3"]
-    
+
 = type =
 
 The media type of the resource:
-    
+
     [podlovevideo src="http://mysite.com/mymedia.m4v" type="video/mp4"]    
 
 = mp4 / webm / ogg  = 
 
 The location of a file with a specific video type:
-    
+
     [podlovevideo mp4="mymedia.mp4" webm="mymedia.webm" ogg="mymedia.ogv"]
 
 = mp4 / mp3 / ogg / opus =
@@ -90,11 +90,11 @@ The location of the poster frame for the video (or cover image for the rich audi
 The width and/or height of the video (or the audio player):
 
     [podlovevideo width="640" height="264"]
-    
+
 = loop =
 
 Loops the video or audio when it ends:
-    
+
     [podlovevideo src="http://mysite.com/mymedia.mp4" loop="true"]    
 
 = preload =
@@ -112,13 +112,13 @@ Start playing the video as soon as it's ready. This might not work on all (mobil
 = fullscreen =
 
 Disables the fullscreen button for video:
-    
+
     [podlovevideo fullscreen="false"]
-    
+
 = duration =
 
 Enables display of duration without having to load the media file. Use seconds or timecode as a unit:
-    
+
     [podlovevideo duration="3522"]
     [podloveaudio duration="00:58:42"]
 
@@ -133,45 +133,59 @@ Displays the time in 00:00:00 instead of 00:00. Default is "true".
 Defines whether the player control bar is permanently visible. For videos, it might be suitable to fade the controls out when not hovering the video.
 
     [podlovevideo alwaysShowControls="false"]   
-    
+
 = volume = 
 
 Disables the volume slider:
-    
+
     [podloveaudio volume="false"]    
-    
+
 = progress =
 
 Disables the progress bar:
-    
+
     [podlovevideo progress="false"] 
-    
+
 = captions = 
 
 URL to a WebVTT captions file:
-    
+
     [podlovevideo captions="http://mysite.com/mymedia.vtt"]  
 
 = chapters = 
 
-Takes chapter string from the defined custom field (the standard WordPress ones) and builds an interactive chapter table. Can be referenced to an external text file, too. Chapters must be written in the following format:
+Takes chapter json string from the defined custom field (the standard WordPress ones) and builds an interactive chapter table. Can be referenced to an external json file, too. Chapters must be written in the following format:
 
-00:00:00.000 Introduction  
-00:00:57.099 First chapter title  
-00:10:03.104 Second chapter title  
-00:12:44.625 Final chapter  
-    
-    [podloveaudio chapters="my_chapter_field"]                
-    [podloveaudio chapters="http://mychapters.com/chapters.txt"]                
+[{  
+  "start": "00:00:00",  
+  "title": "foo",  
+  "href": "http://podlove.org",  
+  "image":""  
+},{  
+  "start": "00:01:00",  
+  "title": "lorem",  
+  "href": "https://github.com/podlove/",  
+  "image":"samples/coverimage-red.png"  
+},{  
+  "start": "00:02:30",  
+  "title": "ipsum",  
+  "href": "https://github.com/shownotes/",  
+  "image":"samples/coverimage-green.png"  
+},{  
+  "start": "00:03:00",  
+  "title": "end",  
+  "href": "",  
+  "image":"samples/coverimage-blue.png"  
+}]  
 
 
-= chapterlinks = 
+* "start" has to be defined as HH:MM:SS
+* "title" is the name of the chapter
+* "href" is an optional URL
+* "image" is an optional image URL or relative path
 
-Option for the jumplink behaviour in chapter table
-
-    [podloveaudio chapterlinks="all"] (default, all chapter links are clickable)
-    [podloveaudio chapterlinks="buffered"] (only buffered chapters are clickable)
-    [podloveaudio chapterlinks="false"] (chapters are not linked)
+    [podloveaudio chapters="my_chapter_field"]  
+    [podloveaudio chapters="http://mychapters.com/chapters.json"]  
 
 = chaptersVisible / timecontrolsVisible / summaryVisible =
 
@@ -183,20 +197,38 @@ Defines the default visibility status of toggable player modules. Standard value
 
 If you have an audio file and use one of the following attributes, the player will sport a richer visual experience: "title", "subtitle", "summary", "poster", "permalink". Full example:
 
-    [podloveaudio mp3="http://mysite.com/mymedia.mp3" ogg="http://mysite.com/mymedia.ogg" title="PWP – First show" subtitle="We talk about this and that" summary="Here goes a summary of the episode which should be about 256 characters long" poster="http://mysite.com/mymedia.jpg" permalink="http://mysite.com/my-first-episode/"]
+    [podloveaudio mp3="http://mysite.com/mymedia.mp3" ogg="http://mysite.com/mymedia.ogg" title="PWP – First show" subtitle="We talk about this and that" summary="Here goes a summary of the episode which should be about 256 characters long" poster="http://mysite.com/mymedia.jpg" chapters="my_chapter_field" permalink="http://mysite.com/my-first-episode/"]
 
+= Podlove Web Player Shortcode in multiple lines =
+
+Don't do it, always write the shortcode in a single line.
 
 ### Deprecated usage
 
-Chapters now handed over as JSON, please take a look at the standalone-json.html. The previous solution will still work, however we recommend to use the new solution, as it offers some more features.
+Chapters now handed over as JSON, please take a look at the standalone.html. The previous solution will still work, however we recommend to use the new solution, as it offers some more features.
 Earlier versions of this plugin could handle alternative shortcodes, too: [audio] and [video]. As of version 1.1, these are deprecated as they conflict with other plugins.
 
 == Screenshots ==
 
 1. Podlove Web Player in full swing, using the chapters table to jump to different section of the audio source.
 2. Podlove Web Player in chapters hidden and timecontrol-bar visible view.
+3. Podlove Web Player Options
 
 == Changelog ==
+
+= 2.0.10 =
+* wordpress.org has some problems with the last commit
+* sorry for the inconvenience
+
+= 2.0.9 =
+* sorry for the mp4 chaps bug
+* now it's working again
+
+= 2.0.8 =
+* better compatibility
+* resume at last position
+* build script (less requests)
+* accept chapters as json-file
 
 = 2.0.7 =
 * Download bar added
@@ -287,3 +319,23 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 = 1.0 =
 * First version on wordpress.org
 * Full of bugs
+
+== Upgrade Notice ==
+
+= 2.0.10 =
+readme.txt update because of wordpress.org validator foo
+
+= 2.0.9 =
+mp4 chaps bug fixed
+
+= 2.0.8 =
+better compatibility, resume at last position and accept chapters as json-file
+
+= 2.0.7 =
+PHP Warnings removed and various small changes
+
+= 2.0.6 =
+podPress compatible, chapterbox/summary height fix and jshint/jslint valid
+
+= 2.0.5 =
+Blubrry PowerPress compatible and firefox flash fallback multiple playing fix
