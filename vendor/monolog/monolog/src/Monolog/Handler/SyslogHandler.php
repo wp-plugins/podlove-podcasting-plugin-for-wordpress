@@ -29,10 +29,6 @@ use Monolog\Formatter\LineFormatter;
  */
 class SyslogHandler extends AbstractProcessingHandler
 {
-    protected $ident;
-    protected $logopts;
-    protected $facility;
-
     /**
      * Translates Monolog log levels to syslog log priorities.
      */
@@ -93,9 +89,9 @@ class SyslogHandler extends AbstractProcessingHandler
             throw new \UnexpectedValueException('Unknown facility value "'.$facility.'" given');
         }
 
-        $this->ident = $ident;
-        $this->logopts = $logopts;
-        $this->facility = $facility;
+        if (!openlog($ident, $logopts, $facility)) {
+            throw new \LogicException('Can\'t open syslog for ident "'.$ident.'" and facility "'.$facility.'"');
+        }
     }
 
     /**
@@ -111,9 +107,6 @@ class SyslogHandler extends AbstractProcessingHandler
      */
     protected function write(array $record)
     {
-        if (!openlog($this->ident, $this->logopts, $this->facility)) {
-            throw new \LogicException('Can\'t open syslog for ident "'.$this->ident.'" and facility "'.$this->facility.'"');
-        }
         syslog($this->logLevels[$record['level']], (string) $record['formatted']);
     }
 

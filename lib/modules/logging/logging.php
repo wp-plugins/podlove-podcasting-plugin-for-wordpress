@@ -30,7 +30,7 @@ class Logging extends \Podlove\Modules\Base {
 		// write logs to database
 		$log->pushHandler( new WPDBHandler( $wpdb, $log->get_log_level() ) );
 		// send critical logs via email
-		// $log->pushHandler( new WPMailHandler( get_option( 'admin_email' ), "Podlove | Critical notice for " . get_option( 'blogname' ), Logger::CRITICAL ) );
+		$log->pushHandler( new WPMailHandler( get_option( 'admin_email' ), "Podlove | Critical notice for " . get_option( 'blogname' ), Logger::CRITICAL ) );
 	}
 
 	public function register_meta_box() {
@@ -63,6 +63,11 @@ class Logging extends \Podlove\Modules\Base {
 			});
 		});
 		</script>
+
+		<?php
+		if ( $timezone = get_option( 'timezone_string' ) )
+			date_default_timezone_set( $timezone );
+		?>
 
 		<div id="podlove-log">
 		<?php foreach ( LogTable::find_all_by_where( "time > " . strtotime("-1 week") ) as $log_entry ): ?>
