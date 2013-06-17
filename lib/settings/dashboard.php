@@ -44,9 +44,6 @@ class Dashboard {
 				<a target="_blank" href="https://trello.com/board/podlove-publisher/508293f65573fa3f62004e0a">See what I'm working on</a>
 			</li>
 			<li>
-				<a target="_blank" href="http://www.satoripress.com/podcast/">Podcast about development (german)</a>
-			</li>
-			<li>
 				<script type="text/javascript">
 				/* <![CDATA[ */
 				    (function() {
@@ -58,7 +55,7 @@ class Dashboard {
 				    })();
 				/* ]]> */</script>
 				<a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://wordpress.org/extend/plugins/podlove-podcasting-plugin-for-wordpress/"></a>
-				<a href="http://www.cornify.com" onclick="cornify_add();return false;" style="text-decoration: none; color: #A7A7A7; float: right; font-size: 20px; line-height: 20px;">♥</a>
+				<a href="http://www.cornify.com" onclick="cornify_add();return false;" style="text-decoration: none; color: #A7A7A7; float: right; font-size: 20px; line-height: 20px;"><i class="podlove-icon-heart"></i></a>
 				<noscript><a href="http://flattr.com/thing/728463/Podlove-Podcasting-Plugin-for-WordPress" target="_blank">
 				<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
 			</li>
@@ -219,7 +216,7 @@ class Dashboard {
 			<?php endif; ?>
 
 			<?php
-			$episodes = Model\Episode::all();
+			$episodes = Model\Episode::all( 'ORDER BY slug DESC' );
 			$assets   = Model\EpisodeAsset::all();
 
 			$header = array( __( 'Episode', 'podlove' ) );
@@ -228,9 +225,9 @@ class Dashboard {
 			}
 			$header[] = __( 'Status', 'podlove' );
 
-			define( 'ASSET_STATUS_OK', '<span style="color: green">✓</span>' );
-			define( 'ASSET_STATUS_INACTIVE', '—' );
-			define( 'ASSET_STATUS_ERROR', '<span style="color: red">!!!</span>' );
+			define( 'ASSET_STATUS_OK', '<i class="clickable podlove-icon-ok"></i>' );
+			define( 'ASSET_STATUS_INACTIVE', '<i class="podlove-icon-minus"></i>' );
+			define( 'ASSET_STATUS_ERROR', '<i class="clickable podlove-icon-remove"></i>' );
 			?>
 
 			<h4><?php echo $podcast->title ?></h4>

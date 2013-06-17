@@ -1,7 +1,7 @@
 === Podlove Podcast Publisher ===
 Contributors: eteubert
 Donate link: http://flattr.com/thing/728463/Podlove-Podcasting-Plugin-for-WordPress
-Tags: podcast, publishing
+Tags: podlove, podcast, publishing, blubrry, podpress, powerpress, feed, audio, video, player
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: trunk
@@ -76,7 +76,21 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
-= 1.6.4 =
+= 1.6.5-alpha =
+* Feature: Feeds are sortable
+* Feature: You can revalidate single media files in the dashboard
+* Enhancement: Use pretty status icons
+* Enhancement: Add "sortable handle" for asset and feed lists, so the sortability feature is more discoverable
+* Enhancement: Add "Podlove" entry to WordPress toolbar
+* Enhancement: Organize "Expert Settings" into tabs
+* Enhancement: Don't log "File not Modified"
+* Bugfix: Activate feature "Activate asset for all existing episodes" for pending episodes
+* Bugfix: Solve issue with chapter asset cache invalidation
+* Bugfix: Solve chapter encoding issue when chapters start with umlauts
+* Bugfix: Fix video display in some themes
+* Other small UI changes in various places
+
+= 1.6.4-alpha =
 * Bugfix: use manual chapter entries if available
 * Bugfix: PSC assets work properly
 * Bugfix: URL magic doesn't interfere with other post types

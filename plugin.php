@@ -275,10 +275,11 @@ function add_feed_discoverability() {
 	if ( ! function_exists( '\Podlove\Feeds\prepare_for_feed' ) )
 		require_once \PODLOVE\PLUGIN_DIR . 'lib/feeds/base.php';
 
-	$feeds = \Podlove\Model\Feed::find_all_by_discoverable( 1 );
+	$feeds = \Podlove\Model\Feed::all( 'ORDER BY position ASC' );
 
 	foreach ( $feeds as $feed ) {
-		echo '<link rel="alternate" type="' . $feed->get_content_type() . '" title="' . \Podlove\Feeds\prepare_for_feed( $feed->title_for_discovery() ) . '" href="' . $feed->get_subscribe_url() . "\" />\n";			
+		if ( $feed->discoverable )
+			echo '<link rel="alternate" type="' . $feed->get_content_type() . '" title="' . \Podlove\Feeds\prepare_for_feed( $feed->title_for_discovery() ) . '" href="' . $feed->get_subscribe_url() . "\" />\n";			
 	}
 		
 }
@@ -290,7 +291,7 @@ add_action( 'init', function () {
 	add_action( 'wp_head', '\Podlove\add_feed_discoverability', 2 );
 
 	// hide WordPress default link discovery
-	if ( \Podlove\get_setting( 'hide_wp_feed_discovery' ) === 'on' ) {
+	if ( \Podlove\get_setting( 'website', 'hide_wp_feed_discovery' ) === 'on' ) {
 		remove_action( 'wp_head', 'feed_links',       2 );
 		remove_action( 'wp_head', 'feed_links_extra', 3 );
 	}
@@ -324,7 +325,7 @@ add_action( 'plugins_loaded', function () {
  */
 add_filter( 'pre_get_posts', function ( $wp_query ) {
 
-	if ( \Podlove\get_setting( 'merge_episodes' ) !== 'on' )
+	if ( \Podlove\get_setting( 'website', 'merge_episodes' ) !== 'on' )
 		return $wp_query;
 
 	if ( is_home() && $wp_query->is_main_query() && ! isset( $wp_query->query_vars["post_type"] ) ) {
@@ -448,7 +449,7 @@ function override404() {
 	if ( isset( $parsed_request['query'] ) )
 		$parsed_request_url .= "?" . $parsed_request['query'];
 
-	foreach ( \Podlove\get_setting( 'podlove_setting_redirect' ) as $redirect ) {
+	foreach ( \Podlove\get_setting( 'redirects', 'podlove_setting_redirect' ) as $redirect ) {
 
 		if ( ! strlen( trim( $redirect['from'] ) ) || ! strlen( trim( $redirect['to'] ) ) )
 			continue;
@@ -548,10 +549,10 @@ add_filter( 'the_content', '\Podlove\autoinsert_templates_into_content' );
 
 function podlove_and_wordpress_permastructs_are_equal() {
 
-	if ( \Podlove\get_setting( 'use_post_permastruct' ) == 'on' )
+	if ( \Podlove\get_setting( 'website', 'use_post_permastruct' ) == 'on' )
 		return true;
 
-	return untrailingslashit( \Podlove\get_setting( 'custom_episode_slug' ) ) == untrailingslashit( str_replace( '%postname%', '%podcast%', get_option( 'permalink_structure' ) ) );
+	return untrailingslashit( \Podlove\get_setting( 'website', 'custom_episode_slug' ) ) == untrailingslashit( str_replace( '%postname%', '%podcast%', get_option( 'permalink_structure' ) ) );
 }
 
 /**
@@ -563,7 +564,7 @@ function add_podcast_rewrite_rules() {
 	global $wp_rewrite;
 	
 	// Get permalink structure
-	$permastruct = \Podlove\get_setting( 'custom_episode_slug' );
+	$permastruct = \Podlove\get_setting( 'website', 'custom_episode_slug' );
 
 	// Add rewrite tag
 	$wp_rewrite->add_rewrite_tag( "%podcast%", '([^/]+)', "post_type=podcast&name=" );
@@ -587,8 +588,8 @@ function add_podcast_rewrite_rules() {
 	}
 	
 	// Add archive pages
-	if ( 'on' == \Podlove\get_setting( 'episode_archive' ) ) {
-		$archive_slug = trim( \Podlove\get_setting( 'episode_archive_slug' ), '/' );
+	if ( 'on' == \Podlove\get_setting( 'website', 'episode_archive' ) ) {
+		$archive_slug = trim( \Podlove\get_setting( 'website', 'episode_archive_slug' ), '/' );
 
 		$blog_prefix = \Podlove\get_blog_prefix();
 		$blog_prefix = $blog_prefix ? trim( $blog_prefix, '/' ) . '/' : '';
@@ -608,6 +609,9 @@ function podcast_permalink_proxy($query_vars) {
 	
 	if ( ! isset( $query_vars["post_type"] ) || $query_vars["post_type"] == "post" )
 		$query_vars["post_type"] = array( "podcast", "post" );
+
+	if ( ! isset( $query_vars["post_status"] ) )
+		$query_vars["post_status"] = "publish";
 
 	return $query_vars;
 }
@@ -641,7 +645,7 @@ function generate_custom_post_link( $post_link, $id, $leavename = false, $sample
 		$post->post_name = "%pagename%";
 	
 	// Get permastruct
-	$permastruct = \Podlove\get_setting( 'custom_episode_slug' );
+	$permastruct = \Podlove\get_setting( 'website', 'custom_episode_slug' );
 
 	if ( podlove_and_wordpress_permastructs_are_equal() )
 		$permastruct = str_replace( '%postname%', '%podcast%', get_option( 'permalink_structure' ) );
@@ -703,14 +707,14 @@ if ( get_option( 'permalink_structure' ) != '' ) {
 
 // devalidate caches when media file has changed
 add_action( 'podlove_media_file_content_has_changed', function ( $media_file_id ) {
-	if ( $media_file = Model\MediaFile::find_by_id( $media_file_id ) ) {
-		$episode = $media_file->episode();
-		delete_transient( 'podlove_chapters_string_' . $episode->id );
-	}
+	if ( $media_file = Model\MediaFile::find_by_id( $media_file_id ) )
+		if ( $episode = $media_file->episode() )
+			$episode->delete_caches();
 } );
 
 add_action( 'podlove_episode_content_has_changed', function( $episode_id ) {
-	delete_transient( 'podlove_chapters_string_' . $episode_id );
+	if ( $episode = Model\Episode::find_by_id( $episode_id ) )
+		$episode->delete_caches();
 } );
 
 // enable chapters pages
@@ -744,3 +748,21 @@ add_action( 'wp', function() {
 
 // register ajax actions
 new \Podlove\AJAX\Ajax;
+
+// add podlove to admin bar
+add_action( 'admin_bar_menu', function ( $wp_admin_bar ) {
+	$wp_admin_bar->add_node( array(
+		'id'     => 'podlove-settings',
+		'parent' => 'site-name',
+		'title'  => 'Podlove',
+		'href'   => admin_url( 'admin.php?page=podlove_settings_handle' )
+	) );
+}, 50 );
+
+add_action( 'admin_print_styles', function () {
+	wp_register_style( 'podlove-admin', \Podlove\PLUGIN_URL . '/css/admin.css', array(), \Podlove\get_plugin_header( 'Version' ) );
+	wp_enqueue_style( 'podlove-admin' );
+
+	wp_register_style( 'podlove-admin-font', \Podlove\PLUGIN_URL . '/css/admin-font.css', array(), \Podlove\get_plugin_header( 'Version' ) );
+	wp_enqueue_style( 'podlove-admin-font' );
+} );
