@@ -123,7 +123,11 @@ class MediaFile extends Base {
 	public function determine_file_size() {
 		$header = $this->curl_get_header();
 
-		if ( (int) $header["http_code"] !== 304 )
+		$http_code = (int) $header["http_code"];
+		// do not change the filesize if http_code = 0
+		// aka "an error occured I don't know how to deal with" (probably timeout)
+		// => change to proper handling once "Conflicts" are introduced
+		if ( $http_code && $http_code !== 304 )
 			$this->size = $header['download_content_length'];
 
 		if ( $this->size <= 0 )
@@ -139,7 +143,7 @@ class MediaFile extends Base {
 	 */
 	public function curl_get_header() {
 		$response = self::curl_get_header_for_url( $this->get_file_url(), $this->etag );
-		$this->validate_request_header( $response );
+		$this->validate_request( $response );
 		return $response['header'];
 	}
 
@@ -149,13 +153,20 @@ class MediaFile extends Base {
 	 * @todo  $this->id not available for first validation before media_file has been saved
 	 * @param  array $response curl response
 	 */
-	private function validate_request_header( $response ) {
+	private function validate_request( $response ) {
 
 		// skip unsaved media files
 		if ( ! $this->id )
 			return;
 
 		$header = $response['header'];
+
+		if ( $response['error'] ) {
+			Log::get()->addError(
+				'Curl Error: ' . $response['error'],
+				array( 'media_file_id' => $this->id )
+			);
+		}
 
 		// look for ETag and safe for later
 		if ( preg_match( '/ETag:\s*"([^"]+)"/i', $response['response'], $matches ) ) {
@@ -216,7 +227,7 @@ class MediaFile extends Base {
 		curl_setopt( $curl, CURLOPT_HEADER, true );         // header only
 		curl_setopt( $curl, CURLOPT_NOBODY, true );         // return no body; HTTP request method: HEAD
 		curl_setopt( $curl, CURLOPT_FAILONERROR, true );
-		curl_setopt( $curl, CURLOPT_TIMEOUT, 2 );          // HEAD requests shouldn't take > 2 seconds
+		curl_setopt( $curl, CURLOPT_TIMEOUT, 3 );          // HEAD requests shouldn't take > 2 seconds
 
 		if ( $etag ) {
 			curl_setopt( $curl, CURLOPT_HTTPHEADER, array(
@@ -244,11 +255,16 @@ class MediaFile extends Base {
 			)
 		);
 		
-		$response = curl_exec( $curl );
+		$response        = curl_exec( $curl );
 		$response_header = curl_getinfo( $curl );
+		$error           = curl_error( $curl );
 		curl_close( $curl );
 		
-		return array( 'header' => $response_header, 'response' => $response );
+		return array(
+			'header'   => $response_header,
+			'response' => $response,
+			'error'    => $error
+		);
 	}
 	
 }
