@@ -82,6 +82,39 @@ class SystemReport {
 				}
 
 				return 'ok';
+			} ),
+			'podcast_settings' => array( 'callback' => function() use ( &$errors ) {
+
+				$out = '';
+				$podcast = Model\Podcast::get_instance();
+
+				if ( ! $podcast->title ) {
+					$error = __( 'Your podcast needs a title.', 'podlove' );
+					$errors[] = $error;
+					$out .= $error;
+				}
+
+				if ( ! $podcast->media_file_base_uri ) {
+					$error = __( 'Your podcast needs an upload location for file storage.', 'podlove' );
+					$errors[] = $error;
+					$out .= $error;
+				}
+
+				return $out;
+			} ),
+			'web_player' => array( 'callback' => function() use ( &$errors ) {
+
+				foreach ( get_option( 'podlove_webplayer_formats', array() ) as $_ => $media_types ) {
+					foreach ( $media_types as $extension => $asset_id ) {
+						if ( $asset_id ) {
+							return "ok";
+						}
+					}
+				}
+
+				$error = __( 'You need to assign at least one asset to the web player.', 'podlove' );
+				$errors[] = $error;
+				return $error;
 			} )
 		);
 
@@ -142,7 +175,7 @@ class SystemReport {
 			$out .= "Nice, Everything looks fine!";
 		}
 
-		return '<pre>' . $out . '</pre>';
+		return $out;
 	}
 
 }
