@@ -5,6 +5,7 @@ Tags: podlove, podcast, publishing, blubrry, podpress, powerpress, feed, audio, 
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: trunk
+License: MIT
 
 The one and only next generation podcast publishing system. Seriously. It's magical and sparkles a lot.
 
@@ -75,6 +76,9 @@ If you haven't already, get the official Flattr plugin here:
 Find the setting Flattr > Advanced Settings > Flattrable content > Post Types and check "podcast". Save changes. There is no step 3 ;)
 
 == Changelog ==
+
+= 1.6.8-alpha =
+* Fix release issues
 
 = 1.6.7-alpha =
 * Enhancement: Move file types settings to expert settings
