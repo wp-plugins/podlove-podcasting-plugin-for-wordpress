@@ -1,3 +1,0 @@
-[submodule "lib/submodules/webplayer"]
-	path = lib/submodules/webplayer
-	url = git://github.com/gerritvanaaken/podlove-web-player.git

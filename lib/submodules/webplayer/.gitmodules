@@ -1,3 +1,0 @@
-[submodule "podlove-web-player/audiojs"]
-	path = podlove-web-player/audiojs
-	url = https://github.com/kolber/audiojs.git
