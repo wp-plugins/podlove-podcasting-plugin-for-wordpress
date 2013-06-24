@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/ericteubert/code/podlove",
+			"folder_exclude_patterns": [".wordpress_release"],
+			"file_exclude_patterns": [".tag*", ".rake*", "podlove.sublime-*"]
+		},
+		{
+			"path": "/Users/ericteubert/code/Sites/wordpress"
+		}
+	]
+}

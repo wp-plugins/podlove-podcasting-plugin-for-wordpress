@@ -1,0 +1,5 @@
+.tags*
+.wordpress_release
+podlove.sublime-*
+wprelease.yml
+composer.phar
