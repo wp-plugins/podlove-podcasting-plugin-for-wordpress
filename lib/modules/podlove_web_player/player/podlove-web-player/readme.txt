@@ -4,7 +4,7 @@ Donate link: http://podlove.org/
 Tags: podcasting, podlove, html5audio, audio, video, podcast, player
 Requires at least: 3.4.0
 Tested up to: 3.5.1
-Stable tag: 2.0.10
+Stable tag: trunk
 License: BSD 2-Clause License
 License URI: http://opensource.org/licenses/BSD-2-Clause
 
@@ -216,6 +216,24 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 
 == Changelog ==
 
+= 2.0.13 =
+* fix IE8 support
+* more valid/better js code
+
+= 2.0.12 =
+* increase version number to fix wordpress.org issues
+* support images in mp4chaps
+* more valid/better js code
+* save playtime in cookies
+
+= 2.0.11 =
+* empty chapter file and empty meta_box bug fixed
+* chapter images added to chapter table
+* chapter links added to chapter table
+* chapter table bugfix
+* max chapter table height changeable
+* buttons improved (style and size)
+
 = 2.0.10 =
 * wordpress.org has some problems with the last commit
 * sorry for the inconvenience
@@ -321,6 +339,15 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 * Full of bugs
 
 == Upgrade Notice ==
+
+= 2.0.13 =
+fix IE8 support and more valid/better js code
+
+= 2.0.12 =
+support images in mp4chaps, more valid/better js code and save playtime in cookies
+
+= 2.0.11 =
+tiny bugs removed and style improved
 
 = 2.0.10 =
 readme.txt update because of wordpress.org validator foo
