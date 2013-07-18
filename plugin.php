@@ -524,7 +524,7 @@ add_action( 'added_post_meta', function ( $meta_id, $post_id, $meta_key, $_meta_
 
 function autoinsert_templates_into_content( $content ) {
 
-	if ( get_post_type() !== 'podcast' )
+	if ( get_post_type() !== 'podcast' || post_password_required() )
 		return $content;
 
 	$template_assignments = Model\TemplateAssignment::get_instance();
@@ -648,7 +648,7 @@ function no_verbose_page_rules() {
 function generate_custom_post_link( $post_link, $id, $leavename = false, $sample = false ) {
 
 	// Get post
-	$post = &get_post($id);
+	$post = get_post($id);
 
 	// only change Podlove URLs
 	if ( $post->post_type != 'podcast' )

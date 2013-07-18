@@ -77,6 +77,13 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.7.3 (2013-07-18) =
+* Enhancement: Show expected and actual mime type in log when an error occurs
+* Bugfix: Fix Bitlove integration
+* Bugfix: Correctly hide content in password protected posts
+* Bugfix: ADN Plugin annonced new episode every time the episode got saved
+* Fix some PHP 5.4 Strict warnings
+
 = 1.7.2 (2013-07-11) =
 * Feature: Update Web Player to 2.0.13
 * Bugfix: Feed web player with existing/valid files only
