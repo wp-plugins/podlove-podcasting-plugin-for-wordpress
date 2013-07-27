@@ -76,7 +76,14 @@ class Podcast {
 					$wrapper->text( 'summary', array(
 						'label'       => __( 'Summary', 'podlove' ),
 						'description' => __( 'Elaborate description of the podcast\'s content.', 'podlove' ),
-						'html'        => array( 'rows' => 5, 'cols' => 40 )
+						'html'        => array( 'rows' => 3, 'cols' => 40, 'class' => 'autogrow' )
+					) );
+
+					$wrapper->select( 'language', array(
+						'label'       => __( 'Language', 'podlove' ),
+						'description' => __( '', 'podlove' ),
+						'default'     => get_bloginfo( 'language' ),
+						'options'  => \Podlove\Locale\locales()
 					) );
 
 					$wrapper->subheader(
@@ -177,13 +184,6 @@ class Podcast {
 						                 . __( 'For placement within the older, text-based browse system, podcast feeds may list up to 3 category/subcategory pairs. (For example, "Music" counts as 1, as does "Business > Careers.") For placement within the newer browse system based on Category links, however, and for placement within the Top Podcasts and Top Episodes lists that appear in the right column of most podcast pages, only the first category listed in the feed is used.' )
 						                 . ' (<a href="http://www.apple.com/itunes/podcasts/specs.html#category" target="_blank">http://www.apple.com/itunes/podcasts/specs.html#category</a>)',
 						'options'  => \Podlove\Itunes\categories()
-					) );
-
-					$wrapper->select( 'language', array(
-						'label'       => __( 'Language', 'podlove' ),
-						'description' => __( '', 'podlove' ),
-						'default'     => get_bloginfo( 'language' ),
-						'options'  => \Podlove\Locale\locales()
 					) );
 
 					$wrapper->select( 'explicit', array(
