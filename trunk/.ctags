@@ -1,0 +1,5 @@
+--exclude=.wordpress*
+--exclude=*.phar
+--exclude=*.phar
+--exclude=*mediaelement*.js
+--exclude=*codemirror*.js
