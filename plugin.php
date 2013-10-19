@@ -29,9 +29,8 @@ function activate_for_current_blog() {
 			array( 'name' => 'WebM Audio',             'type' => 'audio',    'mime_type' => 'audio/webm',  'extension' => 'webm' ),
 			array( 'name' => 'WebM Video',             'type' => 'video',    'mime_type' => 'video/webm',  'extension' => 'webm' ),
 			array( 'name' => 'FLAC Audio',             'type' => 'audio',    'mime_type' => 'audio/flac',  'extension' => 'flac' ),
-			array( 'name' => 'Opus Audio',             'type' => 'audio',    'mime_type' => 'audio/opus',  'extension' => 'opus' ),
+			array( 'name' => 'Opus Audio',             'type' => 'audio',    'mime_type' => 'audio/ogg;codecs=opus',  'extension' => 'opus' ),
 			array( 'name' => 'Matroska Audio',         'type' => 'audio',    'mime_type' => 'audio/x-matroska',  'extension' => 'mka' ),
-			array( 'name' => 'Matroska Video',         'type' => 'video',    'mime_type' => 'video/x-matroska',  'extension' => 'mkv' ),
 			array( 'name' => 'Matroska Video',         'type' => 'video',    'mime_type' => 'video/x-matroska',  'extension' => 'mkv' ),
 			array( 'name' => 'PDF Document',           'type' => 'ebook',    'mime_type' => 'application/pdf',  'extension' => 'pdf' ),
 			array( 'name' => 'ePub Document',          'type' => 'ebook',    'mime_type' => 'application/epub+zip',  'extension' => 'epub' ),
@@ -626,8 +625,13 @@ function podcast_permalink_proxy($query_vars) {
 	if ( ! isset( $query_vars["post_type"] ) || $query_vars["post_type"] == "post" )
 		$query_vars["post_type"] = array( "podcast", "post" );
 
-	if ( ! isset( $query_vars["post_status"] ) )
+	// When migrating, there are two posts with the same slug (old post and new episode post).
+	// WP_Query uses the first one it finds. Sometimes it's the correct one, sometimes it's
+	// the trashed post.
+	// To avoid conflicts with other plugins however, only filter when migration module is on.
+	if (\Podlove\Modules\Base::is_active('migration') && !isset($query_vars["post_status"])) {
 		$query_vars["post_status"] = "publish";
+	}
 
 	return $query_vars;
 }
