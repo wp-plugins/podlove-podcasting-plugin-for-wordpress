@@ -216,6 +216,8 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 
 == Changelog ==
 
+= 2.0.17 =
+* fixes an error on apaches without mod_headers
 
 = 2.0.16
 * fixes unspecific css selector bug, introduced in last version
@@ -357,6 +359,12 @@ Earlier versions of this plugin could handle alternative shortcodes, too: [audio
 * Full of bugs
 
 == Upgrade Notice ==
+
+= 2.0.17 =
+fixes an error on apaches without mod_headers
+
+= 2.0.16 =
+fixes css, removing elements other than sources and false milliseconds bugs
 
 = 2.0.15 =
 small fixes and .htaccess examples added in /help
