@@ -21,8 +21,11 @@ class Contributor_List_Table extends \Podlove\List_Table {
 			'list'   => $this->get_episodes_link($contributor, __('Show Episodes', 'podlove'))
 		);
 	
+		if (!($name = $contributor->realname))
+			$name = $contributor->publicname;
+
 		return sprintf( '%1$s %2$s',
-		    Settings\Contributors::get_action_link( $contributor, $contributor->realname ),
+		    Settings\Contributors::get_action_link( $contributor, $name ),
 		    $this->row_actions( $actions )
 		) . '<input type="hidden" class="contributor_id" value="' . $contributor->id . '">';;
 	}
@@ -43,25 +46,10 @@ class Contributor_List_Table extends \Podlove\List_Table {
 	}
 	
 	public function column_role( $contributor ) {
-		switch($contributor->role) {
-			case "moderator" :
-				return "Moderator";
-			break;
-			case "comoderator" :
-				return "Co-Moderator";
-			break;
-			case "camera" :
-				return "Camera";
-			break;
-			case "chatmoderator" :
-				return "Chat-Moderator";
-			break;		
-			case "shownoter" :
-				return "Shownoter";
-			break;			
-			case "guest" :
-				return "Guest";
-			break;
+		if ($role = $contributor->getRole()) {
+			return $role->title;
+		} else {
+			return '';
 		}
 	}
 	
@@ -83,7 +71,7 @@ class Contributor_List_Table extends \Podlove\List_Table {
 
 	public function get_columns(){
 		$columns = array(
-			'realname'             => __( 'Real Name', 'podlove' ),
+			'realname'             => __( 'Contributor', 'podlove' ),
 			'publicname'           => __( 'Public Name', 'podlove' ),
 			'role'                 => __( 'Default Role', 'podlove' ),
 			'episodes'             => __( 'Episodes', 'podlove' ),
