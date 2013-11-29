@@ -6,7 +6,7 @@ use Podlove\ChaptersManager;
 /**
  * We could use simple post_meta instead of a table here
  */
-class Episode extends Base {
+class Episode extends Base implements Licensable {
 
 	/**
 	 * Generate a human readable title.
@@ -28,16 +28,24 @@ class Episode extends Base {
 	}
 
 	public function description() {
+	
+	  if ( $this->summary ) {
+	    $description = $this->summary;
+	  } elseif ( $this->subtitle ) {
+	    $description = $this->subtitle;
+	  } else {
+	    $description = get_the_title();
+	  }
+	
+	  return htmlspecialchars( trim( $description ) );
+	}
 
-		if ( $this->summary ) {
-			$description = $this->summary;
-		} elseif ( $this->subtitle ) {
-			$description = $this->subtitle;
-		} else {
-			$description = get_the_title();
-		}
+	public function explicitText() {
 
-		return htmlspecialchars( trim( $description ) );
+		if ($this->explicit == 2)
+			return 'clean';
+
+		return $this->explicit ? 'yes' : 'no';
 	}
 
 	public function media_files() {
@@ -69,6 +77,13 @@ class Episode extends Base {
 		}
 		
 		return $media_files;
+	}
+
+	/**
+	 * Get episode related to the current global post object.
+	 */
+	public static function get_current() {
+		return self::find_one_by_post_id(get_the_ID());
 	}
 
 	public static function find_or_create_by_post_id( $post_id ) {
@@ -194,6 +209,27 @@ class Episode extends Base {
 		return true;
 	}
 
+	public function get_license()
+	{
+		$license = new License('episode', array(
+			'type'                 => $this->license_type,
+			'license_name'         => $this->license_name,
+			'license_url'          => $this->license_url,
+			'allow_modifications'  => $this->license_cc_allow_modifications,
+			'allow_commercial_use' => $this->license_cc_allow_commercial_use,
+			'jurisdiction'         => $this->license_cc_license_jurisdiction
+		));
+
+		return $license;
+	}
+
+	public function get_license_picture_url() {
+		return $this->get_license()->getPictureUrl();
+	}
+
+	public function get_license_html() {
+		return $this->get_license()->getHtml();
+	}	
 }
 
 Episode::property( 'id', 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY' );
@@ -207,3 +243,10 @@ Episode::property( 'cover_art', 'VARCHAR(255)' );
 Episode::property( 'chapters', 'TEXT' );
 Episode::property( 'record_date', 'DATETIME' );
 Episode::property( 'publication_date', 'DATETIME' );
+Episode::property( 'explicit', 'TINYINT' ); // listed in podcast directories or not?
+Episode::property( 'license_type', 'VARCHAR(255)' );
+Episode::property( 'license_name', 'TEXT' );
+Episode::property( 'license_url', 'TEXT' );
+Episode::property( 'license_cc_allow_modifications', 'TEXT' );
+Episode::property( 'license_cc_allow_commercial_use', 'TEXT' );
+Episode::property( 'license_cc_license_jurisdiction', 'TEXT' );

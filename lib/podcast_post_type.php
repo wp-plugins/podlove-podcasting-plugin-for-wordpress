@@ -7,7 +7,7 @@ use \Podlove\Model;
  */
 class Podcast_Post_Type {
 
-	const SETTINGS_PAGE_HANDLE = 'podlove_settings_handle';
+	const SETTINGS_PAGE_HANDLE = 'podlove_settings_handle'; 
 
 	public function __construct() {
 
@@ -112,6 +112,20 @@ class Podcast_Post_Type {
 			);
 
 			wp_register_script(
+				'podlove_admin_license',
+				\Podlove\PLUGIN_URL . '/js/admin/license.js',
+				array( 'jquery' ),
+				$version
+			);
+
+			wp_register_script(
+				'podlove_admin_protected_feed',
+				\Podlove\PLUGIN_URL . '/js/admin/protected_feed.js',
+				array( 'jquery' ),
+				$version
+			);
+
+			wp_register_script(
 				'podlove_admin',
 				\Podlove\PLUGIN_URL . '/js/admin.js',
 				array(
@@ -122,7 +136,9 @@ class Podcast_Post_Type {
 					'podlove_admin_episode_feed_settings',
 					'podlove_admin_autogrow',
 					'podlove_admin_count_characters',
-					'podlove_admin_chosen'
+					'podlove_admin_chosen',
+					'podlove_admin_license',
+					'podlove_admin_protected_feed'
 				),
 				$version
 			);
@@ -142,6 +158,7 @@ class Podcast_Post_Type {
 		}
 
 		add_filter( 'request', array( $this, 'add_post_type_to_feeds' ) );
+		
 
 		add_filter( 'get_the_excerpt', array( $this, 'default_excerpt_to_episode_summary' ) );
 	}
@@ -205,12 +222,16 @@ class Podcast_Post_Type {
 		new \Podlove\Settings\WebPlayer( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Templates( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\FileType( self::SETTINGS_PAGE_HANDLE );
-		new \Podlove\Settings\Modules( self::SETTINGS_PAGE_HANDLE );
-		new \Podlove\Settings\Settings( self::SETTINGS_PAGE_HANDLE );
 		
+		do_action( 'podlove_register_settings_pages', self::SETTINGS_PAGE_HANDLE );
 	}
 
+	/**
+	 * Make sure those are at the bottom of the list.
+	 */
 	public function create_support_menu_entry() {
+		new \Podlove\Settings\Modules( self::SETTINGS_PAGE_HANDLE );
+		new \Podlove\Settings\Settings( self::SETTINGS_PAGE_HANDLE );
 		new \Podlove\Settings\Support( self::SETTINGS_PAGE_HANDLE );
 	}
 
@@ -261,5 +282,6 @@ class Podcast_Post_Type {
 
 		$episode->delete();
 	}
+ 
 }
 

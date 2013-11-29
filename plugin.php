@@ -309,6 +309,9 @@ add_action( 'init', function () {
 	    );
 
 	    wp_enqueue_style( 'podlove-frontend-css' );
+
+	    wp_register_style( 'podlove-admin-font', \Podlove\PLUGIN_URL . '/css/admin-font.css', array(), \Podlove\get_plugin_header( 'Version' ) );
+	    wp_enqueue_style( 'podlove-admin-font' );
 } );
 
 // apply domain mapping plugin where it's essential
@@ -460,9 +463,21 @@ function override404() {
 			$parsed_redirect_url .= "?" . $parsed_url['query'];
 
 		if ( untrailingslashit( $parsed_redirect_url ) === untrailingslashit( $parsed_request_url ) ) {
-			status_header( 301 );
+			
+			if ($redirect['code']) {
+				$http_code = (int) $redirect['code'];
+			} else {
+				$http_code = 301; // default to permanent
+			}
+
+			// fallback for HTTP/1.0 clients
+			if ($http_code == 307 && $_SERVER['SERVER_PROTOCOL'] == "HTTP/1.0") {
+				$http_code = 302;
+			}
+
+			status_header( $http_code );
 			$wp_query->is_404 = false;
-			\wp_redirect( $redirect['to'], 301 );
+			\wp_redirect( $redirect['to'], $http_code );
 			exit;
 		}
 	}
@@ -789,4 +804,3 @@ add_action( 'admin_print_styles', function () {
 	wp_register_style( 'podlove-admin-font', \Podlove\PLUGIN_URL . '/css/admin-font.css', array(), \Podlove\get_plugin_header( 'Version' ) );
 	wp_enqueue_style( 'podlove-admin-font' );
 } );
-

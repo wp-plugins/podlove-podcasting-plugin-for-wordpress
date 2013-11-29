@@ -40,7 +40,7 @@
 namespace Podlove;
 use \Podlove\Model;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 45 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 50 );
 
 add_action( 'init', function () {
 	
@@ -351,6 +351,130 @@ function run_migrations_for_version( $version ) {
 		case 45:
 			delete_transient('podlove_auphonic_user');
 			delete_transient('podlove_auphonic_presets');
+		break;
+		case 46:
+			if (\Podlove\Modules\Base::is_active('contributors')) {
+
+				// manually trigger activation if the old module was active
+				$module = \Podlove\Modules\Contributors\Contributors::instance();
+				$module->was_activated('contributors');
+
+				// then, migrate existing contributors
+				// register old taxonomy so it can be queried
+				$args = array(
+					'hierarchical'  => false,
+					'labels'        => array(),
+					'show_ui'       => true,
+					'show_tagcloud' => true,
+					'query_var'     => true,
+					'rewrite'       => array( 'slug' => 'contributor' ),
+				);
+
+				register_taxonomy( 'podlove-contributors', 'podcast', $args );
+				$contributor_settings = get_option( 'podlove_contributors', array() );
+
+				$contributors = get_terms( 'podlove-contributors', array( 'hide_empty' => 0 ) );
+
+				if ($contributors && !is_wp_error($contributors)) {
+					foreach ($contributors as $contributor) {
+
+						// create new contributor
+						$new = new \Podlove\Modules\Contributors\Model\Contributor();
+						$new->publicname = $contributor->name;
+						$new->realname = $contributor->name;
+						$new->slug = $contributor->slug;
+						$new->showpublic = true;
+
+						if (isset($contributor_settings[$contributor->term_id]['contributor_email'])) {
+							$email = $contributor_settings[$contributor->term_id]['contributor_email'];
+							if ($email) {
+								$new->privateemail = $email;
+								$new->avatar = $email;
+							}
+						}
+						$new->save();
+
+						// create contributions
+						$query = new \WP_Query(array(
+							'posts_per_page' => -1,
+							'post_type' => 'podcast',
+							'tax_query' => array(
+								array(
+									'taxonomy' => 'podlove-contributors',
+									'field' => 'slug',
+									'terms' => $contributor->slug
+								)
+							)
+						));
+						while ($query->have_posts()) {
+							$post = $query->next_post();
+							$contribution = new \Podlove\Modules\Contributors\Model\EpisodeContribution();
+							$contribution->contributor_id = $new->id;
+							$contribution->episode_id = Model\Episode::find_one_by_post_id($post->ID)->id;
+							$contribution->save();
+						}
+					}
+				}
+			}
+		break;
+		case 47:
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `protected` TINYINT(1) NULL',
+				\Podlove\Model\Feed::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `protection_type` TINYINT(1)',
+				\Podlove\Model\Feed::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `protection_user` VARCHAR(60)',
+				\Podlove\Model\Feed::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `protection_password` VARCHAR(64)',
+				\Podlove\Model\Feed::table_name()
+			) );
+		break;
+		case 48:
+			$podcast = Model\Podcast::get_instance();
+			$podcast->limit_items = '-1';
+			$podcast->save();
+		break;
+		case 49:
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `explicit` TINYINT',
+				Model\Episode::table_name()
+			) );
+		break;
+		case 50:
+			$podcast = Model\Podcast::get_instance();
+			$podcast->license_type = 'other';
+			$podcast->save();
+
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `license_type` VARCHAR(255) AFTER `publication_date`',
+				Model\Episode::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `license_name` TEXT AFTER `license_type`',
+				Model\Episode::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `license_url` TEXT AFTER `license_name`',
+				Model\Episode::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `license_cc_allow_modifications` TEXT AFTER `license_url`',
+				Model\Episode::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `license_cc_allow_commercial_use` TEXT AFTER `license_cc_allow_modifications`',
+				Model\Episode::table_name()
+			) );
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `license_cc_license_jurisdiction` TEXT AFTER `license_cc_allow_commercial_use`',
+				Model\Episode::table_name()
+			) );
 		break;
 	}
 

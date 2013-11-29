@@ -57,7 +57,8 @@ function override_feed_head( $hook, $podcast, $feed, $format ) {
 		'podlove_feed_itunes_subtitle',
 		'podlove_feed_itunes_keywords',
 		'podlove_feed_itunes_summary' ,
-		'podlove_feed_itunes_complete'
+		'podlove_feed_itunes_complete',
+		'podlove_feed_itunes_explicit'
 	);
 	foreach ( $filter_hooks as $filter ) {
 		add_filter( $filter, 'convert_chars' );
@@ -81,7 +82,7 @@ function override_feed_head( $hook, $podcast, $feed, $format ) {
 		echo $feed->get_self_link();
 		echo $feed->get_alternate_links();
 	}, 9 );
-	
+ 	
 	add_action( $hook, function () use ( $podcast, $feed, $format ) {
 		echo PHP_EOL;
 
@@ -154,8 +155,8 @@ function override_feed_head( $hook, $podcast, $feed, $format ) {
 		echo "\t" . apply_filters( 'podlove_feed_itunes_explicit', $explicit );
 		echo PHP_EOL;
 
-		$keywords = sprintf( '<itunes:complete>%s</itunes:complete>', ( $podcast->complete ) ? 'yes' : 'no' );
-		echo "\t" . apply_filters( 'podlove_feed_itunes_complete', $keywords );
+		$complete = sprintf( '<itunes:complete>%s</itunes:complete>', ( $podcast->complete ) ? 'yes' : 'no' );
+		echo "\t" . apply_filters( 'podlove_feed_itunes_complete', $complete );
 		echo PHP_EOL;
 	} );
 }
@@ -206,6 +207,12 @@ function override_feed_entry( $hook, $podcast, $feed, $format ) {
 		$summary = sprintf( '<itunes:summary>%s</itunes:summary>', $summary );
 		echo apply_filters( 'podlove_feed_itunes_summary', $summary );
 
+		if (\Podlove\get_setting('metadata', 'enable_episode_explicit')) {
+			$itunes_explicit = apply_filters( 'podlove_feed_content', $episode->explicitText() );
+			$itunes_explicit = sprintf( '<itunes:explicit>%s</itunes:explicit>', $itunes_explicit );
+			echo apply_filters( 'podlove_feed_itunes_explicit', $itunes_explicit );
+		}
+
 		if ( $cover_art_url ) {
 			$cover_art = sprintf( '<itunes:image href="%s" />', $cover_art_url );
 		} else {
@@ -220,6 +227,8 @@ function override_feed_entry( $hook, $podcast, $feed, $format ) {
 			$content_encoded = '<content:encoded><![CDATA[' . get_the_content_feed( 'rss2' ) . ']]></content:encoded>';
 			echo apply_filters( 'podlove_feed_content_encoded', $content_encoded );
 		}
+
+		do_action('podlove_append_to_feed_entry', $podcast, $episode, $feed, $format);
 
 	}, 11 );
 }

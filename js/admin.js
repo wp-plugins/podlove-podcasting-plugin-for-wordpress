@@ -63,6 +63,11 @@ jQuery(function($) {
 		PODLOVE.FeedSettings($(this));
 	});
 
+	$(".row_podlove_feed_protected").each(function() {
+		PODLOVE.ProtectFeed();
+	});
+
 	$(".autogrow").autogrow();
 	
 });
+

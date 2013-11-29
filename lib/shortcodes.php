@@ -44,7 +44,7 @@ function handle_direct_download() {
 		exit;
 	}
 
-	if ( in_array( strtolower( ini_get( 'allow_url_fopen' ) ), array( "1", "on", "true" ) ) ) {
+	if ( \Podlove\get_setting('website', 'force_download') == 'on' && in_array( strtolower( ini_get( 'allow_url_fopen' ) ), array( "1", "on", "true" ) ) ) {
 		header( "Expires: 0" );
 		header( 'Cache-Control: must-revalidate' );
 	    header( 'Pragma: public' );
@@ -282,3 +282,22 @@ function template_shortcode( $attributes ) {
 	return $html;
 }
 add_shortcode( 'podlove-template', '\Podlove\template_shortcode' );
+
+function podcast_license() {
+	$podcast = Model\Podcast::get_instance();
+		return $podcast->get_license_html();
+}
+add_shortcode( 'podlove-podcast-license', '\Podlove\podcast_license' );
+
+
+function episode_license() {
+	global $post;
+
+	if ( is_feed() )
+		return '';
+
+	$episode = Model\Episode::find_or_create_by_post_id( $post->ID );
+	return $episode->get_license_html();
+}
+add_shortcode( 'podlove-episode-license', '\Podlove\episode_license' );
+

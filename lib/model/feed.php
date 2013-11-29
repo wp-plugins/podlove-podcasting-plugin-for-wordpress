@@ -168,6 +168,11 @@ class Feed extends Base {
 
 		$tag_name = $args['prefix'] ? $args['prefix'] . ':link' : 'link';
 
+		if (isset($_GET['redirect'])) {
+			$op = parse_url($args['href'], PHP_URL_QUERY) ? '&amp;' : '?';
+			$args['href'] .= $op . "redirect=" . $_GET['redirect'];
+		}
+
 		return sprintf(
 			'<%s%s%s%s href="%s" />',
 			$tag_name,
@@ -193,3 +198,7 @@ Feed::property( 'enable', 'INT' );
 Feed::property( 'discoverable', 'INT' );
 Feed::property( 'limit_items', 'INT' );
 Feed::property( 'embed_content_encoded', 'INT' );
+Feed::property( 'protected', 'TINYINT(1)' ); 
+Feed::property( 'protection_type', 'TINYINT(1)' ); // Protection type: 0: local, 1: WordPress User
+Feed::property( 'protection_user', 'VARCHAR(60)' );
+Feed::property( 'protection_password', 'VARCHAR(64)' );
