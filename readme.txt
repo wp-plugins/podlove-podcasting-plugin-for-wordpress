@@ -3,7 +3,7 @@ Contributors: eteubert, chemiker
 Donate link: http://flattr.com/thing/728463/Podlove-Podcasting-Plugin-for-WordPress
 Tags: podlove, podcast, publishing, blubrry, podpress, powerpress, feed, audio, video, player
 Requires at least: 3.0
-Tested up to: 3.5
+Tested up to: 3.7.1
 Stable tag: trunk
 License: MIT
 
@@ -75,13 +75,21 @@ If you haven't already, get the official Flattr plugin here:
 
 Find the setting Flattr > Advanced Settings > Flattrable content > Post Types and check "podcast". Save changes. There is no step 3 ;)
 
+== Installation ==
+
+1. Download the Podlove Publisher Plugin to your desktop.
+1. If downloaded as a zip archive, extract the Plugin folder to your desktop.
+1. With your FTP program, upload the Plugin folder to the wp-content/plugins folder in your WordPress directory online.
+1. Go to Plugins screen and find the newly uploaded Plugin in the list.
+1. Click Activate Plugin to activate it.
+
 == Changelog ==
 
-= 1.9.0 =
+= 1.9.0 / 1.9.1 =
 
 **New Module: Contributors**
 
-Podcasts are not possible without their active communities. Huge contributions are being made behind the scenes and nobody notices except the podcaster. The contributors module shines light on all those diligent people. It's now easy to manage contributors of an episode and list them on the blog. The list contains references to their social profiles and the donation service Flattr. Shortcode to display them in an episode post: [`[podlove-contributors]`](http://docs.podlove.org/publisher/shortcodes/#contributors).
+Podcasts are not possible without their active communities. Huge contributions are being made behind the scenes and nobody notices except the podcaster. The contributors module shines light on all those diligent people. It's now easy to manage contributors of an episode and list them on the blog. The list contains references to their social profiles and the donation service Flattr. Shortcode to display them in an episode post: [`[podlove-contributor-list]`](http://docs.podlove.org/publisher/shortcodes/#contributors).
 
 **Simple Protected Feeds**
 
@@ -101,6 +109,7 @@ We built an interface to generate a Creative Commons license for your podcast an
 * Fix: keep ?redirect=no flag in paged feeds
 * Fix: _Module: Import/Export_ Importing episodes no longer causes floods of ADN posts.
 * Fix: _Module: Auphonic_ respect Auphonic chapter offset
+* _DEPRECATED_: `podlove-contributors` shortcode. Use `podlove-contributor-list` instead
 
 = 1.8.13 =
 * Feature: Update Web Player to 2.0.17 (for realsies). It fixes an issue with icon/font display.
