@@ -97,21 +97,18 @@ class RSS {
 		 * and overrides it with the 'posts_per_rss' option. So we need to
 		 * override that option.
 		 */
-		if ( $posts_per_page > -1 ) {
-			add_filter( 'pre_option_posts_per_rss', function ( $_ ) use ( $posts_per_page ) {
-				return $posts_per_page;
-			} );
-		} else {
-			switch ($posts_per_page) {
-				case '-2' :
-					add_filter( 'post_limits', function( $limits ) use ( $podcast ) { return 'LIMIT '.$podcast->limit_items; } );
-				break;
-				case '-1' :
-					add_filter( 'post_limits', function( $limits ) { return ''; } );
-				break;
+		add_filter( 'post_limits', function($limits) use ($feed, $posts_per_page) {
+			$page = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+
+			$start = $posts_per_page * ($page - 1);
+			$max = $feed->get_post_limit_sql();
+
+			if ($max > 0) {
+				return 'LIMIT ' . $start . ', ' . $max;
+			} else {
+				return '';
 			}
-			
-		}
+		} );
 
 		$args = array_merge( $wp_query->query_vars, $args );
 		query_posts( $args );

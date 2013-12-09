@@ -46,6 +46,7 @@ return array(
     'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/GenericAttribute.php',
     'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/Keys.php',
     'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/Location.php',
+    'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/Log.php',
     'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/MoveTo.php',
     'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/Orientation.php',
     'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url' => $vendorDir . '/phpunit/phpunit-selenium/PHPUnit/Extensions/Selenium2TestCase/SessionCommand/Url.php',
