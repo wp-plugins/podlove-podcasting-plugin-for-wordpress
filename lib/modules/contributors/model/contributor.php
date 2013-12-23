@@ -4,7 +4,7 @@ namespace Podlove\Modules\Contributors\Model;
 use \Podlove\Model\Base;
 
 class Contributor extends Base
-{
+{	
 	public function getAvatar($size) {
 		return '<img alt="avatar" src="' . $this->getAvatarUrl($size) . '" class="avatar avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '">';
 	}
@@ -13,7 +13,7 @@ class Contributor extends Base
 		return ContributorRole::find_one_by_slug($this->role);
 	}
 
-	private function getAvatarUrl($size) {
+	public function getAvatarUrl($size) {
 
 		if ($this->avatar)
 			if (filter_var($this->avatar, FILTER_VALIDATE_EMAIL) === FALSE) {
@@ -58,20 +58,22 @@ Contributor::property( 'slug', 'VARCHAR(255)' );
 Contributor::property( 'gender', 'VARCHAR(255)' );
 Contributor::property( 'organisation', 'TEXT' );
 Contributor::property( 'department', 'TEXT' );
+Contributor::property( 'jobtitle', 'TEXT' );
 Contributor::property( 'avatar', 'TEXT' );
 Contributor::property( 'twitter', 'VARCHAR(255)' );
 Contributor::property( 'adn', 'VARCHAR(255)' );
 Contributor::property( 'facebook', 'VARCHAR(255)' );
 Contributor::property( 'flattr', 'VARCHAR(255)' );
+Contributor::property( 'paypal', 'VARCHAR(255)' );
+Contributor::property( 'bitcoin', 'VARCHAR(255)' );
+Contributor::property( 'litecoin', 'VARCHAR(255)' );
 Contributor::property( 'amazonwishlist', 'TEXT' );
 Contributor::property( 'publicemail', 'TEXT' );
 Contributor::property( 'privateemail', 'TEXT' );
-Contributor::property( 'role', 'VARCHAR(255)' );
 Contributor::property( 'realname', 'TEXT' );
 Contributor::property( 'nickname', 'TEXT' );
 Contributor::property( 'publicname', 'TEXT' );
 Contributor::property( 'showpublic', 'VARCHAR(255)' );
-Contributor::property( 'permanentcontributor', 'VARCHAR(255)' );
 Contributor::property( 'guid', 'TEXT' );
 Contributor::property( 'www', 'TEXT' );
 Contributor::property( 'contributioncount', 'INT' );

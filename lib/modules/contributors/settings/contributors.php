@@ -3,7 +3,9 @@ namespace Podlove\Modules\Contributors\Settings;
 
 use Podlove\Model;
 use Podlove\Modules\Contributors\Model\ContributorRole;
+use Podlove\Modules\Contributors\Model\ContributorGroup;
 use Podlove\Modules\Contributors\Model\Contributor;
+use Podlove\Modules\Contributors\Contributor_List_Table;
 
 class Contributors {
 
@@ -25,6 +27,20 @@ class Contributors {
 		add_action( 'admin_init', array( $this, 'process_form' ) );
 		add_action( 'admin_print_styles', array( $this, 'scripts_and_styles' ) );
 		add_action( "load-$pagehook",  array( $this, 'add_contributors_screen_options' ) );
+		add_filter('admin_title', array( $this, 'add_contributor_to_title' ), 10, 2);
+	}
+
+	public function add_contributor_to_title( $title ) {
+
+		if ( ! isset( $_REQUEST['contributor'] ) )
+			return $title;
+
+		$contributor = Contributor::find_by_id( $_REQUEST['contributor'] );
+
+		if ( ! is_object( $contributor ) )
+			return $title;
+
+		return str_replace('Contributor', $contributor->publicname . ' &lsaquo; Contributor', $title);
 	}
 	
 	public static function get_action_link( $contributor, $title, $action = 'edit', $class = 'link' ) {
@@ -131,14 +147,14 @@ class Contributors {
 	}
 
 	public function add_contributors_screen_options() {
-		$option = 'per_page';
-		$args = array(
+
+		add_screen_option( 'per_page', array(
 	       'label'   => 'Contributors',
 	       'default' => 10,
 	       'option'  => 'podlove_contributors_per_page'
-		);
+		) );
 
-		add_screen_option( $option, $args );
+		$this->table = new Contributor_List_Table();
 	}
 
 	/**
@@ -154,9 +170,8 @@ class Contributors {
 	}
 	
 	private function view_template() {
-		$table = new \Podlove\Modules\Contributors\Contributor_List_Table();
-		$table->prepare_items();
-		$table->display();
+		$this->table->prepare_items();
+		$this->table->display();
 	}
 	
 	private function new_template() {
@@ -210,7 +225,7 @@ class Contributors {
 				'options'     => array( 'female' => 'Female', 'male' => 'Male', 'none' => 'Not attributed')
 			) );
 			
-			$wrapper->string( 'avatar', array(
+			$wrapper->avatar( 'avatar', array(
 				'label'       => __( 'Avatar', 'podlove' ),
 				'description' => 'Either a Gravatar E-mail adress or a URL.'
 			) );
@@ -220,26 +235,13 @@ class Contributors {
 			$wrapper->checkbox( 'showpublic', array(
 				'label'       => __( 'Public Profile', 'podlove' ),
 				'description' => 'Check this, if you want the contributor\'s profile to appear e.g. in the Web Player.',
-				'default'     => false
-			) );
-
-			$wrapper->checkbox( 'permanentcontributor', array(
-				'label'       => __( 'Regular Contributor', 'podlove' ),
-				'description' => 'Check this, if you want the contributor to be added to each episode per default.',
-				'default'     => false
+				'default'     => true
 			) );
 
 			$wrapper->string( 'slug', array(
 				'label'       => __( 'ID', 'podlove' ),
 				'description' => 'The ID will be used as in internal identifier for e.g. shortcodes.',
 				'html'        => array( 'class' => 'required' )
-			) );	
-			
-			$wrapper->select( 'role', array(
-				'label'       => __( 'Default role', 'podlove' ),
-				'description' => 'The default role of the conributor.',
-				'options'     => ContributorRole::selectOptions(),
-				'please_choose_text' => __( '- none -', 'podlove' )
 			) );
 
 			$wrapper->string( 'guid', array(
@@ -255,6 +257,10 @@ class Contributors {
 			
 			$wrapper->string( 'department', array(
 				'label'       => __( 'Department', 'podlove' )
+			) );
+
+			$wrapper->string( 'jobtitle', array(
+				'label'       => __( 'Job Title', 'podlove' )
 			) );
 			
 			$wrapper->subheader( __( 'Contact &amp; Social', 'podlove' ) );
@@ -283,20 +289,37 @@ class Contributors {
 				'label'       => __( 'Twitter', 'podlove' ),
 				'description' => 'Twitter username.'
 			) );				
-				
-			$wrapper->string( 'flattr', array(
-				'label'       => __( 'Flattr', 'podlove' ),
-				'description' => 'Flattr username.'
-			) );	
 			
 			$wrapper->string( 'facebook', array(
 				'label'       => __( 'Facebook', 'podlove' ),
 				'description' => 'Facebook URL.'
 			) );	
+
+			$wrapper->subheader( __( 'Donations', 'podlove' ) );
+
+			$wrapper->string( 'flattr', array(
+				'label'       => __( 'Flattr', 'podlove' ),
+				'description' => 'Flattr username.'
+			) );	
+
+			$wrapper->string( 'paypal', array(
+				'label'       => __( 'Paypal', 'podlove' ),
+				'description' => 'Paypal button id.'
+			) );	
+
+			$wrapper->string( 'bitcoin', array(
+				'label'       => __( 'Bitcoin', 'podlove' ),
+				'description' => 'Bitcoin Address.'
+			) );
+
+			$wrapper->string( 'litecoin', array(
+				'label'       => __( 'Litecoin', 'podlove' ),
+				'description' => 'Litecoin Address.'
+			) );
 			
 			$wrapper->string( 'amazonwishlist', array(
-				'label'       => __( 'Wishlist', 'podlove' ),
-				'description' => 'URL of the contributors wishlist (e.g. Amazon).'
+				'label'       => __( 'Amazon Wishlist', 'podlove' ),
+				'description' => 'URL of the contributors Amazon wishlist.'
 			) );	
 
 		} );
