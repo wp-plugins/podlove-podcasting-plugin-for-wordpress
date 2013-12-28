@@ -65,6 +65,7 @@ class Dashboard {
 
 	public static function settings_page() {
 		add_meta_box( Dashboard::$pagehook . '_about', __( 'About', 'podlove' ), '\Podlove\Settings\Dashboard::about_meta', Dashboard::$pagehook, 'side' );		
+		add_meta_box( Dashboard::$pagehook . '_statistics', __( 'At a glance', 'podlove' ), '\Podlove\Settings\Dashboard::statistics', Dashboard::$pagehook, 'normal' );
 		add_meta_box( Dashboard::$pagehook . '_validation', __( 'Validate Podcast Files', 'podlove' ), '\Podlove\Settings\Dashboard::validate_podcast_files', Dashboard::$pagehook, 'normal' );
 
 		do_action( 'podlove_dashboard_meta_boxes' );
@@ -140,6 +141,212 @@ class Dashboard {
 		}
 
 		return $warnings;
+	}
+
+	public static function duration_to_seconds( $timestring ) {
+		$time 		= strtotime($timestring);
+		$seconds    = date( "s", $time);
+		$minutes    = date( "i", $time);
+		$hours	    = date( "H", $time);
+
+		return $seconds + $minutes * 60 + $hours * 3600;
+	}
+
+	public static function statistics() {
+
+		$episodes     = Model\Episode::all();
+		$media_files  = Model\MediaFile::all();
+
+		$episode_edit_url = site_url() . '/wp-admin/edit.php?post_type=podcast';
+
+		// For Episodes, status and length will be calculated
+
+		$episodes_published 			  = 0;
+		$episodes_draft					  = 0;
+		$episodes_future				  = 0;
+		$episodes_private				  = 0;
+
+		$episodes_total_length	 		  = 0;
+
+		$episodes_days_until_next_release = 0;
+
+		$counted_episodes 		 		  = 0;
+		$counted_episodes_length 		  = 0;
+
+		// For Media Files the total and average file size will be calculated
+
+		$mediafile_total_size 		 	  = 0;
+		$mediafile_counted 	  			  = 0;
+
+		/*
+         *	Episode Statistics
+		 */
+
+		foreach ( $episodes as $episode_key => $episode ) {
+
+			$post = get_post( $episode->post_id );
+			// Setting the first episode to 0 -> neglected (as there is no reference episode)
+			$next_episode = ( $episode_key > 0 ? $episodes[$episode_key - 1] : $episodes[$episode_key] );
+			$next_post = get_post( $next_episode->post_id );
+
+			// Average Episode length
+			$episodes_total_length = $episodes_total_length + self::duration_to_seconds( $episode->duration );
+			if ( self::duration_to_seconds( $episode->duration ) > 0 ) // Only count episodes with a larger episode duration than 0 
+				$counted_episodes_length++;
+
+			// Count Episode status (neglect trash and inherit)
+			switch ( $post->post_status ) {
+				case 'publish' :
+					$episodes_published++;
+					$counted_episodes++;
+				break;
+				case 'draft' :
+					$episodes_draft++;
+					$counted_episodes++;
+				break;
+				case 'future' :
+					$episodes_future++;
+					$counted_episodes++;
+				break;
+				case 'private' :
+					$episodes_private++;
+					$counted_episodes++;
+				break;
+			}
+
+			// Calculate time between release of current and next episode
+			$timestamp_current_episode = new \DateTime( $post->post_date );
+			$timestamp_next_episode = new \DateTime( $next_post->post_date );
+			$time_stamp_difference = $timestamp_current_episode->diff($timestamp_next_episode);
+
+			if ( $time_stamp_difference->days > 0 ) // Filter first episode, as no reference episode is available here!
+				$episodes_days_until_next_release = $episodes_days_until_next_release + $time_stamp_difference->days;			
+		}
+
+		// Calculating average episode in seconds
+		$episodes_average_episode_length = ( $counted_episodes_length > 0 ? round( $episodes_total_length / $counted_episodes_length ) : 0 );
+		// Calculate average tim until next release in days
+		$episodes_days_until_next_release = ( $counted_episodes > 0 ? round( $episodes_days_until_next_release / $counted_episodes ) : 0 );
+
+		/*
+         *	Media Files
+		 */
+		foreach ( $media_files as $media_file_key => $media_file) {
+			if ( $media_file->size <= 0 ) // Neglect empty files
+				continue;
+
+			$mediafile_total_size = $mediafile_total_size + $media_file->size;
+			$mediafile_counted++;
+		}
+
+		$formated_mediafile_average_size = ( $mediafile_counted > 0 ? $mediafile_total_size / $mediafile_counted / 1000000 : 0 ); // [Megabyte]
+		$formated_mediafile_total_size = $mediafile_total_size / 1000000000; // [Gigabyte]
+
+		?>
+			<div class="podlove-dashboard-statistics-wrapper">
+				<h4>Episodes</h4>
+				<table cellspacing="0" cellpadding="0" class="podlove-dashboard-statistics">
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<a href="<?php echo $episode_edit_url; ?>&amp;post_status=publish"><?php echo $episodes_published; ?></a>
+						</td>
+						<td>
+							<span style="color: #2c6e36;"><?php echo __( 'Published', 'podlove' ); ?></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<a href="<?php echo $episode_edit_url; ?>&amp;post_status=private"><?php echo $episodes_private; ?></a>
+						</td>
+						<td>
+							<span style="color: #b43f56;"><?php echo __( 'Private', 'podlove' ); ?></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<a href="<?php echo $episode_edit_url; ?>&amp;post_status=future"><?php echo $episodes_future; ?></a>
+						</td>
+						<td>
+							<span style="color: #a8a8a8;"><?php echo __( 'To be published', 'podlove' ); ?></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<a href="<?php echo $episode_edit_url; ?>&amp;post_status=draft"><?php echo $episodes_draft; ?></a>
+						</td>
+						<td>
+							<span style="color: #c0844c;"><?php echo __( 'Drafts', 'podlove' ); ?></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column podlove-dashboard-total-number">
+							<a href="<?php echo $episode_edit_url; ?>"><?php echo $counted_episodes; ?></a>
+						</td>
+						<td class="podlove-dashboard-total-number">
+							<?php echo __( 'Total', 'podlove' ); ?>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="podlove-dashboard-statistics-wrapper">
+				<h4>Statistics</h4>
+				<table cellspacing="0" cellpadding="0" class="podlove-dashboard-statistics">
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<?php echo gmdate("H:i:s", $episodes_average_episode_length ); ?>
+						</td>
+						<td>
+							<?php echo __( 'is the average length of an episode', 'podlove' ); ?>.
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<?php 
+								// Cut after the first decimal place [Days]
+								echo substr( $episodes_total_length / 3600 / 24, 0, strpos( $episodes_total_length / 3600 / 24, "." ) + 2 );
+							?>
+						</td>
+						<td>
+							<?php echo __( 'Days, is the total playback time of all episodes', 'podlove' ); ?>.
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<?php 
+								// Cut after the first decimal place [Megabyte]
+								echo substr( $formated_mediafile_average_size , 0, strpos($formated_mediafile_average_size, "." ) + 2 ); 
+							?>
+						</td>
+						<td>
+							<?php echo __( 'Megabyte is the average media file size', 'podlove' ); ?>.
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<?php
+								// Cut after the first decimal place [Gigabyte]
+								echo substr( $formated_mediafile_total_size , 0, strpos($formated_mediafile_total_size, "." ) + 2 ); 
+							?>
+						</td>
+						<td>
+							<?php echo __( 'Gigabyte is the total media file size', 'podlove' ); ?>.
+						</td>
+					</tr>
+					<tr>
+						<td class="podlove-dashboard-number-column">
+							<?php echo $episodes_days_until_next_release; ?>
+						</td>
+						<td>
+							<?php echo __( 'Days, is the average interval until a new episode is released', 'podlove' ); ?>.
+						</td>
+					</tr>
+					<?php do_action('podlove_dashboard_statistics'); ?>
+				</table>
+			</div>
+			<p>
+				<?php echo sprintf( __('You are using %s', 'podlove'), '<strong>Podlove Publisher ' . \Podlove\get_plugin_header( 'Version' ) . '</strong>'); ?>.
+			</p>
+		<?php
 	}
 
 	public static function validate_podcast_files() {

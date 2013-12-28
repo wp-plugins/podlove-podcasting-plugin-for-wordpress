@@ -30,6 +30,8 @@ class Contributors extends \Podlove\Modules\Base {
 		add_action('rss2_head', array($this, 'feed_head_contributors'));
 		add_action('podlove_append_to_feed_entry', array($this, 'feed_item_contributors'), 10, 4);
 
+		add_action('podlove_dashboard_statistics', array($this, 'dashboard_statistics_row'));
+
 		// register shortcodes
 		new Shortcodes;	
 
@@ -46,6 +48,38 @@ class Contributors extends \Podlove\Modules\Base {
 			new Settings\Contributors($settings_parent);
 			new Settings\ContributorSettings($settings_parent);
 		});
+	}
+
+	public function dashboard_statistics_row() {
+		$contributors = Contributor::all();
+		$contributor_count = count($contributors);
+
+		$absolute_gender_numbers = array(
+			'female' => count(array_filter($contributors, function($c) { return $c->gender == 'female'; })),
+			'male'   => count(array_filter($contributors, function($c) { return $c->gender == 'male'; }))
+		);
+		$absolute_gender_numbers['sexless'] = $contributor_count - $absolute_gender_numbers['female'] - $absolute_gender_numbers['male'];
+
+		$relative_gender_numbers = array_map(function($abs) use ($contributor_count) {
+			return $contributor_count > 0 ? $abs / $contributor_count * 100 : 0;
+		}, $absolute_gender_numbers);
+
+		// sort by percentage (high to low)
+		arsort( $relative_gender_numbers );
+		?>
+		<tr>
+			<td class="podlove-dashboard-number-column">
+				<?php echo __('Genders', 'podlove') ?>
+			</td>
+			<td>
+				<?php
+				echo implode(', ', array_map(function($percent, $gender) {
+					return round($percent) . "% " . $gender;
+				}, $relative_gender_numbers, array_keys($relative_gender_numbers)));
+				?>
+			</td>
+		</tr>
+		<?php
 	}
 
 	function feed_head_contributors() {
@@ -68,9 +102,9 @@ class Contributors extends \Podlove\Modules\Base {
 	{
 		$contributor_xml = '';
 
-		if ($contributor->showpublic == 1 && $contributor->publicname) {
+		if ($contributor->showpublic == 1) {
 			$contributor_xml .= "<atom:contributor>\n";
-			$contributor_xml .= "	<atom:name>" . $contributor->publicname . "</atom:name>\n";
+			$contributor_xml .= "	<atom:name>" . $contributor->getName() . "</atom:name>\n";
 
 			if ($contributor->guid)
 				$contributor_xml .= "	<atom:uri>" . $contributor->guid . "</atom:uri>\n";
@@ -569,7 +603,7 @@ class Contributors extends \Podlove\Modules\Base {
 	        	foreach ($contributors as $contributor_id => $contributor) {
 	        		$contributor_details = $contributor->getContributor();
 
-	        		$contributor_list = $contributor_list."<a href=\"".site_url()."/wp-admin/edit.php?post_type=podcast&contributor=".$contributor_details->slug."\">".$contributor_details->publicname."</a>, ";
+	        		$contributor_list = $contributor_list."<a href=\"".site_url()."/wp-admin/edit.php?post_type=podcast&contributor=".$contributor_details->slug."\">".$contributor_details->getName()."</a>, ";
 	        	}
 
 	        	echo substr($contributor_list, 0, -2);
