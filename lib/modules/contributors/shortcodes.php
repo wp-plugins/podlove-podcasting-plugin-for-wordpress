@@ -227,7 +227,7 @@ class Shortcodes {
 			$donations
 			$flattr
 		</tr>
-	<thead>
+	</thead>
 	<tbody>
 EOD;
 
@@ -257,6 +257,10 @@ EOD;
 		$body = "";
 		foreach ($this->contributions as $contribution) {
 			$contributor = $contribution->getContributor();
+
+			if( !is_object( $contributor ) )
+				continue;
+
 			$body .= "<tr>";
 
 			// avatar
@@ -281,7 +285,7 @@ EOD;
 
 			// donations
 			if ($this->settings['donations'] == 'yes')
-				$body .= '<td class="docation_cell"><ul class="podlove-donations-list">'
+				$body .= '<td class="donation_cell"><ul class="podlove-donations-list">'
 			    . $this->getXcoinButton($contributor, 'bitcoin')
 			    . $this->getXcoinButton($contributor, 'litecoin')
 			    . $this->getPayPalButton($contributor)
@@ -307,7 +311,7 @@ EOD;
 			if ($contributor->{$service['key']}) {
 				$html .= sprintf(
 					'<li><a href="%1$s" target="_blank" title="%3$s">
-						<img src="%4$s/lib/modules/contributors/images/icons/%5$s" class="podlove-contributor-button" 
+						<img width="32" height="32" src="%4$s/lib/modules/contributors/images/icons/%5$s" class="podlove-contributor-button" 
 						alt="%3$s" />
 					</a></li>',
 					sprintf($service['url_template'], $contributor->{$service['key']}),
@@ -332,7 +336,7 @@ EOD;
 			target=\"_blank\"
     		title=\"Support {$contributor->getName()} by buying things from an Amazon Wishlist\"
     		href=\"{$contributor->amazonwishlist}\">
-    		<img src=\"" . \Podlove\PLUGIN_URL  . "/lib/modules/contributors/images/icons/amazonwishlist-128.png\" class=\"podlove-contributor-button\" 
+    		<img width=\"32\" height=\"32\" src=\"" . \Podlove\PLUGIN_URL  . "/lib/modules/contributors/images/icons/amazonwishlist-128.png\" class=\"podlove-contributor-button\" 
     		alt=\"" . sprintf( __('Support %s by buying things from an Amazon Wishlist'),  $contributor->getName() ) . "\" />
 		</a></li>";
 	}
@@ -348,7 +352,7 @@ EOD;
 			style=\"display:none;\"
     		title=\"{$contributor->getName()}@" . get_the_title( $postid ) . "\"
     		rel=\"flattr;uid:{$contributor->flattr};button:compact;popout:0\"
-    		href=\"".get_permalink( $postid )."#podlove-contributor={$contributor->slug}\">
+    		href=\"".get_permalink( $postid )."#" . md5( $contributor->id . '-' .$contributor->flattr ) . "\">
 		    	Flattr {$contributor->getName()}@" . get_the_title( $postid ) . "
 		</a>";
 	}
@@ -379,7 +383,7 @@ EOD;
 			class=\"PayPalButton\"
     		title=\"Support {$contributor->getName()} by donating with PayPal\"
     		href=\"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id={$contributor->paypal}\">
-    		<img src=\"" . \Podlove\PLUGIN_URL  . "/lib/modules/contributors/images/icons/paypal-128.png\" class=\"podlove-contributor-button\" 
+    		<img width=\"32\" height=\"32\" src=\"" . \Podlove\PLUGIN_URL  . "/lib/modules/contributors/images/icons/paypal-128.png\" class=\"podlove-contributor-button\" 
     		alt=\"" . sprintf( __('Support %s by donating with PayPal'), $contributor->getName() ) ."\" />
 		</a></li>";
 	}
@@ -391,8 +395,8 @@ EOD;
 
 		return '<li><a href="' . $currency . ':' . $contributor->$currency . '"
 					 title="Support ' . $contributor->getName() . ' by donating with ' . ucfirst($currency) .'">
-						<img src="' . \Podlove\PLUGIN_URL  . '/lib/modules/contributors/images/icons/' . $currency . '-128.png" class="podlove-contributor-button" 
-						alt=\"' . sprintf( __('Support %s by donating with %s'), $contributor->getName(), ucfirst($currency) ) . '\" />
+						<img width="32" height="32" src="' . \Podlove\PLUGIN_URL  . '/lib/modules/contributors/images/icons/' . $currency . '-128.png" class="podlove-contributor-button" 
+						alt="' . sprintf( __('Support %s by donating with %s'), $contributor->getName(), ucfirst($currency) ) . '" />
 					</a>
 				</li>';
 	}

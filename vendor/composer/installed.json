@@ -727,5 +727,47 @@
             "testing",
             "xunit"
         ]
+    },
+    {
+        "name": "podlove/comment-introspection",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/podlove/podlove-comment-introspection.git",
+            "reference": "08ce9985f132a28a4bba5b65c1eef00acafe9ba0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/podlove/podlove-comment-introspection/zipball/08ce9985f132a28a4bba5b65c1eef00acafe9ba0",
+            "reference": "08ce9985f132a28a4bba5b65c1eef00acafe9ba0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2014-01-04 11:28:17",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Podlove\\Comment": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "PHP library providing a toolkit to parse class and method comments.",
+        "keywords": [
+            "comment",
+            "introspection",
+            "parser",
+            "podlove",
+            "reflection"
+        ]
     }
 ]
