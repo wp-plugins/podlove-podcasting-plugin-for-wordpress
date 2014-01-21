@@ -6,11 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Twig_' => $vendorDir . '/twig/twig/lib',
     'Symfony\\Component\\Yaml\\' => $vendorDir . '/symfony/yaml',
     'Psr\\Log\\' => $vendorDir . '/psr/log',
     'Podlove\\NormalPlayTime' => $vendorDir . '/podlove/normalplaytime/src',
-    'Podlove\\Comment' => $vendorDir . '/podlove/comment-introspection/lib',
     'Podlove\\Chapters' => $vendorDir . '/podlove/podlove-timeline/lib',
     'Monolog' => $vendorDir . '/monolog/monolog/src',
 );
