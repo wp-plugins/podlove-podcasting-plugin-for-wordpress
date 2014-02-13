@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Symfony\\Component\\Yaml\\' => $vendorDir . '/symfony/yaml',
     'Psr\\Log\\' => $vendorDir . '/psr/log',
     'Podlove\\NormalPlayTime' => $vendorDir . '/podlove/normalplaytime/src',
     'Podlove\\Chapters' => $vendorDir . '/podlove/podlove-timeline/lib',

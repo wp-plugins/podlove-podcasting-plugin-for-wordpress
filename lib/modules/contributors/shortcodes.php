@@ -23,6 +23,8 @@ class Shortcodes {
 		add_shortcode( 'podlove-contributors', array( $this, 'podlove_contributors') );
 		// display a table/list of contributors
 		add_shortcode( 'podlove-contributor-list', array( $this, 'podlove_contributor_list') );
+		// display a table/list of podcast contributors
+		add_shortcode( 'podlove-podcast-contributor-list', array( $this, 'podlove_podcast_contributor_list') );
 	}
 
 	/**
@@ -71,7 +73,7 @@ class Shortcodes {
 	 * 
 	 * Examples:
 	 *
-	 *	[podlove-contributor-list]
+	 *	[podlove-contributor-list] / [podlove-podcast-contributor-list]
 	 * 
 	 * @return string
 	 */
@@ -98,6 +100,29 @@ class Shortcodes {
 		return $this->renderListOfContributors();
 	}
 
+	public function podlove_podcast_contributor_list($attributes)
+	{
+		$defaults = array(
+			'preset'    => 'table',
+			'avatars'   => 'yes',
+			'role'      => 'all',
+			'roles'		=> 'no',
+			'group'		=> 'all',
+			'groups'	=> 'no',
+			'donations' => 'no',
+			'flattr'    => 'yes',
+			'linkto'    => 'none',
+			'title'     => ''
+		);
+
+		if (!is_array($attributes))
+			$attributes = array();
+
+		$this->settings = array_merge($defaults, $attributes);
+
+		return $this->renderListOfContributors('podcast');
+	}
+
 	/**
 	 * Maybe link text to named service.
 	 */
@@ -114,14 +139,26 @@ class Shortcodes {
 		);
 	}
 
-	private function renderListOfContributors() {
+	private function renderListOfContributors( $relation='episode' ) {
 
-		// fetch contributions
-		if ($episode = Model\Episode::get_current()) {
-			$this->contributions = \Podlove\Modules\Contributors\Model\EpisodeContribution::all('WHERE `episode_id` = "' . $episode->id . '" ORDER BY `position` ASC');
-		} else {
-			$this->contributions = \Podlove\Modules\Contributors\Model\EpisodeContribution::all('GROUP BY contributor_id ORDER BY `position` ASC');
+		// fetch contributors
+		switch ( $relation ) {
+			case 'episode' :
+				if ($episode = Model\Episode::get_current()) {
+					$this->contributions = \Podlove\Modules\Contributors\Model\EpisodeContribution::all('WHERE `episode_id` = "' . $episode->id . '" ORDER BY `position` ASC');
+				} else {
+					$this->contributions = \Podlove\Modules\Contributors\Model\EpisodeContribution::all('GROUP BY contributor_id ORDER BY `position` ASC');
+				}
+			break;
+			case 'podcast' :
+				$this->contributions = \Podlove\Modules\Contributors\Model\ShowContribution::all();
+			break;
 		}
+
+		// Remove all contributions with missing contributors.
+		$this->contributions = array_filter($this->contributions, function($c) {
+			return (bool) $c->getContributor();
+		});
 
 		if ($this->settings['role'] != 'all') {
 			$role = $this->settings['role'];
@@ -199,19 +236,11 @@ class Shortcodes {
 
 	private function renderAsTable() {
 
-		$donations = $this->settings['donations'] == 'yes' ? '<th></th>' : '';
-		$flattr = $this->settings['flattr'] == 'yes' ? '<th></th>' : '';
-		$title = $this->settings['title'];
+		$title = $this->settings['title'] == '' ? '' : '<caption>' . $this->settings['title'] . '</caption>';
 
 		$before = <<<EOD
 <table class="podlove-contributors-table">
-	<thead>
-		<tr>
-			<th colspan="3">$title</th>
-			$donations
-			$flattr
-		</tr>
-	</thead>
+	$title
 	<tbody>
 EOD;
 
@@ -252,17 +281,19 @@ EOD;
 			$body .= ($this->settings['avatars'] == 'yes' ? $contributor->getAvatar(50) . ' ' : '');
 			$body .= "</td>";
 
-			// name, role and group
+			// name and comment
 			$body .= '<td class="title_cell">';
 			$body .= $this->wrapWithLink($contributor, $contributor->getName());
+			$body .= $contribution->comment == '' ? '' :'<br /><em>' . $contribution->comment . '</em>';
+			$body .= '</td>';
 
-			if ($this->settings['roles'] == 'yes' && $role = $contribution->getRole())
-				$body .= '<br /><em>' . $role->title . '</em>';
-
+			// group
 			if ($this->settings['groups'] == 'yes' && $group = $contribution->getGroup())
-				$body .= '<br /><em>' . $group->title . '</em>';
+				$body .= '<td>' . $group->title . '</td>';
 
-			$body .= "</td>";
+			// role
+			if ($this->settings['roles'] == 'yes' && $role = $contribution->getRole())
+				$body .= '<td>' . $role->title . '</td>';
 
 			// social
 			$body .= '<td class="social_cell">' . $this->getSocialButtons($contributor) . "</td>";
@@ -416,6 +447,12 @@ EOD;
 				'url_template' => 'http://facebook.com/%s',
 				'title' => 'Facebook',
 				'icon' => 'facebook-128.png'
+			),
+			array(
+				'key' => 'googleplus',
+				'url_template' => '%s',
+				'title' => 'Google+',
+				'icon' => 'googleplus-128.png'
 			)
 		);
 	}

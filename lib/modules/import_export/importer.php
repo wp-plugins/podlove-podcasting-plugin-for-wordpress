@@ -65,84 +65,40 @@ class Importer {
 		}
 	}
 
-	private function importAssets()
-	{
-		Model\EpisodeAsset::delete_all();
-
-		$assets = $this->xml->xpath('//wpe:asset');
-		foreach ($assets as $asset) {
-			$new_asset = new Model\EpisodeAsset;
-
-			foreach ($asset->children('wpe', true) as $attribute) {
-				$new_asset->{$attribute->getName()} = self::escape((string) $attribute);
-			}
-
-			$new_asset->save();
-		}		
+	private function importAssets() {
+		self::importTable($this->xml, 'asset', '\Podlove\Model\EpisodeAsset');
 	}
 
-	private function importFeeds()
-	{
-		Model\Feed::delete_all();
-
-		$feeds = $this->xml->xpath('//wpe:feed');
-		foreach ($feeds as $feed) {
-			$new_feed = new Model\Feed;
-
-			foreach ($feed->children('wpe', true) as $attribute) {
-				$new_feed->{$attribute->getName()} = self::escape((string) $attribute);
-			}
-
-			$new_feed->save();
-		}		
+	private function importFeeds() {
+		self::importTable($this->xml, 'feed', '\Podlove\Model\Feed');
 	}
 
-	private function importFileTypes()
-	{
-		Model\FileType::delete_all();
-
-		$filetypes = $this->xml->xpath('//wpe:filetype');
-		foreach ($filetypes as $filetype) {
-			$new_filetype = new Model\FileType;
-
-			foreach ($filetype->children('wpe', true) as $attribute) {
-				$new_filetype->{$attribute->getName()} = self::escape((string) $attribute);
-			}
-
-			$new_filetype->save();
-		}		
+	private function importFileTypes() {
+		self::importTable($this->xml, 'filetype', '\Podlove\Model\FileType');	
 	}
 
-	private function importMediaFiles()
-	{
-		Model\MediaFile::delete_all();
-
-		$mediafiles = $this->xml->xpath('//wpe:mediafile');
-		foreach ($mediafiles as $mediafile) {
-			$new_mediafile = new Model\MediaFile;
-
-			foreach ($mediafile->children('wpe', true) as $attribute) {
-				$new_mediafile->{$attribute->getName()} = self::escape((string) $attribute);
-			}
-
-			$new_mediafile->save();
-		}
+	private function importMediaFiles() {
+		self::importTable($this->xml, 'mediafile', '\Podlove\Model\MediaFile');
 	}
 
-	private function importTemplates()
-	{
-		Model\Template::delete_all();
+	private function importTemplates() {
+		self::importTable($this->xml, 'template', '\Podlove\Model\Template');
+	}
 
-		$templates = $this->xml->xpath('//wpe:template');
-		foreach ($templates as $template) {
-			$new_template = new Model\Template;
+	public static function importTable($xml, $item_name, $table_class) {
+		$table_class::delete_all();
 
-			foreach ($template->children('wpe', true) as $attribute) {
-				$new_template->{$attribute->getName()} = self::escape((string) $attribute);
+		$group = $xml->xpath('//wpe:' . $item_name);
+
+		foreach ($group as $item) {
+			$new_item = new $table_class;
+
+			foreach ($item->children('wpe', true) as $attribute) {
+				$new_item->{$attribute->getName()} = self::escape((string) $attribute);
 			}
 
-			$new_template->save();
-		}
+			$new_item->save();
+		}	
 	}
 
 	private static function escape($value) {

@@ -1,5 +1,7 @@
 # Podlove Comment Introspection
 
+[![Build Status](https://travis-ci.org/podlove/podlove-comment-introspection.png?branch=master)](https://travis-ci.org/podlove/podlove-comment-introspection)
+
 PHP library providing a toolkit to parse class and method comments.
 
 ## Usage

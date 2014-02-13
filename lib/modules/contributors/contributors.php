@@ -2,11 +2,13 @@
 namespace Podlove\Modules\Contributors;
 
 use \Podlove\Model\Episode;
+use \Podlove\Modules;
 use \Podlove\Modules\Contributors\Model\Contributor;
 use \Podlove\Modules\Contributors\Model\ContributorRole;
 use \Podlove\Modules\Contributors\Model\ContributorGroup;
 use \Podlove\Modules\Contributors\Model\EpisodeContribution;
 use \Podlove\Modules\Contributors\Model\ShowContribution;
+use \Podlove\Modules\Contributors\Model\DefaultContribution;
 
 use Podlove\DomDocumentFragment;
 
@@ -20,7 +22,7 @@ class Contributors extends \Podlove\Modules\Base {
 		add_action( 'podlove_module_was_activated_contributors', array( $this, 'was_activated' ) );
 		add_action( 'podlove_episode_form_beginning', array( $this, 'contributors_form_for_episode' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'update_contributors' ), 10, 2 );
-		add_action( 'podlove_podcast_form', array( $this, 'podcast_form_extension' ), 10, 2 );
+		add_action( 'podlove_podcast_settings_tabs', array( $this, 'podcast_settings_tab' ) );
 		add_action( 'update_option_podlove_podcast', array( $this, 'save_setting' ), 10, 2 );
 		add_filter( 'parse_query', array($this, 'filter_by_contributor') );
 
@@ -31,6 +33,10 @@ class Contributors extends \Podlove\Modules\Base {
 		add_action('podlove_append_to_feed_entry', array($this, 'feed_item_contributors'), 10, 4);
 
 		add_action('podlove_dashboard_statistics', array($this, 'dashboard_statistics_row'));
+
+		add_action('podlove_xml_export', array($this, 'expandExportFile'));
+		add_action('podlove_xml_import', array($this, 'expandImport'));
+		add_action( 'admin_print_styles', array( $this, 'admin_print_styles' ) );
 
 		// register shortcodes
 		new Shortcodes;	
@@ -48,6 +54,28 @@ class Contributors extends \Podlove\Modules\Base {
 			new Settings\Contributors($settings_parent);
 			new Settings\ContributorSettings($settings_parent);
 		});
+	}
+
+	/**
+	 * Expands "Import/Export" module: export logic
+	 */
+	public function expandExportFile(\SimpleXMLElement $xml) {
+		Modules\ImportExport\Exporter::exportTable($xml, 'contributors', 'contributor', '\Podlove\Modules\Contributors\Model\Contributor');
+		Modules\ImportExport\Exporter::exportTable($xml, 'contributor-groups', 'contributor-group', '\Podlove\Modules\Contributors\Model\ContributorGroup');
+		Modules\ImportExport\Exporter::exportTable($xml, 'contributor-roles', 'contributor-role', '\Podlove\Modules\Contributors\Model\ContributorRole');
+		Modules\ImportExport\Exporter::exportTable($xml, 'contributor-episode-contributions', 'contributor-episode-contribution', '\Podlove\Modules\Contributors\Model\EpisodeContribution');
+		Modules\ImportExport\Exporter::exportTable($xml, 'contributor-show-contributions', 'contributor-show-contribution', '\Podlove\Modules\Contributors\Model\ShowContribution');
+	}
+
+	/**
+	 * Expands "Import/Export" module: import logic
+	 */
+	public function expandImport($xml) {
+		Modules\ImportExport\Importer::importTable($xml, 'contributor', '\Podlove\Modules\Contributors\Model\Contributor');
+		Modules\ImportExport\Importer::importTable($xml, 'contributor-group', '\Podlove\Modules\Contributors\Model\ContributorGroup');
+		Modules\ImportExport\Importer::importTable($xml, 'contributor-role', '\Podlove\Modules\Contributors\Model\ContributorRole');
+		Modules\ImportExport\Importer::importTable($xml, 'contributor-episode-contribution', '\Podlove\Modules\Contributors\Model\EpisodeContribution');
+		Modules\ImportExport\Importer::importTable($xml, 'contributor-show-contribution', '\Podlove\Modules\Contributors\Model\ShowContribution');
 	}
 
 	public function dashboard_statistics_row() {
@@ -83,7 +111,7 @@ class Contributors extends \Podlove\Modules\Base {
 
 	function feed_head_contributors() {
 		$contributor_xml = '';
-		foreach (ShowContribution::all() as $contribution) {
+		foreach (\Podlove\Modules\Contributors\Model\ShowContribution::all() as $contribution) {
 			$contributor = $contribution->getContributor();
 
 			if( !is_object( $contributor ) )
@@ -96,7 +124,7 @@ class Contributors extends \Podlove\Modules\Base {
 
 	function feed_item_contributors($podcast, $episode, $feed, $format) {
 		$contributor_xml = '';
-		foreach (EpisodeContribution::find_all_by_episode_id($episode->id) as $contribution) {
+		foreach (\Podlove\Modules\Contributors\Model\EpisodeContribution::find_all_by_episode_id($episode->id) as $contribution) {
 			$contributor = $contribution->getContributor();
 
 			if( !is_object( $contributor ) )
@@ -107,11 +135,11 @@ class Contributors extends \Podlove\Modules\Base {
 		echo apply_filters( 'podlove_feed_contributors', $contributor_xml );
 	}
 
-	private function getContributorXML(Contributor $contributor)
+	private function getContributorXML($contributor)
 	{
 		$contributor_xml = '';
 
-		if ($contributor->showpublic == 1) {
+		if ($contributor->visibility == 1) {
 			$contributor_xml .= "<atom:contributor>\n";
 			$contributor_xml .= "	<atom:name>" . $contributor->getName() . "</atom:name>\n";
 
@@ -150,6 +178,7 @@ class Contributors extends \Podlove\Modules\Base {
 		ContributorGroup::build();
 		EpisodeContribution::build();
 		ShowContribution::build();
+		DefaultContribution::build();
 	}
 
 	public function migrate_contributors( $module_name ) {
@@ -181,7 +210,7 @@ class Contributors extends \Podlove\Modules\Base {
 										"publicname" => $contributor->name,
 										"slug" => $contributor->slug,
 										"id" => $contributor->term_id,
-										"showpublic" => 1,
+										"visibility" => 1,
 										"privateemail" => $privateemail);
 
 			$contributor_entry = new \Podlove\Modules\Contributors\Contributor;
@@ -223,6 +252,7 @@ class Contributors extends \Podlove\Modules\Base {
 		}
 
 		$position = 0;
+
 		foreach ($_POST["episode_contributor"] as $contributor_appearance) {
 			foreach ($contributor_appearance as $contributor_id => $contributor) {
 				$c = new \Podlove\Modules\Contributors\Model\EpisodeContribution;
@@ -232,6 +262,7 @@ class Contributors extends \Podlove\Modules\Base {
 					$c->group_id = \Podlove\Modules\Contributors\Model\ContributorGroup::find_one_by_slug($contributor['group'])->id;
 				$c->episode_id = $episode->id;
 				$c->contributor_id = $contributor_id;
+				$c->comment = $contributor['comment'];
 				$c->position = $position++;
 				$c->save();		
 			}
@@ -251,10 +282,11 @@ class Contributors extends \Podlove\Modules\Base {
 				if ($current_page->action == "add") {
 					$i = 0;
 					$permanent_contributors = array();
-					foreach ( ShowContribution::all() as $contribution_key => $contribution ) {
+					foreach ( DefaultContribution::all() as $contribution_key => $contribution ) {
 						$permanent_contributors[$contribution_key]['contributor'] = $contribution->getContributor();
 						$permanent_contributors[$contribution_key]['role'] = $contribution->getRole();
 						$permanent_contributors[$contribution_key]['group'] = $contribution->getGroup();
+						$permanent_contributors[$contribution_key]['comment'] = $contribution->comment;
 					}
 
 					foreach ($permanent_contributors as $permanent_contributor) {
@@ -267,6 +299,10 @@ class Contributors extends \Podlove\Modules\Base {
 							
 							if (isset($permanent_contributor['group'])) {
 								$contrib->group = ContributorGroup::find_by_id( $permanent_contributor['group']->id );
+							}
+
+							if (isset($permanent_contributor['comment'])) {
+								$contrib->comment = $permanent_contributor['comment'];
 							}
 
 							$contributions[] = $contrib;						
@@ -289,25 +325,15 @@ class Contributors extends \Podlove\Modules\Base {
 	 * @param  TableWrapper $wrapper form wrapper
 	 * @param  Podcast      $podcast podcast model
 	 */
-	public function podcast_form_extension($wrapper, $podcast)
+	public function podcast_settings_tab($tabs)
 	{
-		$wrapper->subheader(
-			__( 'Contributors', 'podlove' ),
-			__( 'You may define contributors for the whole podcast.', 'podlove' )
-		);
-
-    	$wrapper->callback( 'contributors', array(
-			'label'    => __( 'Contributors', 'podlove' ),
-			'callback' => array( $this, 'podcast_form_extension_form' )
-		) );
+		$tabs->addTab( new Settings\PodcastSettingsTab( __( 'Contributors', 'podlove' ) ) );
+		return $tabs;
 	}
 
-	public function podcast_form_extension_form()
-	{
-		$contributions = ShowContribution::all();
-		self::contributors_form_table($contributions, 'podlove_podcast[contributor]');
-	}
-
+	/**
+	 * @todo  this save logic belongs into the tab class
+	 */
 	public function save_setting($old, $new)
 	{
 		if (!isset($new['contributor']))
@@ -315,24 +341,29 @@ class Contributors extends \Podlove\Modules\Base {
 
 		$contributor_appearances = $new['contributor'];
 
-		foreach (ShowContribution::all() as $contribution) {
+		foreach (\Podlove\Modules\Contributors\Model\ShowContribution::all() as $contribution) {
 			$contribution->delete();
 		}
 
 		$position = 0;
 		foreach ($contributor_appearances as $contributor_appearance) {
 			foreach ($contributor_appearance as $contributor_id => $contributor) {
-				$c = new ShowContribution;
+				$c = new \Podlove\Modules\Contributors\Model\ShowContribution;
 
-				if ($role = ContributorRole::find_one_by_slug( $contributor['role'] )) {
-					$c->role_id = $role->id;
+				if (isset($contributor['role'])) {
+					if ($role = ContributorRole::find_one_by_slug( $contributor['role'] )) {
+						$c->role_id = $role->id;
+					}
 				}
 
-				if ($group = ContributorGroup::find_one_by_slug( $contributor['group'] )) {
-					$c->group_id = $group->id;
+				if (isset($contributor['group'])) {
+					if ($group = ContributorGroup::find_one_by_slug( $contributor['group'] )) {
+						$c->group_id = $group->id;
+					}
 				}
 
 				$c->contributor_id = $contributor_id;
+				$c->comment = $contributor['comment'];
 				$c->position = $position++;
 				$c->save();
 			}
@@ -346,6 +377,7 @@ class Contributors extends \Podlove\Modules\Base {
 
 		$has_roles  = count( $contributors_roles ) > 0;
 		$has_groups = count( $contributors_groups ) > 0;
+		$can_be_commented = $form_base_name == 'podlove_contributor_defaults[contributor]' ? 0 : 1;
 
 		foreach (\Podlove\Modules\Contributors\Model\Contributor::all() as $contributor) {
 			$show_contributions = \Podlove\Modules\Contributors\Model\ShowContribution::all( "WHERE `contributor_id` = " . $contributor->id );
@@ -360,9 +392,9 @@ class Contributors extends \Podlove\Modules\Base {
 				);
 			} else {
 				foreach($show_contributions as $show_contribution) {
-					$role_data = ContributorRole::find_one_by_id($show_contribution->role_id);
+					$role_data = \Podlove\Modules\Contributors\Model\ContributorRole::find_one_by_id($show_contribution->role_id);
 						($role_data == "" ? $role = '' : $role = $role_data->id );
-					$group_data = ContributorGroup::find_one_by_id($show_contribution->group_id);
+					$group_data = \Podlove\Modules\Contributors\Model\ContributorGroup::find_one_by_id($show_contribution->group_id);
 						($group_data == "" ? $group = '' : $group = $group_data->id );
 					$cjson[$contributor->id] = array(
 						'id'   => $contributor->id,
@@ -395,6 +427,7 @@ class Contributors extends \Podlove\Modules\Base {
 						<th></th>
 						<?php echo ( $has_groups ? '<th>Group</th>'  : '' ); ?>
 						<?php echo ( $has_roles ? '<th>Role</th>'  : '' ); ?>
+						<?php echo ( $can_be_commented ? '<th>Public Comment</th>'  : '' ); ?>
 						<th style="width: 60px">Remove</th>
 						<th style="width: 30px"></th>
 					</tr>
@@ -417,7 +450,7 @@ class Contributors extends \Podlove\Modules\Base {
 					<select name="<?php echo $form_base_name ?>[{{id}}][{{contributor-id}}][id]" class="chosen-image podlove-contributor-dropdown">
 						<option value=""><?php echo __('Choose Contributor', 'podlove') ?></option>
 						<?php foreach ( \Podlove\Modules\Contributors\Model\Contributor::all() as $contributor ): ?>
-							<option value="<?php echo $contributor->id ?>" data-img-src="<?php echo $contributor->getAvatarUrl("10px") ?>" data-contributordefaultrole="<?php echo $contributor->role ?>"><?php echo $contributor->getName() .( $contributor->nickname == "" ? '' : " (" . trim($contributor->nickname) . ")" ); ?></option>
+							<option value="<?php echo $contributor->id ?>" data-img-src="<?php echo $contributor->getAvatarUrl("10px") ?>" data-contributordefaultrole="<?php echo $contributor->role ?>"><?php echo $contributor->getName(); ?></option>
 						<?php endforeach; ?>
 					</select>
 					<a class="clickable podlove-icon-edit podlove-contributor-edit" href="<?php echo site_url(); ?>/wp-admin/edit.php?post_type=podcast&amp;page=podlove_contributors_settings_handle&amp;action=edit&contributor={{contributor-id}}"></a>
@@ -425,7 +458,7 @@ class Contributors extends \Podlove\Modules\Base {
 				<?php if( $has_groups ) : ?>
 				<td>
 					<select name="<?php echo $form_base_name ?>[{{id}}][{{contributor-id}}][group]" class="chosen podlove-group">
-						<option value=""><?php echo __( '- none -', 'podlove' ) ?></option>
+						<option value="">&nbsp;</option>
 						<?php foreach ( $contributors_groups as $group_slug => $group_title ): ?>
 							<option value="<?php echo $group_slug ?>"><?php echo $group_title ?></option>
 						<?php endforeach; ?>
@@ -435,11 +468,16 @@ class Contributors extends \Podlove\Modules\Base {
 				<?php if( $has_roles ) : ?>
 				<td>
 					<select name="<?php echo $form_base_name ?>[{{id}}][{{contributor-id}}][role]" class="chosen podlove-role">
-						<option value=""><?php echo __( '- none -', 'podlove' ) ?></option>
+						<option value="">&nbsp;</option>
 						<?php foreach ( $contributors_roles as $role_slug => $role_title ): ?>
 							<option value="<?php echo $role_slug ?>"><?php echo $role_title ?></option>
 						<?php endforeach; ?>
 					</select>
+				</td>
+				<?php endif; ?>
+				<?php if( $can_be_commented ) : ?>
+				<td>
+					<input type="text" name="<?php echo $form_base_name ?>[{{id}}][{{contributor-id}}][comment]" class="podlove-comment" />
 				</td>
 				<?php endif; ?>
 				<td>
@@ -481,7 +519,7 @@ class Contributors extends \Podlove\Modules\Base {
 					}
 
 					if( is_object( \Podlove\Modules\Contributors\Model\Contributor::find_by_id( $c->contributor_id ) ) )
-						return array( 'id' => $c->contributor_id, 'role' => $role, 'group' => $group );
+						return array( 'id' => $c->contributor_id, 'role' => $role, 'group' => $group, 'comment' => $c->comment );
 
 					return '';
 
@@ -520,7 +558,7 @@ class Contributors extends \Podlove\Modules\Base {
 						$("#" + new_row_id + "_chzn").find("a").focus();
 					}
 
-					function add_contributor_row(contributor, role, group) {
+					function add_contributor_row(contributor, role, group, comment) {
 						var row = '';
 
 						// add contributor to table
@@ -539,6 +577,8 @@ class Contributors extends \Podlove\Modules\Base {
 						new_row.find('select.podlove-role option[value="' + role + '"]').attr('selected',true);
 						// select default group
 						new_row.find('select.podlove-group option[value="' + group + '"]').attr('selected',true);
+						// set comment
+						new_row.find('input.podlove-comment').val(comment);
 					}
 
 					function contributor_dropdown_handler() {
@@ -560,13 +600,17 @@ class Contributors extends \Podlove\Modules\Base {
 							row.find(".podlove-contributor-dropdown").attr("name", PODLOVE.Contributors_form_base_name + "[" + i + "]" + "[" + contributor.id + "]" + "[id]");
 							row.find(".podlove-group").attr("name", PODLOVE.Contributors_form_base_name + "[" + i + "]" + "[" + contributor.id + "]" + "[group]");
 							row.find(".podlove-role").attr("name", PODLOVE.Contributors_form_base_name + "[" + i + "]" + "[" + contributor.id + "]" + "[role]");
+							row.find(".podlove-comment").attr("name", PODLOVE.Contributors_form_base_name + "[" + i + "]" + "[" + contributor.id + "]" + "[comment]");
 							row.find(".podlove-contributor-edit").attr("href", "<?php echo site_url(); ?>/wp-admin/edit.php?post_type=podcast&page=podlove_contributors_settings_handle&action=edit&contributor=" + contributor.id);
 							row.find(".podlove-contributor-edit").show(); // Show Edit Button
 							i++; // continue using "i" which was already used to add the existing contributions
 						});
-					}	
+					}
 
-					
+					function add_contribution( contributor ) {
+						add_contributor_row(fetch_contributor(contributor.id), contributor.role, contributor.group, contributor.comment);
+
+					}
 
 					$(document).on('click', "#add_new_contributor_button", function() {
 						add_new_contributor();
@@ -576,11 +620,18 @@ class Contributors extends \Podlove\Modules\Base {
 						$(this).closest("tr").remove();
 					});	
 
+					$("#podlove_podcast").on('click', 'h3.hndle',  function() {
+						$("#contributors_table_body").empty();
+						$.each(existing_contributions, function(index, contributor) {
+							add_contribution(contributor);
+						});
+						update_chosen();
+					});	
+
 					$(document).ready(function() {
 
 						$.each(existing_contributions, function(index, contributor) {
-							if (contributor)
-								add_contributor_row(fetch_contributor(contributor.id), contributor.role, contributor.group);
+							add_contribution(contributor);
 						});
 
 						$("#contributors_table_body td").each(function(){
@@ -643,6 +694,15 @@ class Contributors extends \Podlove\Modules\Base {
 
 	    	break;
 	    }
-	} 
+	}
 
+	public function admin_print_styles() {
+		wp_register_script(
+			'podlove_contributor_jquery_visible',
+			$this->get_module_url() . '/js/jquery.visible.min.js',
+			array( 'jquery', 'jquery-ui-tabs' ),
+			\Podlove\get_plugin_header( 'Version' )
+		);
+		wp_enqueue_script('podlove_contributor_jquery_visible');
+	}
 }

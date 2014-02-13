@@ -41,6 +41,14 @@ class Contributor extends Base
 		return EpisodeContribution::find_all_by_contributor_id($this->id);
 	}
 
+	public function getShowContributions() {
+		return ShowContribution::find_all_by_contributor_id($this->id);
+	}
+
+	public function getDefaultContributions() {
+		return DefaultContribution::find_all_by_contributor_id($this->id);
+	}
+
 	public function calcContributioncount() {
 		$this->contributioncount = count($this->getContributions());
 		$this->save();
@@ -63,6 +71,22 @@ class Contributor extends Base
 		$url .= "?s=$s&d=mm&r=g";
 		return $url;
 	}	
+
+	/**
+	 * @override \Podlove\Model\Base::delete();
+	 */
+	public function delete() {
+		foreach ( $this->getContributions() as $contribution )
+			$contribution->delete();
+
+		foreach ( $this->getShowContributions() as $contribution )
+			$contribution->delete();
+
+		foreach ( $this->getDefaultContributions() as $contribution )
+			$contribution->delete();
+
+		parent::delete();
+	}
 }
 
 Contributor::property( 'id', 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY' );
@@ -74,6 +98,7 @@ Contributor::property( 'jobtitle', 'TEXT' );
 Contributor::property( 'avatar', 'TEXT' );
 Contributor::property( 'twitter', 'VARCHAR(255)' );
 Contributor::property( 'adn', 'VARCHAR(255)' );
+Contributor::property( 'googleplus', 'TEXT' );
 Contributor::property( 'facebook', 'VARCHAR(255)' );
 Contributor::property( 'flattr', 'VARCHAR(255)' );
 Contributor::property( 'paypal', 'VARCHAR(255)' );
@@ -85,7 +110,7 @@ Contributor::property( 'privateemail', 'TEXT' );
 Contributor::property( 'realname', 'TEXT' );
 Contributor::property( 'nickname', 'TEXT' );
 Contributor::property( 'publicname', 'TEXT' );
-Contributor::property( 'showpublic', 'VARCHAR(255)' );
+Contributor::property( 'visibility', 'TINYINT(1)' );
 Contributor::property( 'guid', 'TEXT' );
 Contributor::property( 'www', 'TEXT' );
 Contributor::property( 'contributioncount', 'INT' );

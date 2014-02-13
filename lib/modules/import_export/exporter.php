@@ -24,27 +24,27 @@ class Exporter {
 	}
 
 	public function exportEpisodes(\SimpleXMLElement $xml) {
-		$this->exportTable($xml, 'episodes', 'episode', '\Podlove\Model\Episode');
+		self::exportTable($xml, 'episodes', 'episode', '\Podlove\Model\Episode');
 	}
 
 	public function exportAssets(\SimpleXMLElement $xml) {
-		$this->exportTable($xml, 'assets', 'asset', '\Podlove\Model\EpisodeAsset');
+		self::exportTable($xml, 'assets', 'asset', '\Podlove\Model\EpisodeAsset');
 	}
 
 	public function exportFeeds(\SimpleXMLElement $xml) {
-		$this->exportTable($xml, 'feeds', 'feed', '\Podlove\Model\Feed');
+		self::exportTable($xml, 'feeds', 'feed', '\Podlove\Model\Feed');
 	}
 
 	public function exportFileType(\SimpleXMLElement $xml) {
-		$this->exportTable($xml, 'filetypes', 'filetype', '\Podlove\Model\FileType');
+		self::exportTable($xml, 'filetypes', 'filetype', '\Podlove\Model\FileType');
 	}
 
 	public function exportMediaFile(\SimpleXMLElement $xml) {
-		$this->exportTable($xml, 'mediafiles', 'mediafile', '\Podlove\Model\MediaFile');
+		self::exportTable($xml, 'mediafiles', 'mediafile', '\Podlove\Model\MediaFile');
 	}
 
 	public function exportTemplates(\SimpleXMLElement $xml) {
-		$this->exportTable($xml, 'templates', 'template', '\Podlove\Model\Template');
+		self::exportTable($xml, 'templates', 'template', '\Podlove\Model\Template');
 	}
 
 	public function exportOptions(\SimpleXMLElement $xml)
@@ -74,13 +74,20 @@ class Exporter {
 		}
 	}
 
-	private function exportTable(\SimpleXMLElement $xml, $group_name, $item_name, $table_class)
+	public static function exportTable(\SimpleXMLElement $xml, $group_name, $item_name, $table_class)
 	{
 		$xml_group = $xml->addChild("xmlns:wpe:$group_name");
 		foreach ($table_class::all() as $mediafile) {
 			$xml_item = $xml_group->addChild("xmlns:wpe:$item_name");
 			foreach ($table_class::property_names() as $property_name) {
-				$xml_item->addChild("xmlns:wpe:$property_name", $mediafile->$property_name);
+				
+				if (strlen($mediafile->$property_name) === 0)
+					continue;
+
+				// This weird syntax is intentional. It is the only way to make
+				// SimpleXML escape ampersands. 
+				// See http://stackoverflow.com/a/12640393/72448
+				$xml_item->addChild("xmlns:wpe:$property_name")->{0} = $mediafile->$property_name;
 			}
 		}
 	}

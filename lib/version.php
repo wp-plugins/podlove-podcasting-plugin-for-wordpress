@@ -40,7 +40,7 @@
 namespace Podlove;
 use \Podlove\Model;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 53 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 56 );
 
 add_action( 'init', function () {
 	
@@ -526,6 +526,46 @@ function run_migrations_for_version( $version ) {
 				$post = get_post( $episode->post_id );
 				if ( $post->post_status == 'publish' )
 					update_post_meta( $episode->post_id, '_podlove_episode_was_published', true );
+			}
+		break;
+		case 54:
+			if (\Podlove\Modules\Base::is_active('contributors')) {
+				$wpdb->query( sprintf(
+					'ALTER TABLE `%s` ADD COLUMN `googleplus` TEXT AFTER `ADN`',
+					\Podlove\Modules\Contributors\Model\Contributor::table_name()
+				) );
+				$wpdb->query( sprintf(
+					'ALTER TABLE `%s` CHANGE COLUMN `showpublic` `visibility` TINYINT(1)',
+					\Podlove\Modules\Contributors\Model\Contributor::table_name()
+				) );
+			}
+		break;
+		case 55:
+			if (\Podlove\Modules\Base::is_active('contributors')) {
+				\Podlove\Modules\Contributors\Model\DefaultContribution::build();
+
+				$wpdb->query( sprintf(
+					'ALTER TABLE `%s` ADD COLUMN `comment` TEXT AFTER `position`',
+					\Podlove\Modules\Contributors\Model\EpisodeContribution::table_name()
+				) );
+				$wpdb->query( sprintf(
+					'ALTER TABLE `%s` ADD COLUMN `comment` TEXT AFTER `position`',
+					\Podlove\Modules\Contributors\Model\ShowContribution::table_name()
+				) );
+			}
+		break;
+		case 56:
+			// migrate Podcast Contributors to Default Contributors
+			if (\Podlove\Modules\Base::is_active('contributors')) {
+				$podcast_contributors = \Podlove\Modules\Contributors\Model\ShowContribution::all();
+				foreach ($podcast_contributors as $podcast_contributor_key => $podcast_contributor) {
+					$new = new \Podlove\Modules\Contributors\Model\DefaultContribution();
+					$new->contributor_id = $podcast_contributor->contributor_id;
+					$new->group_id = $podcast_contributor->group_id;
+					$new->role_id = $podcast_contributor->role_id;
+					$new->position = $podcast_contributor->positon;
+					$new->save();
+				}
 			}
 		break;
 	}

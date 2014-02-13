@@ -58,23 +58,38 @@ class Contributor_List_Table extends \Podlove\List_Table {
 				'appdotnet'	=> array(
 								'title' => 'App.net',
 								'url_template' => 'http://alpha.app.net/',
-								'account' => $contributor->adn 
+								'account' => $contributor->adn,
+								'text' => '%s'
 							   ),
 				'twitter'  => array( 
 								'title' => 'Twitter',
 								'url_template' => 'http://twitter.com/',
-								'account' => $contributor->twitter
+								'account' => $contributor->twitter,
+								'text' => '%s'
 							  ),
 				'facebook' => array(
 								'title' => 'Facebook',
 								'url_template' => 'http://facebook.com/',
-								'account' => $contributor->facebook
+								'account' => $contributor->facebook,
+								'text' => '%s'
+							  ),
+				'googleplus' => array(
+								'title' => 'Google+',
+								'url_template' => '',
+								'account' => $contributor->googleplus,
+								'text' => 'Link'
+							  ),
+				'house' => array(
+								'title' => 'Homepage',
+								'url_template' => '',
+								'account' => $contributor->www,
+								'text' => 'Link'
 							  )
 		);
 
 		$social = '';
 		foreach ( $social_services as $service => $details ) {
-			( $details['account'] == "" ? "" : $social = $social . '<i class="podlove-icon-' . $service .'" title="' . $details['title'] . '"></i> <a target="_blank" href="' . $details['url_template'] . $details['account'] . '">' . $details['account'] . '</a><br />' );
+			( $details['account'] == "" ? "" : $social = $social . '<i class="podlove-icon-' . $service .'" title="' . $details['title'] . '"></i> <a target="_blank" href="' . $details['url_template'] . $details['account'] . '" title="' . $details['account'] .'">' . str_replace( '%s', $details['account'], $details['text']) . '</a><br />' );
 		}
 
 		return $social;
@@ -109,8 +124,8 @@ class Contributor_List_Table extends \Podlove\List_Table {
 				<a href='http://flattr.com/profile/".$contributor->flattr."'>".$contributor->flattr."</a>";
 	}
 	
-	public function column_showpublic( $contributor ) {
-		return $contributor->showpublic ? '✓' : '×';
+	public function column_visibility( $contributor ) {
+		return $contributor->visibility ? '✓' : '×';
 	}
 
 	public function column_episodes( $contributor ) {
@@ -128,7 +143,7 @@ class Contributor_List_Table extends \Podlove\List_Table {
 			'flattr'        	   => __( 'Flattr', 'podlove' ),
 			'privateemail'         => __( 'Private E-mail', 'podlove' ),
 			'episodes'             => __( 'Episodes', 'podlove' ),
-			'showpublic'           => __( 'Public', 'podlove' )
+			'visibility'           => __( 'Visiblity', 'podlove' )
 		);
 		return $columns;
 	}
@@ -150,7 +165,7 @@ class Contributor_List_Table extends \Podlove\List_Table {
 	    'flattr'     		   => array('privateemail',false),
 	    'privateemail'         => array('privateemail',false),
 	    'episodes'             => array('contributioncount',true),
-	    'showpublic'           => array('showpublic',false)
+	    'visibility'           => array('visibility',false)
 	  );
 	  return $sortable_columns;
 	}		
@@ -166,7 +181,7 @@ class Contributor_List_Table extends \Podlove\List_Table {
 		#permanentcontributor { width: 160px; }
 		td.column-avatar, th.column-avatar { width: 50px; }
 		td.column-slug, th.column-slug { width: 12% !important; }
-		td.column-showpublic, th.column-showpublic { width: 7% !important; }
+		td.column-visibility, th.column-visibility { width: 7% !important; }
 		td.column-gender, th.column-gender { width: 7% !important; }
 		td.column-episodes, th.column-episodes { width: 8% !important; }
 		</style>
