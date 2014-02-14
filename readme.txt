@@ -85,6 +85,11 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.9.12 =
+* Enhancement: Take over chapters when switching from chapter asset to manual
+* Enhancement: Contributor tables look better in a wider range of themes
+* Fix: Auphonic module: Buttons cannot be clicked again while the corresponding action is in progress
+
 = 1.9.11 =
 * Enhancement: Split podcast settings into tabs.
 * Enhancement: Import/Export module supports contributors and contributions
