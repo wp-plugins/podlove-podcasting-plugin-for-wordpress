@@ -40,7 +40,7 @@
 namespace Podlove;
 use \Podlove\Model;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 56 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 60 );
 
 add_action( 'init', function () {
 	
@@ -567,6 +567,30 @@ function run_migrations_for_version( $version ) {
 					$new->save();
 				}
 			}
+		break;
+		case 57:
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` ADD COLUMN `append_name_to_podcast_title` TINYINT(1) NULL AFTER `embed_content_encoded`',
+				\Podlove\Model\Feed::table_name()
+			) );
+		break;
+		case 58:
+			// if contributors module is active, activate social module
+			if (\Podlove\Modules\Base::is_active('contributors')) {
+				\Podlove\Modules\Base::activate('social');
+			}
+		break;
+		case 59:
+			if (\Podlove\Modules\Base::is_active('bitlove')) {
+				$wpdb->query( sprintf(
+					"ALTER TABLE `%s` ADD COLUMN `bitlove` TINYINT(1) DEFAULT '0'",
+					\Podlove\Model\Feed::table_name()
+				) );
+			}
+		break;
+		case 60:
+			\Podlove\Modules\Base::activate('oembed');
+			\Podlove\Modules\Base::activate('feed_validation');
 		break;
 	}
 

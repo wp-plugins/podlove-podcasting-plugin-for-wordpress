@@ -66,9 +66,11 @@ class Dashboard {
 	public static function settings_page() {
 		add_meta_box( Dashboard::$pagehook . '_about', __( 'About', 'podlove' ), '\Podlove\Settings\Dashboard::about_meta', Dashboard::$pagehook, 'side' );		
 		add_meta_box( Dashboard::$pagehook . '_statistics', __( 'At a glance', 'podlove' ), '\Podlove\Settings\Dashboard::statistics', Dashboard::$pagehook, 'normal' );
+		
+		do_action( 'podlove_dashboard_meta_boxes' );
+
 		add_meta_box( Dashboard::$pagehook . '_validation', __( 'Validate Podcast Files', 'podlove' ), '\Podlove\Settings\Dashboard::validate_podcast_files', Dashboard::$pagehook, 'normal' );
 
-		do_action( 'podlove_dashboard_meta_boxes' );
 
 		?>
 		<div class="wrap">
@@ -324,7 +326,7 @@ class Dashboard {
 		
 		$podcast = Model\Podcast::get_instance();
 		?>
-		<div id="validation">
+		<div id="asset_validation">
 			<?php
 			$episodes = Model\Episode::all( 'ORDER BY slug DESC' );
 			$assets   = Model\EpisodeAsset::all();
