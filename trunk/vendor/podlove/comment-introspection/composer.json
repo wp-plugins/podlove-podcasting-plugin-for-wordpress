@@ -1,0 +1,15 @@
+{
+	"name": "podlove/comment-introspection",
+	"description": "PHP library providing a toolkit to parse class and method comments.",
+	"keywords": ["podlove", "parser","reflection","introspection","comment"],
+	"license": "MIT",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": { "Podlove\\Comment": "lib/" }
+    }
+}
