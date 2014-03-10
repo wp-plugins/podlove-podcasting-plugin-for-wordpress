@@ -164,7 +164,7 @@ class Templates {
 			var readonly_textareas = $(".highlight-readonly");
 			readonly_textareas.each(function() {
 				var podlove_code_highlight = CodeMirror.fromTextArea(this, {
-					mode: "htmlmixed",
+					mode: "application/x-twig",
 					lineNumbers: false,
 					theme: "default",
 					indentUnit: 4,
@@ -261,31 +261,12 @@ EOT
 		<script type="text/javascript">
 		var podlove_template_content = document.getElementById("podlove_template_content");
 		var podlove_template_editor = CodeMirror.fromTextArea(podlove_template_content, {
-			mode: "htmlmixed",
+			mode: "application/x-twig",
 			lineNumbers: true,
 			theme: "default",
 			indentUnit: 4,
 			lineWrapping: true,
-			extraKeys: {
-				"'>'": function(cm) { cm.closeTag(cm, '>'); },
-				"'/'": function(cm) { cm.closeTag(cm, '/'); },
-				"'['": function(cm) {
-					CodeMirror.simpleHint(cm, function(cm) {
-						return {
-							list:[
-								"[podlove-episode-downloads]",
-								"[podlove-web-player]",
-								"[podlove-episode field=\"\"]",
-								"[podlove-podcast field=\"\"]",
-								"[podlove-contributor-list]",
-								"[podlove-episode-license]",
-								"[podlove-podcast-license]"
-							],
-							from: cm.getCursor()
-						};
-					});
-				}
-			},
+			autoCloseTags: true,
 			onCursorActivity: function() {
 				podlove_template_editor.matchHighlight("CodeMirror-matchhighlight");
 			}

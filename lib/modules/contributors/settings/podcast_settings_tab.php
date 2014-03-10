@@ -13,7 +13,7 @@ class PodcastSettingsTab extends Tab {
 
 	public function process_form() {
 		if (!isset($_POST['podlove_podcast']) || !$this->is_active())
-			return;
+			return;			
 
 		$formKeys = array('contributor');
 
@@ -57,6 +57,13 @@ class PodcastSettingsTab extends Tab {
 	public static function podcast_form_extension_form()
 	{
 		$contributions = ShowContribution::all();
-		\Podlove\Modules\Contributors\Contributors::contributors_form_table($contributions, 'podlove_podcast[contributor]');
+
+		// map indices to IDs
+		$map = array();
+		foreach ($contributions as $c) {
+			$map[$c->id] = $c;
+		}
+
+		\Podlove\Modules\Contributors\Contributors::contributors_form_table($map, 'podlove_podcast[contributor]');
 	}
 }
