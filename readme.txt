@@ -85,6 +85,17 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.10.2 =
+
+* Feature: add template filter `formatBytes` to format an integer as kilobytes, megabytes etc. Example: `{{ file.size|formatBytes }}`
+* Feature: New accessor `{{ file.id }}`. This is required to generate download forms.
+* Fix: `[podlove-episode-contributor-list]` shortcode: Firstly, the "title" attribute works again. Secondly, output by group is optional now and defaults to "not grouped" (as it was before 1.10). If you are using contributor groups and would like grouped output, use `[podlove-episode-contributor-list groupby="group"]`
+* Fix: division by zero bug in statistics dashboard
+* Fix: parse time in statistics dashboard correctly as normalplaytime
+* Fix: add missing template accessor `{{ episode.recordingDate }}`
+* Remove separate "publication date" field in episodes. Instead, use the episode post publication date maintained by WordPress. It can be accessed via `{{ episode.publicationDate }}`
+* Fix: missing contributor-edit-icon on last entries
+
 = 1.10.1 =
 
 * Fix: podlove-episode-contributor-list shortcode: add support for "group" and "role" attributes
@@ -101,9 +112,9 @@ If you have used templates before, please note that some shortcodes are now _DEP
 
 Instead of `[podlove-web-player]`, write `{{ episode.player }}`.
 
-Instead of `[podlove-podcast-license]`, write `{{ podcast.license }}`.
+Instead of `[podlove-podcast-license]`, write `{{ podcast.license.html }}`.
 
-Instead of `[podlove-episode-license]`, write `{{ episode.license }}`.
+Instead of `[podlove-episode-license]`, write `{{ episode.license.html }}`.
 
 Instead of `[podlove-episode field="subtitle"]`, write `{{ episode.subtitle }}`. Instead of `[podlove-episode field="summary"]`, write `{{ episode.summary }}` etc. When in doubt, look at the [Episode Template Reference](http://docs.podlove.org/publisher/template-reference/#episode).
 
