@@ -13,7 +13,6 @@ class Ajax {
 
 		$actions = array(
 			'get-new-guid',
-			'validate-feed',
 			'validate-file',
 			'validate-url',
 			'update-file',
@@ -21,7 +20,10 @@ class Ajax {
 			'update-asset-position',
 			'update-feed-position',
 			'podcast',
-			'hide-teaser'
+			'hide-teaser',
+			'get-license-url',
+			'get-license-name',
+			'get-license-parameters-from-url'
 		);
 
 		foreach ( $actions as $action )
@@ -60,18 +62,6 @@ class Ajax {
 
 		self::respond_with_json( array( 'guid' => $guid ) );
 	}
-
-	public function validate_feed() {
-		$feed_id = $_REQUEST['feed_id'];
-	 
-	 	$feed = \Podlove\Model\Feed::find_by_id( $feed_id );
-	 	// Renew transient
-	 	set_transient( 'podlove_dashboard_feed_validation_' . $feed_id, 
-	 														  $feed->getValidationIcon(),
-															  3600*24 );
-	 	
-	 	self::respond_with_json( array( 'validation_icon' => $feed->getValidationIcon() ) );
-	 }
 
 	public function validate_file() {
 		$file_id = $_REQUEST['file_id'];
@@ -180,6 +170,27 @@ class Ajax {
 
 	public function hide_teaser() {
 		update_option( '_podlove_hide_teaser', TRUE );
+	}
+
+	private function parse_get_parameter_into_url_array() {
+		return array(
+						'version'		 => '3.0',
+						'modification'	 => $_REQUEST['modification'],
+						'commercial_use' => $_REQUEST['commercial_use'],
+						'jurisdiction'	 => $_REQUEST['jurisdiction']
+					);
+	}
+
+	public function get_license_url() {
+		self::respond_with_json( \Podlove\Model\License::get_url_from_license( self::parse_get_parameter_into_url_array() ) );
+	}
+
+	public function get_license_name() {
+		self::respond_with_json( \Podlove\Model\License::get_name_from_license( self::parse_get_parameter_into_url_array() ) );
+	}
+
+	public function get_license_parameters_from_url() {
+		self::respond_with_json( \Podlove\Model\License::get_license_from_url( $_REQUEST['url'] ) );
 	}
 	
 }

@@ -85,6 +85,39 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.10.3 =
+
+**Changes to the Templating System**
+
+* New filter: `padLeft(padCharacter, padLength)` can be used to append a character to the left of the given string until a certain length is reached. Example: `{{ "4"|padLeft("0",2) }}` returns "04";
+* For consistency `{{ contributor.avatar }}` is now an object. To render an HTML image tag, use `{% include '@contributors/avatar.twig' with {'avatar': contributor.avatar} only %}`.
+* `{{ episode.duration }}` has been turned into an object to enable custom time renderings. The duration object has the following accessors: hours, minutes, seconds, milliseconds and totalMilliseconds.
+
+__DEPRECATIONS/WARNINGS__
+
+* `{{ episode.duration }}` should not be used any more. The default templates are updated but if you have used it in a custom template, you must replace it. Example: `{{ episode.duration.hours }}:{{ episode.duration.minutes|padLeft("0",2) }}:{{ episode.duration.seconds|padLeft("0",2) }}`
+* `{{ episode.license.html }}` and `{{ podcast.license.html }}` are deprecated. Use `{% include '@core/license.twig' %}` for the previous behaviour of choosing the correct license based on context. If you want to be more specific, use `{% include '@core/license.twig' with {'license': episode.license} %}` or `{% include '@core/license.twig' with {'license': podcast.license} %}`.
+
+**Other Changes**
+
+* Feature: ADN Module supports broadcasts
+* Enhancement: Contributor shortcode defaults to `donations="yes"` to avoid confusion
+* Enhancement: `[podlove-episode-downloads]` now uses templates internally
+* Enhancement: Added 500px, Last.fm, OpenStreetMap and Soup to Services
+* Enhancement: Use custom contributor social/donation titles as icon titles
+* Enhancement: Template form has a "Save Changes and Continue Editing" button now
+* Enhancement: feed validation is asynchronous now and has improved performance
+* Enhancement: Licenses have a new interface and are compatible with Auphonic now: they can be imported from a finished production and are included when creating a production.
+* Enhancement: Default MySQL character set is utf8 now when creating tables
+* Enhancement: Add datepicker for episode recording date
+* Fix: all default contributors appear in new episodes again
+* Fix: change Tumblr URLs from https to http since Tumblr does not support them
+* Fix: `[podlove-podcast-contributor-list]` shows the correct contributors now
+* Fix: internal template warning when accessing empty contributor roles or groups
+* Fix: episode rendering when no files are available
+* Fix: flattr script in rss feeds
+* Fix: importer issue where sometimes modules would not activate properly
+
 = 1.10.2 =
 
 * Feature: add template filter `formatBytes` to format an integer as kilobytes, megabytes etc. Example: `{{ file.size|formatBytes }}`

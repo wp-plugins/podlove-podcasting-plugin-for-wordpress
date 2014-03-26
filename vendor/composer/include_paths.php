@@ -7,12 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     $vendorDir . '/phpunit/php-token-stream',
+    $vendorDir . '/phpunit/php-text-template',
     $vendorDir . '/phpunit/php-file-iterator',
+    $vendorDir . '/phpunit/php-code-coverage',
     $vendorDir . '/phpunit/php-timer',
     $vendorDir . '/phpunit/phpunit-mock-objects',
-    $vendorDir . '/phpunit/phpunit-selenium',
-    $vendorDir . '/phpunit/php-text-template',
-    $vendorDir . '/phpunit/php-code-coverage',
     $vendorDir . '/phpunit/phpunit',
     $vendorDir . '/symfony/yaml',
+    $vendorDir . '/phpunit/phpunit-selenium',
 );
