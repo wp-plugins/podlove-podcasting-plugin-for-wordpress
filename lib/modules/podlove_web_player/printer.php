@@ -32,6 +32,7 @@ class Printer {
 
 	public function __construct( Episode $episode ) {
 		$this->episode = $episode;
+		$this->post    = get_post($episode->post_id);
 		$this->player_format_assignments = $this->get_player_format_assignments();
 		$this->files = $this->get_files();
 	}
@@ -68,11 +69,14 @@ class Printer {
 		// get all relevant info about media files
 		$media_files = array();
 		foreach ( $this->files as $file ) {
-			$mime = $file->episode_asset()->file_type()->mime_type;
+			$asset = $file->episode_asset();
+			$mime = $asset->file_type()->mime_type;
 			$media_files[ $mime ] = array(
-				'file'      => $file,
-				'mime_type' => $mime,
-				'url'       => $file->get_file_url()
+				'file'       => $file,
+				'mime_type'  => $mime,
+				'url'        => $file->get_file_url(),
+				'publicUrl'  => home_url('?download_media_file=' . $file->id),
+				'assetTitle' => $asset->title()
 			);
 		}
 
@@ -132,6 +136,14 @@ class Printer {
 		// get podcast object
 		$podcast = Podcast::get_instance();
 
+		if ($this->episode->license_name && $this->episode->license_url) {
+			$license_name = $this->episode->license_name;
+			$license_url  = $this->episode->license_url;
+		} else {
+			$license_name = $podcast->license_name;
+			$license_url  = $podcast->license_url;
+		}
+
 		// set JavaScript options
 		$truthy = array( true, 'true', 'on', 1, "1" );
 		$init_options = array(
@@ -146,15 +158,33 @@ class Printer {
 			'sharewholeepisode'   => in_array( $this->get_webplayer_setting('buttons_sharemode'), $truthy, true ),
 			'loop'                => false,
 			'chapterlinks'        => 'all',
-			'permalink'           => get_permalink(),
-			'title'               => get_the_title(),
+			'permalink'           => get_permalink( $this->post->ID ),
+			'title'               => get_the_title( $this->post->ID ),
 			'subtitle'            => wptexturize( convert_chars( trim( $this->episode->subtitle ) ) ),
 			'summary'             => nl2br( wptexturize( convert_chars( trim( $this->episode->summary ) ) ) ),
 			'poster'              => $this->episode->get_cover_art_with_fallback(),
-			'showTitle'           => $podcast->title,
-			'showSubtitle'        => $podcast->subtitle,
-			'showSummary'         => $podcast->summary,
-			'showPoster'          => $podcast->cover_image,
+			'showTitle'           => $podcast->title,       /* deprecated */
+			'showSubtitle'        => $podcast->subtitle,    /* deprecated */
+			'showSummary'         => $podcast->summary,     /* deprecated */
+			'showPoster'          => $podcast->cover_image, /* deprecated */
+			'show' => array(
+				'title'    => $podcast->title,
+				'subtitle' => $podcast->subtitle,
+				'summary'  => $podcast->summary,
+				'poster'   => $podcast->cover_image
+			),
+			'license' => array(
+				'name' => $license_name,
+				'url'  => $license_url
+			),
+			'downloads' => array_map(function($mf) {
+				return array(
+					'assetTitle'   => $mf['assetTitle'],
+					'downloadUrl'  => $mf['publicUrl'],
+					'directAccess' => $mf['url'],
+					'url' => $mf['url'] /* player v.2.0.x compatibility */
+				);
+			}, array_values($sorted_files)),
 			'duration'            => $this->episode->get_duration(),
 			'chaptersVisible'     => in_array( \Podlove\get_webplayer_setting( 'chaptersVisible' ), $truthy, true ),
 			'features'            => array( "current", "progress", "duration", "tracks", "fullscreen", "volume" )

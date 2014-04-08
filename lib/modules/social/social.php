@@ -33,6 +33,14 @@ class Social extends \Podlove\Modules\Base {
 		add_action( 'wp_ajax_podlove-services-delete-contributor-services', array($this, 'delete_contributor_services') );
 		add_action( 'wp_ajax_podlove-services-delete-podcast-services', array($this, 'delete_podcast_services') );
 
+		add_action('podlove_xml_export', array($this, 'expandExportFile'));
+		add_action('podlove_xml_import', array($this, 'expandImport'));
+
+		add_filter('podlove_twig_file_loader', function($file_loader) {
+			$file_loader->addPath(implode(DIRECTORY_SEPARATOR, array(\Podlove\PLUGIN_DIR, 'lib', 'modules', 'social', 'templates')), 'social');
+			return $file_loader;
+		});
+
 		\Podlove\Modules\Contributors\Template\Contributor::add_accessor(
 			'services', array('\Podlove\Modules\Social\TemplateExtensions', 'accessorContributorServices'), 5
 		);
@@ -40,6 +48,9 @@ class Social extends \Podlove\Modules\Base {
 		\Podlove\Template\Podcast::add_accessor(
 			'services', array('\Podlove\Modules\Social\TemplateExtensions', 'accessorPodcastServices'), 4
 		);
+
+		add_shortcode( 'podlove-podcast-social-media-list', array( $this, 'podlove_podcast_social_media_list') );
+		add_shortcode( 'podlove-podcast-donations-list', array( $this, 'podlove_podcast_donations_list') );
 	}
 
 	public function was_activated( $module_name ) {
@@ -137,7 +148,7 @@ class Social extends \Podlove\Modules\Base {
 					'type'			=> 'social',
 					'description'	=> 'Instagram Account',
 					'logo'			=> 'instagram-128.png',
-					'url_scheme'	=> 'https://http://instagram.com/%account-placeholder%'
+					'url_scheme'	=> 'https://instagram.com/%account-placeholder%'
 				),
 			array(
 					'title' 		=> 'Jabber',
@@ -842,5 +853,31 @@ class Social extends \Podlove\Modules\Base {
 
 		if ($service = ShowService::find_by_id($object_id))
 			$service->delete();
+	}
+	
+	public function expandExportFile(\SimpleXMLElement $xml) {
+		\Podlove\Modules\ImportExport\Exporter::exportTable($xml, 'services', 'service', '\Podlove\Modules\Social\Model\Service');
+		\Podlove\Modules\ImportExport\Exporter::exportTable($xml, 'contributorServices', 'contributorService', '\Podlove\Modules\Social\Model\ContributorService');
+		\Podlove\Modules\ImportExport\Exporter::exportTable($xml, 'showServices', 'showService', '\Podlove\Modules\Social\Model\ShowService');
+	}
+
+	public function expandImport($xml) {
+		\Podlove\Modules\ImportExport\Importer::importTable($xml, 'service', '\Podlove\Modules\Social\Model\Service');
+		\Podlove\Modules\ImportExport\Importer::importTable($xml, 'contributorService', '\Podlove\Modules\Social\Model\ContributorService');
+		\Podlove\Modules\ImportExport\Importer::importTable($xml, 'showService', '\Podlove\Modules\Social\Model\ShowService');
+	}
+	
+	/**
+	 * [podlove-podcast-social-media-list] shortcode
+	 */
+	public function podlove_podcast_social_media_list() {
+		return \Podlove\Template\TwigFilter::apply_to_html('@social/podcast-social-media-list.twig');
+	}
+
+	/**
+	 * [podlove-podcast-social-media-list] shortcode
+	 */
+	public function podlove_podcast_donations_list() {
+		return \Podlove\Template\TwigFilter::apply_to_html('@social/podcast-donations-list.twig');
 	}
 }

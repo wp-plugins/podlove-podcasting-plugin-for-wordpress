@@ -85,6 +85,27 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.10.7 =
+
+* Feature: Direct episode access in templates via `{{ podcast.episodes({slug: 'pod001'}).title }}`
+* Feature: Episodes in templates can be filtered and ordered, for example `{{ podcast.episodes({orderby: 'title', 'order': 'ASC'}) }}`. For details, see [`podcast.episodes` documentation](http://docs.podlove.org/publisher/template-reference/#podcast)
+* Feature: Direct contributor access in templates via `{{ podcast.contributors({id: 'john'}).name }}`
+* Feature: Add shortcode `[podlove-podcast-social-media-list]`, which lists all social media accounts for the podcast
+* Feature: Add shortcode `[podlove-podcast-donations-list]`, which lists all donation accounts for the podcast
+* Feature: Add tag support for Auphonic
+* Enhancement: Add "Save and Continue Editing" buttons to all table based management screens
+* Enhancement: Use translations for month and day names in formatted template dates (if a language other than english is used)
+* Enhancement: Add refresh buttons for Auphonic preset selector
+* Enhancement: Pass more data to web player (as preparation for the next release)
+* Enhancement: Improved export format: It has its own namespace and a version now. Publisher version and export date are included as XML comments. XML elements are indented for better readability.
+* Remove default content for new templates
+* Fix: "Network Activate" works now
+* Fix: group and role filters for `[podlove-podcast-contributor-list]` shortcode work as expected now
+* Fix: Add services and donations to export format
+* Fix: `episode.player` in episode loops, outside the WordPress loop works now
+* Fix: Auphonic chapter integration issue
+* Fix: Instagram URL scheme
+
 = 1.10.6 =
 
 * Fix: contributor services will be saved correctly
