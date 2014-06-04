@@ -55,16 +55,26 @@ abstract class Base
 	 * @param string $name Name of the property / column
 	 * @param string $type mySQL column type 
 	 */
-	public static function property( $name, $type ) {
+	public static function property( $name, $type, $args = array() ) {
 		$class = get_called_class();
 		
 		if ( ! isset( self::$properties[ $class ] ) ) {
 			self::$properties[ $class ] = array();
 		}
+
+		// "id" columns and those ending on "_id" get an index by default
+		$index = $name == 'id' || stripos( $name, '_id' );
+		// but if the argument is set, it overrides the default
+		if (isset($args['index'])) {
+			$index = $args['index'];
+		}
 		
 		self::$properties[ $class ][] = array(
-			'name' => $name,
-			'type' => $type
+			'name'  => $name,
+			'type'  => $type,
+			'index' => $index,
+			'index_length' => isset($args['index_length']) ? $args['index_length'] : null,
+			'unique' => isset($args['unique']) ? $args['unique'] : null
 		);
 	}
 	
@@ -374,14 +384,11 @@ abstract class Base
 		}
 
 		// @todo this is the wrong place to do this!
+		// The feed password is the only "passphrase" which is saved. It is not encrypted!
+		// However, we keep this function for later use
 		if ( isset( $_REQUEST['passwords'] ) && is_array( $_REQUEST['passwords'] ) ) {
 			foreach ( $_REQUEST['passwords'] as $password ) {
-				if ( isset( $attributes[ $password ] ) && $attributes[ $password ] !== $_REQUEST[ 'field_filler_podlove_feed' ][ $password ] ) {
-					$this->$password = crypt($attributes[ $password ], SECURE_AUTH_SALT);
-				} else {
-					$feed = \Podlove\Model\Feed::find_one_by_id($this->id);
-					$this->$password = $feed->protection_password;
-				}
+				$this->$password = $attributes[ $password ];
 			}
 		}
 		return $this->save();
@@ -434,7 +441,7 @@ abstract class Base
 			;
 			$success = $wpdb->query( $sql );
 			if ( $success ) {
-				$this->id = mysql_insert_id();
+				$this->id = $wpdb->insert_id;
 			}
 		} else {
 			$sql = 'UPDATE ' . self::table_name()
@@ -550,8 +557,11 @@ abstract class Base
 		$index_columns = array_map( function($index){ return $index->Column_name; }, $indices );
 
 		foreach ( self::properties() as $property ) {
-			if ( ($property['name'] == 'id' || stripos( $property['name'], '_id' )) && ! in_array( $property['name'], $index_columns ) ) {
-				$sql = 'ALTER TABLE `' . self::table_name() . '` ADD INDEX `' . $property['name'] . '` (`' . $property['name'] . '`)';
+
+			if ( $property['index'] && ! in_array( $property['name'], $index_columns ) ) {
+				$length = isset($property['index_length']) ? '(' . (int) $property['index_length'] . ')' : '';
+				$unique = isset($property['unique']) && $property['unique'] ? 'UNIQUE' : '';
+				$sql = 'ALTER TABLE `' . self::table_name() . '` ADD ' . $unique . ' INDEX `' . $property['name'] . '` (' . $property['name'] . $length . ')';
 				$wpdb->query( $sql );
 			}
 		}

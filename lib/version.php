@@ -40,9 +40,11 @@
 namespace Podlove;
 use \Podlove\Model;
 
-define( __NAMESPACE__ . '\DATABASE_VERSION', 67 );
+define( __NAMESPACE__ . '\DATABASE_VERSION', 74 );
 
-add_action( 'init', function () {
+add_action( 'init', '\Podlove\run_database_migrations' );
+
+function run_database_migrations() {
 	
 	$database_version = get_option( 'podlove_database_version' );
 
@@ -57,7 +59,7 @@ add_action( 'init', function () {
 		}
 	}
 
-} );
+}
 
 /**
  * Find and run migration for given version number.
@@ -746,6 +748,98 @@ function run_migrations_for_version( $version ) {
 					$instagram_service->save();
 				}
 			}
+		break;
+		case 68: // Do that ADN module fix again, as we forgot to mark all episodes as published if the ADN module is activated
+			$episodes = Model\Episode::all();
+			foreach ( $episodes as $episode ) {
+				$post = get_post( $episode->post_id );
+				if ( $post->post_status == 'publish' && !get_post_meta( $episode->post_id, '_podlove_episode_was_published', true ) )
+						update_post_meta( $episode->post_id, '_podlove_episode_was_published', true );
+			}
+		break;
+		case 69:
+			if (\Podlove\Modules\Base::is_active('app_dot_net')) {
+				$adn = \Podlove\Modules\AppDotNet\App_Dot_Net::instance();
+				if ( $adn->get_module_option( 'adn_auth_key' ) )
+					$adn->update_module_option( 'adn_automatic_announcement', 'on' );
+			}
+		break;
+		case 70:
+			\Podlove\Model\DownloadIntent::build();
+			\Podlove\Model\UserAgent::build();
+		break;
+		case 71:
+			// update for everyone, so even those with inactive service tables get updated
+			$wpdb->query( sprintf(
+				'ALTER TABLE `%s` CHANGE COLUMN `type` `category` VARCHAR(255)',
+				\Podlove\Modules\Social\Model\Service::table_name()
+			) );
+
+			$wpdb->query( sprintf(
+				"ALTER TABLE `%s` ADD COLUMN `type` VARCHAR(255) AFTER `category`",
+				\Podlove\Modules\Social\Model\Service::table_name()
+			) );
+
+			$services = \Podlove\Modules\Social\Model\Service::all();
+			foreach ($services as $service) {
+				$service->type = strtolower($service->title);
+				$service->save();
+			}
+		break;
+		case 72:
+			if (\Podlove\Modules\Base::is_active('social')) {
+				$services = array(
+					array(
+						'title'       => 'Vimeo',
+						'type'        => 'vimeo',
+						'category'    => 'social',
+						'description' => 'Vimeo Account',
+						'logo'        => 'vimeo-128.png',
+						'url_scheme'  => 'http://vimeo.com/%account-placeholder%'
+					),
+					array(
+						'title' 		=> 'about.me',
+						'type'	 		=> 'about.me',
+						'category'		=> 'social',
+						'description'	=> 'about.me Account',
+						'logo'			=> 'aboutme-128.png',
+						'url_scheme'	=> 'http://about.me/%account-placeholder%'
+					),
+					array(
+						'title' 		=> 'Gittip',
+						'type'	 		=> 'gittip',
+						'category'		=> 'donation',
+						'description'	=> 'Gittip Account',
+						'logo'			=> 'gittip-128.png',
+						'url_scheme'	=> 'https://www.gittip.com/%account-placeholder%'
+					)
+				);
+
+				foreach ($services as $service_key => $service) {
+					$c = new \Podlove\Modules\Social\Model\Service;
+					$c->title = $service['title'];
+					$c->type = $service['type'];
+					$c->category = $service['category'];
+					$c->description = $service['description'];
+					$c->logo = $service['logo'];
+					$c->url_scheme = $service['url_scheme'];
+					$c->save();
+				}
+			}
+		break;
+		case 73:
+			if (\Podlove\Modules\Base::is_active('social')) {
+				$jabber_service = \Podlove\Modules\Social\Model\Service::find_one_by_where( "`type` = 'jabber' AND `category` = 'social'" );
+				if ($jabber_service) {
+					$jabber_service->url_scheme = 'jabber:%account-placeholder%';
+					$jabber_service->save();
+				}
+			}
+		break;
+		case 74:
+			Model\GeoArea::build();
+			Model\GeoAreaName::build();
+			\Podlove\Geo_Ip::register_updater_cron();
 		break;
 	}
 

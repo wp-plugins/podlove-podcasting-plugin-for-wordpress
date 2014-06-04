@@ -29,6 +29,14 @@ function override_feed_title( $feed ) {
 	} );
 }
 
+function override_feed_description($feed) {
+	add_filter('podlove_rss_feed_description', function($description) use ($feed) {
+		$podcast = Model\Podcast::get_instance();
+		$desc = $podcast->subtitle ? $podcast->subtitle : $description;
+		return htmlspecialchars($desc);
+	});
+}
+
 function override_feed_language( $feed ) {
 	add_filter( 'pre_option_rss_language', function ( $language ) use ( $feed ) {
 		$podcast = Model\Podcast::get_instance();
@@ -176,7 +184,7 @@ function override_feed_entry( $hook, $podcast, $feed, $format ) {
 		$enclosure_file_size = $file->size;
 		$cover_art_url       = $episode->get_cover_art();
 
-		$enclosure_url = $episode->enclosure_url( $feed->episode_asset() );
+		$enclosure_url = htmlentities($episode->enclosure_url( $feed->episode_asset(), "feed", $feed->slug ));
 
 		$chapters = new \Podlove\Feeds\Chapters( $episode );
 		$chapters->render( 'inline' );

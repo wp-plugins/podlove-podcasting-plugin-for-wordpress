@@ -60,11 +60,56 @@ class MediaFile extends Base {
 	}
 
 	/**
-	 * Dynamically return file url from release, format and show.
+	 * Return public file URL
 	 *
+	 * A source must be provided, an additional context is optional.
+	 * Example sources: webplayer, download, feed, other
+	 * Example contexts: home/episode/archive for player source, feed slug for feed source
+	 * 
+	 * @param  string $source  download source
+	 * @param  string $context optional download context
 	 * @return string
 	 */
-	public function get_file_url() {
+	public function get_public_file_url($source, $context = null) {
+		switch (\Podlove\get_setting( 'tracking', 'mode' )) {
+			case 'ptm':
+				// when PTM is active, add $source and $context but
+				// keep the original file URL
+				return $this->get_file_url($source, $context);
+				break;
+			case 'ptm_analytics':
+				// we track, so we need to generate a shadow URL
+				$path = '?download_media_file=' . $this->id;
+
+				// trim source and context
+				$context = trim($context);
+				$source  = trim($source);
+
+				// build path
+				$path.= '&ptm_source=' . $source;
+
+				if (is_string($context) && strlen($context) > 0)
+					$path .= '&ptm_context=' . $context;
+
+				return site_url($path);
+				break;
+			default:
+				// tracking is off, return raw URL
+				return $this->get_file_url();
+				break;
+		}
+	}
+
+	/**
+	 * Return real file URL
+	 *
+	 * For public facing URLs, use ::get_public_file_url().
+	 *
+	 * @param  string $source  optional download source
+	 * @param  string $context optional download context
+	 * @return string
+	 */
+	public function get_file_url($source = null, $context = null) {
 
 		$podcast  = Podcast::get_instance();
 
@@ -72,7 +117,7 @@ class MediaFile extends Base {
 		$episode_asset = EpisodeAsset::find_by_id( $this->episode_asset_id );
 		$file_type     = FileType::find_by_id( $episode_asset->file_type_id );
 
-		if ( ! $episode_asset || ! $file_type )
+		if ( ! $episode_asset || ! $file_type || ! $episode )
 			return '';
 
 		$template = $podcast->get_url_template();
@@ -82,19 +127,17 @@ class MediaFile extends Base {
 		$template = str_replace( '%suffix%',              $episode_asset->suffix, $template );
 		$template = str_replace( '%format_extension%',    $file_type->extension, $template );
 
-		return $template;
-	}
+		if ($source) {
+			$connector = strpos($template, '?') === false ? '?' : '&';
+			$template .= $connector . "ptm_source=$source";
+		}
 
-	/**
-	 * Dynamically return file path from release, format and show.
-	 *
-	 * @return string
-	 */
-	public function get_file_path() {
-		
-		$url_data  = parse_url( $this->get_file_url() );
-		
-		return trim( $url_data['path'], '/' );
+		if ($context) {
+			$connector = strpos($template, '?') === false ? '?' : '&';
+			$template .= $connector . "ptm_context=$context";
+		}
+
+		return $template;
 	}
 
 	public function episode() {
