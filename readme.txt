@@ -85,6 +85,25 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.10.11 =
+
+**Tracking**
+
+* For increased compatibility (we are looking at you, iTunes), new file URLs without parameters are used when analytics are active.
+* Add `&ptm_file=<episode-slug>.<file-extension>` parameter to the end of Parameter-URLs, so tools like wget generate a filename with a correct extension by default.
+* Feed URLs now support a `&tracking=no` parameter, which dynamically disables tracking parameters in feed enclosures. This is introduced for debugging purposes and is only mentioned here for the sake of completeness.
+* Fix PHP glitch that caused tracking to go into "Tracking URL Parameters" mode even when it was disabled
+
+**ADN Module**
+
+* Fix issue that could lead to repostings
+* Fix tags description
+* Messages longer than 256 characters will be shortened now and "…" will be appended
+
+**Other**
+
+* Fix: reenable "force download" option
+
 = 1.10.10 =
 
 We discovered incompatibilities between our tracking implementation and some clients. To avoid further trouble, we are *deactivating tracking* until we solve the issue. The option is still available, we just switch it off automatically with this release and it isn't on by default any more.

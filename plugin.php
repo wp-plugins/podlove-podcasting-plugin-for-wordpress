@@ -805,8 +805,30 @@ add_filter('pre_update_option_podlove_asset_assignment', function($new, $old) {
 }, 10, 2);
 
 function handle_media_file_download() {
-	
-	if ( ! isset( $_GET['download_media_file'] ) )
+
+	if (isset($_GET['download_media_file'])) {
+		$download_media_file = $_GET['download_media_file'];
+	} else {
+		$download_media_file = get_query_var("download_media_file");
+	}
+
+	if (isset($_REQUEST['ptm_source'])) {
+		$ptm_source = isset($_REQUEST['ptm_source']);
+	} else {
+		$ptm_source = get_query_var("ptm_source");
+	}
+
+	if (isset($_REQUEST['ptm_context'])) {
+		$ptm_context = isset($_REQUEST['ptm_context']);
+	} else {
+		$ptm_context = get_query_var("ptm_context");
+	}
+
+	$download_media_file = (int) $download_media_file;
+	$ptm_source  = trim($ptm_source);
+	$ptm_context = trim($ptm_context);
+
+	if (!$download_media_file)
 		return;
 
 	// tell WP Super Cache to not cache download links
@@ -815,8 +837,8 @@ function handle_media_file_download() {
 
 	// FIXME: this is a hack for bitlove => so move it in this module AND make sure the location in valid
 	// if download_media_file is a URL, download directly
-	if ( filter_var( $_GET['download_media_file'], FILTER_VALIDATE_URL ) ) {
-		$parsed_url = parse_url($_GET['download_media_file']);
+	if ( filter_var( $download_media_file, FILTER_VALIDATE_URL ) ) {
+		$parsed_url = parse_url($download_media_file);
 		$file_name = substr( $parsed_url['path'], strrpos( $parsed_url['path'], "/" ) + 1 );
 		header( "Expires: 0" );
 		header( 'Cache-Control: must-revalidate' );
@@ -828,11 +850,11 @@ function handle_media_file_download() {
 		ob_clean();
 		flush();
 		while ( @ob_end_flush() ); // flush and end all output buffers
-		readfile( $_GET['download_media_file'] );
+		readfile( $download_media_file );
 		exit;
 	}
 
-	$media_file_id = (int) $_GET['download_media_file'];
+	$media_file_id = $download_media_file;
 	$media_file    = Model\MediaFile::find_by_id( $media_file_id );
 
 	if ( ! $media_file ) {
@@ -852,13 +874,11 @@ function handle_media_file_download() {
 	$intent->media_file_id = $media_file_id;
 	$intent->accessed_at = date('Y-m-d H:i:s');
 	
-	if (isset($_REQUEST['ptm_source'])) {
-		$intent->source = trim($_REQUEST['ptm_source']);
-	}
+	if ($ptm_source)
+		$intent->source = $ptm_source;
 
-	if (isset($_REQUEST['ptm_context'])) {
-		$intent->context = trim($_REQUEST['ptm_context']);
-	}
+	if ($ptm_context)
+		$intent->context = $ptm_context;
 
 	// set user agent
 	$ua_string = $_SERVER['HTTP_USER_AGENT'];
@@ -883,11 +903,38 @@ function handle_media_file_download() {
 
 	$intent->save();
 
-	header("HTTP/1.1 301 Moved Permanently");
-	header("Location: " . $media_file->get_file_url($intent->source, $intent->context));
-	exit;
+	if ( \Podlove\get_setting('website', 'force_download') == 'on' && in_array( strtolower( ini_get( 'allow_url_fopen' ) ), array( "1", "on", "true" ) ) ) {
+		header( "Expires: 0" );
+		header( 'Cache-Control: must-revalidate' );
+	    header( 'Pragma: public' );
+		header( "Content-Type: " . $episode_asset->file_type()->mime_type );
+		header( "Content-Description: File Transfer" );
+		header( "Content-Disposition: attachment; filename=" . $media_file->get_download_file_name() );
+		header( "Content-Transfer-Encoding: binary" );
+
+		if ( $media_file->size > 0 )
+			header( 'Content-Length: ' . $media_file->size );
+		
+		if (strtoupper($_SERVER['REQUEST_METHOD']) !== "HEAD") {
+			ob_clean();
+			flush();
+			while ( @ob_end_flush() ); // flush and end all output buffers
+			readfile( $media_file->get_file_url($intent->source, $intent->context) );
+		}
+	} else {
+		$location = $media_file->add_ptm_parameters(
+			$media_file->get_file_url(),
+			array(
+				'source'  => $intent->source,
+				'context' => $intent->context
+			)
+		);
+
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: " . $location);
+	}
 }
-add_action( 'init', '\Podlove\handle_media_file_download' );
+add_action( 'wp', '\Podlove\handle_media_file_download' );
 
 /**
  * Extend/Replace WordPress core search logic to include episode fields.
@@ -950,6 +997,32 @@ add_filter('posts_join', function($join, $query) {
 
 	return $join;
 }, 10, 2);
+
+// add route for file downloads
+add_action( 'init', function () {
+    add_rewrite_rule(
+        '^podlove/file/([0-9]+)/s/([^/]+)/c/([^/]+)/.+/?$',
+        'index.php?download_media_file=$matches[1]&ptm_source=$matches[2]&ptm_context=$matches[3]',
+        'top'
+    );
+    add_rewrite_rule(
+        '^podlove/file/([0-9]+)/s/([^/]+)/.+/?$',
+        'index.php?download_media_file=$matches[1]&ptm_source=$matches[2]',
+        'top'
+    );
+    add_rewrite_rule(
+        '^podlove/file/([0-9]+)/.+/?$',
+        'index.php?download_media_file=$matches[1]',
+        'top'
+    );
+}, 10 );
+
+add_filter( 'query_vars', function ( $query_vars ){
+    $query_vars[] = 'download_media_file';
+    $query_vars[] = 'ptm_source';
+    $query_vars[] = 'ptm_context';
+    return $query_vars;
+}, 10, 1 );
 
 // register ajax actions
 new \Podlove\AJAX\Ajax;
