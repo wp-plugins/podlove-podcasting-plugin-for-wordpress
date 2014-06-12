@@ -8,12 +8,12 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_Extensions_' => $vendorDir . '/twig/extensions/lib',
     'Twig_' => $vendorDir . '/twig/twig/lib',
-    'Symfony\\Component\\Yaml\\' => $vendorDir . '/symfony/yaml',
     'Symfony\\Component\\EventDispatcher\\' => $vendorDir . '/symfony/event-dispatcher',
     'Psr\\Log\\' => $vendorDir . '/psr/log',
     'Podlove\\NormalPlayTime' => $vendorDir . '/podlove/normalplaytime/src',
     'Podlove\\Comment' => $vendorDir . '/podlove/comment-introspection/lib',
     'Podlove\\Chapters' => $vendorDir . '/podlove/podlove-timeline/lib',
+    'PEAR' => $vendorDir . '/pear/pear_exception',
     'Monolog' => $vendorDir . '/monolog/monolog/src',
     'MaxMind' => $vendorDir . '/maxmind-db/reader/src',
     'Leth\\IPAddress' => $vendorDir . '/leth/ip-address/classes',
@@ -21,4 +21,5 @@ return array(
     'Guzzle\\Tests' => $vendorDir . '/guzzle/guzzle/tests',
     'Guzzle' => $vendorDir . '/guzzle/guzzle/src',
     'GeoIp2' => $vendorDir . '/geoip2/geoip2/src',
+    'Console' => $vendorDir . '/pear/console_commandline',
 );

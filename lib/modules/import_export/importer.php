@@ -27,7 +27,28 @@ class Importer {
 	 */
 	public function import() {
 
-		$this->xml = simplexml_load_file($this->file);
+		$gzfilesize = function($filename) {
+			$gzFilesize = FALSE;
+			if (($zp = fopen($filename, 'r'))!==FALSE) {
+				if (@fread($zp, 2) == "\x1F\x8B") { // this is a gzip'd file
+					fseek($zp, -4, SEEK_END);
+					if (strlen($datum = @fread($zp, 4))==4)
+					  extract(unpack('Vgzfs', $datum));
+				}
+				else // not a gzip'd file, revert to regular filesize function
+					$gzfs = filesize($filename);
+				fclose($zp);
+			}
+			return($gzfs);
+		};
+		
+		// It might not look like it, but it is actually compatible to 
+		// uncompressed files.
+		$gzFileHandler = gzopen($this->file, 'r');
+		$decompressed = gzread($gzFileHandler, $gzfilesize($this->file));
+
+		$this->xml = simplexml_load_string($decompressed);
+
 		$this->xml->registerXPathNamespace('wpe', Exporter::XML_NAMESPACE);
 
 		$export = $this->xml->xpath('//wpe:export');
@@ -45,6 +66,7 @@ class Importer {
 		$this->importAssets();
 		$this->importFeeds();
 		$this->importMediaFiles();
+		$this->importTracking();
 		$this->importTemplates();
 
 		do_action('podlove_xml_import', $this->xml);
@@ -99,6 +121,13 @@ class Importer {
 
 	private function importMediaFiles() {
 		self::importTable($this->xml, 'mediafile', '\Podlove\Model\MediaFile');
+	}
+
+	private function importTracking() {
+		self::importTable($this->xml, 'geoarea', '\Podlove\Model\GeoArea');
+		self::importTable($this->xml, 'geoareaname', '\Podlove\Model\GeoAreaName');
+		self::importTable($this->xml, 'useragent', '\Podlove\Model\UserAgent');
+		self::importTable($this->xml, 'downloadintent', '\Podlove\Model\DownloadIntent');
 	}
 
 	private function importTemplates() {

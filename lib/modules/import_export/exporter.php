@@ -6,6 +6,7 @@ use Podlove\Model;
 class Exporter {
 
 	const XML_NAMESPACE = 'http://podlove.org/podlove-podcast-publisher/export';
+	private $compression = false;
 
 	public function __construct() {
 		add_action('podlove_xml_export', array($this, 'exportEpisodes'));
@@ -14,12 +15,30 @@ class Exporter {
 		add_action('podlove_xml_export', array($this, 'exportFileType'));
 		add_action('podlove_xml_export', array($this, 'exportMediaFile'));
 		add_action('podlove_xml_export', array($this, 'exportTemplates'));
+		add_action('podlove_xml_export', array($this, 'exportTracking'));
 		add_action('podlove_xml_export', array($this, 'exportOptions'));
+
+		if (function_exists('gzencode') && extension_loaded('zlib'))
+			$this->enableCompression();
+	}
+
+	public function enableCompression() {
+		$this->compression = true;
+	}
+
+	public function isCompressionEnabled() {
+		return (bool) $this->compression;
 	}
 
 	public function download() {
 		$this->setDownloadHeaders();
-		echo $this->getXml();
+		$xml = $this->getXml();
+
+		if ($this->isCompressionEnabled()) {
+			echo gzencode($xml, 9);
+		} else {
+			echo $xml;
+		}
 		exit;
 	}
 
@@ -45,6 +64,13 @@ class Exporter {
 
 	public function exportTemplates(\SimpleXMLElement $xml) {
 		self::exportTable($xml, 'templates', 'template', '\Podlove\Model\Template');
+	}
+
+	public function exportTracking(\SimpleXMLElement $xml) {
+		self::exportTable($xml, 'geoareas', 'geoarea', '\Podlove\Model\GeoArea');
+		self::exportTable($xml, 'geoareanames', 'geoareaname', '\Podlove\Model\GeoAreaName');
+		self::exportTable($xml, 'useragents', 'useragent', '\Podlove\Model\UserAgent');
+		self::exportTable($xml, 'downloadintents', 'downloadintent', '\Podlove\Model\DownloadIntent');
 	}
 
 	public function exportOptions(\SimpleXMLElement $xml)
@@ -100,15 +126,27 @@ class Exporter {
 		if (!empty($sitename))
 			$sitename .= '.';
 
-		return $sitename . 'podlove.' . date( 'Y-m-d' ) . '.xml';
+		$filename = $sitename . 'podlove.' . date( 'Y-m-d' ) . '.xml';
+
+		if ($this->isCompressionEnabled()) {
+			$filename .= '.gz';
+		}
+
+		return $filename;
 	}
 
 	private function setDownloadHeaders() {		
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $this->getDownloadFileName() );
-		header( 'Content-Type: text/xml; charset=' . get_option( 'blog_charset' ), true );
 		header( 'Cache-control: private' );
 		header( 'Expires: -1' );
+
+		if ($this->isCompressionEnabled()) {
+			header( 'Content-Encoding: gzip' );
+			header( 'Content-Type: application/x-gzip; charset=' . get_option( 'blog_charset' ), true );
+		} else {
+			header( 'Content-Type: text/xml; charset=' . get_option( 'blog_charset' ), true );
+		}
 	}
 
 	public function getXml() {
