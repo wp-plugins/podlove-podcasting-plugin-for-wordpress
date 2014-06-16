@@ -65,7 +65,7 @@ function activate_for_current_blog() {
 	$podcast->save();
 
 	// set default modules
-	$default_modules = array( 'podlove_web_player', 'open_graph', 'asset_validation', 'logging', 'oembed', 'feed_validation' );
+	$default_modules = array( 'podlove_web_player', 'open_graph', 'asset_validation', 'logging', 'oembed', 'feed_validation', 'import_export' );
 	foreach ( $default_modules as $module ) {
 		\Podlove\Modules\Base::activate( $module );
 	}
@@ -906,36 +906,17 @@ function handle_media_file_download() {
 		$intent->save();
 	}
 
-	if ( \Podlove\get_setting('website', 'force_download') == 'on' && in_array( strtolower( ini_get( 'allow_url_fopen' ) ), array( "1", "on", "true" ) ) ) {
-		header( "Expires: 0" );
-		header( 'Cache-Control: must-revalidate' );
-	    header( 'Pragma: public' );
-		header( "Content-Type: " . $episode_asset->file_type()->mime_type );
-		header( "Content-Description: File Transfer" );
-		header( "Content-Disposition: attachment; filename=" . $media_file->get_download_file_name() );
-		header( "Content-Transfer-Encoding: binary" );
+	$location = $media_file->add_ptm_parameters(
+		$media_file->get_file_url(),
+		array(
+			'source'  => $intent->source,
+			'context' => $intent->context
+		)
+	);
 
-		if ( $media_file->size > 0 )
-			header( 'Content-Length: ' . $media_file->size );
-		
-		if (strtoupper($_SERVER['REQUEST_METHOD']) !== "HEAD") {
-			ob_clean();
-			flush();
-			while ( @ob_end_flush() ); // flush and end all output buffers
-			readfile( $media_file->get_file_url($intent->source, $intent->context) );
-		}
-	} else {
-		$location = $media_file->add_ptm_parameters(
-			$media_file->get_file_url(),
-			array(
-				'source'  => $intent->source,
-				'context' => $intent->context
-			)
-		);
-
-		header("HTTP/1.1 301 Moved Permanently");
-		header("Location: " . $location);
-	}
+	header("HTTP/1.1 301 Moved Permanently");
+	header("Location: " . $location);
+	exit;
 }
 add_action( 'wp', '\Podlove\handle_media_file_download' );
 
@@ -1035,6 +1016,17 @@ add_filter('redirect_canonical', function($redirect_url, $requested_url) {
 		return $redirect_url;
 	}
 }, 10, 2);
+
+// Ensure WordPress importer keeps the mapping id for old<->new post id.
+// This is required for the Im/Export module. To avoid user errors, it is
+// better to keep this behaviour in core.
+add_filter( 'wp_import_post_meta', function($postmetas, $post_id, $post) {
+	$postmetas[] = array(
+		'key' => 'import_id',
+		'value' => $post_id
+	);
+	return $postmetas;
+}, 10, 3 );
 
 // register ajax actions
 new \Podlove\AJAX\Ajax;
