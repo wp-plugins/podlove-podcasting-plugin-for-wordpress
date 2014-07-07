@@ -85,6 +85,37 @@ Find the setting Flattr > Advanced Settings > Flattrable content > Post Types an
 
 == Changelog ==
 
+= 1.10.14 =
+
+**Performance**
+
+A simple yet effective caching strategy has been implemented. This is used to cache rendered site segments. A complete cache invalidation happens when podcast related data changes. This should be a good start since such data rarely changes (mostly when a new episode is published). In a Multisite setup, each site handles its cache separately.
+
+This is implemented using the [Transients API](http://codex.wordpress.org/Transients_API). By default, WordPress uses the database as a caching backend. If you want to squeeze out even more speed, consider installing a [Persistent Cache Plugin](http://codex.wordpress.org/Class_Reference/WP_Object_Cache#Persistent_Cache_Plugins) which replaces the database with a more efficient caching backend, such as memcached or APC. That might require some fiddling around, though.
+
+Caching can be deactivated in the `wp-config.php` with the following line: `define('PODLOVE_TEMPLATE_CACHE', false);`
+
+* Cache Publisher templates
+* Cache feed discovery header
+* Cache Bitlove widget
+* Other minor performance improvements
+
+**Templates**
+
+* There is now a default template containing the player and download section
+* Episode contributions can be sorted by comment and position, for example: `episode.contributors({orderby: "comment", order: "DESC"})` or episode.contributors({orderby: "position", order: "ASC"})
+* Iterate over the list of episode tags: `{% for tag in episode.tags({order: "DESC", orderby: "count"}) %} {{ tag.name }} {% endfor %}`
+
+**Other**
+
+* Display available processing time in Auphonic production box
+* Episode slugs may contain a wider variety of characters now, such as umlauts.
+* Feeds now only contain contributors with an URI. Also, output of contributors in feeds can be filtered by group and/or role.
+* New donation option for Auphonic Credits
+* Remove scary debug output on failed media file validations. This can be found in the log now.
+* Fix Auphonic authentication issue by providing the whole certificate chain
+* Fix contributor related feed rendering issue
+
 = 1.10.13 =
 
 We decided to remove the "Force Download" feature. Its purpose was to guarantee that a click on a download button results in a download dialogue, rather than playing the media file in the browser. The way we implemented it worked, but came with many downsides. Just to name two of them:

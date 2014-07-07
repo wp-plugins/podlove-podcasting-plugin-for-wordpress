@@ -1,8 +1,6 @@
 <?php
 namespace Podlove\Modules\ImportExport;
 
-use Podlove\Modules\ImportExport\Exporter;
-
 class Import_Export extends \Podlove\Modules\Base {
 
 	protected $module_name = 'Import &amp; Export';
@@ -11,18 +9,11 @@ class Import_Export extends \Podlove\Modules\Base {
 
 	public function load() {
 		
-		// hook into export feature
-		add_action('init', function() {
-
-			if (!is_admin())
-				return;
-
-			if (isset($_GET['podlove_export']) && $_GET['podlove_export']) {
-				$exporter = new Exporter;
-				$exporter->download();
-				exit;
-			}
-
+		add_action('admin_init', function() {
+			Export\PodcastExporter::init();
+			Import\PodcastImporter::init();
+			Export\TrackingExporter::init();
+			Import\TrackingImporter::init();
 		});
 
 		add_action( 'admin_menu', array( $this, 'register_menu' ), 250 );

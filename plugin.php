@@ -84,6 +84,20 @@ function activate_for_current_blog() {
 		update_option( 'podlove', $settings );
 	}
 
+	// set default template
+	if (!$template = Model\Template::find_one_by_property('title', 'default')) {
+		$template = new Model\Template;
+		$template->title = 'default';
+		$template->content = <<<EOT
+{{ episode.player }}
+[podlove-episode-downloads]
+EOT;
+		$template->save();
+
+		$assignment = Model\TemplateAssignment::get_instance();
+		$assignment->top = $template->id;
+		$assignment->save();
+	}
 }
 
 /**
@@ -193,6 +207,9 @@ function uninstall_for_current_blog() {
 add_action( 'init', array( '\Podlove\Custom_Guid', 'init' ) );
 add_action( 'init', array( '\Podlove\Geo_Ip', 'init' ) );
 
+// init cache (after plugins_loaded, so modules have a chance to hook)
+add_action( 'init', array( '\Podlove\Cache\TemplateCache', 'get_instance' ) );
+
 /**
  * Adds feed discover links to WordPress head.
  *
@@ -206,13 +223,18 @@ function add_feed_discoverability() {
 	if ( ! function_exists( '\Podlove\Feeds\prepare_for_feed' ) )
 		require_once \PODLOVE\PLUGIN_DIR . 'lib/feeds/base.php';
 
-	$feeds = \Podlove\Model\Feed::all( 'ORDER BY position ASC' );
+	$cache = \Podlove\Cache\TemplateCache::get_instance();
+	echo $cache->cache_for('feed_discoverability', function() {
 
-	foreach ( $feeds as $feed ) {
-		if ( $feed->discoverable )
-			echo '<link rel="alternate" type="' . $feed->get_content_type() . '" title="' . \Podlove\Feeds\prepare_for_feed( $feed->title_for_discovery() ) . '" href="' . $feed->get_subscribe_url() . "\" />\n";			
-	}
-		
+		$feeds = \Podlove\Model\Feed::all( 'ORDER BY position ASC' );
+
+		$html = '';
+		foreach ( $feeds as $feed ) {
+			if ( $feed->discoverable )
+				$html .= '<link rel="alternate" type="' . $feed->get_content_type() . '" title="' . \Podlove\Feeds\prepare_for_feed( $feed->title_for_discovery() ) . '" href="' . $feed->get_subscribe_url() . "\" />\n";			
+		}
+		return $html;
+	});
 }
 
 add_action( 'init', function () {

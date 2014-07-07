@@ -122,15 +122,13 @@ function get_webplayer_setting( $name ) {
 	return $settings[ $name ];
 }
 
-function slugify( $text ) {
-
+function slugify($slug) {
+	$slug = trim($slug);
 	// replace everything but unreserved characters (RFC 3986 section 2.3) by a hyphen
-	$text = preg_replace( '~[^\\pL\d_\.\~]~u', '-', $text );
+	$slug = preg_replace('~[^\\pL\d_\.\~]~u', '-', $slug);
+	$slug = rawurlencode($slug);
 
-	// transliterate
-	$text = iconv( 'utf-8', 'us-ascii//TRANSLIT', $text );
-
-	return empty( $text ) ? 'n-a' : $text;
+	return empty($slug) ? 'n-a' : $slug;
 }
 
 function require_code_mirror() {
@@ -747,7 +745,7 @@ function getFlattrScript() {
 		     var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
 		     s.type = 'text/javascript';
 		     s.async = true;
-		    s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+		    s.src = 'https://api.flattr.com/js/0.6/load.js?mode=auto';
 		    t.parentNode.insertBefore(s, t);
 			 })();
 		/* ]]> */</script>\n";
