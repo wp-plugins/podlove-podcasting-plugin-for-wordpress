@@ -92,40 +92,79 @@ class Reader implements ProviderInterface
     }
 
     /**
-     * This method returns a GeoIP2 City/ISP/Org model.
+     * This method returns a GeoIP2 City model.
      *
      * @param string $ipAddress IPv4 or IPv6 address as a string.
      *
-     * @return \GeoIp2\Model\CityIspOrg
+     * @return \GeoIp2\Model\City
      *
      * @throws \GeoIp2\Exception\AddressNotFoundException if the address is
      *         not in the database.
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *         is corrupt or invalid
+     *
+     * @deprecated deprecated since version 0.7.0
      */
     public function cityIspOrg($ipAddress)
     {
-        return $this->modelFor('CityIspOrg', $ipAddress);
+        return $this->modelFor('City', $ipAddress);
     }
 
     /**
-     * This method returns a GeoIP2 Omni model.
+     * This method returns a GeoIP2 Insights model.
      *
      * @param string $ipAddress IPv4 or IPv6 address as a string.
      *
-     * @return \GeoIp2\Model\Omni
+     * @return \GeoIp2\Model\Insights
      *
      * @throws \GeoIp2\Exception\AddressNotFoundException if the address is
      *         not in the database.
      * @throws \MaxMind\Db\Reader\InvalidDatabaseException if the database
      *         is corrupt or invalid
+     *
+     * @deprecated deprecated since version 0.7.0
      */
     public function omni($ipAddress)
     {
-        return $this->modelFor('Omni', $ipAddress);
+        return $this->modelFor('Insights', $ipAddress);
+    }
+
+    public function connectionType($ipAddress)
+    {
+        return $this->flatModelFor('ConnectionType', $ipAddress);
+    }
+
+    public function domain($ipAddress)
+    {
+        return $this->flatModelFor('Domain', $ipAddress);
+    }
+
+    public function isp($ipAddress)
+    {
+        return $this->flatModelFor('Isp', $ipAddress);
     }
 
     private function modelFor($class, $ipAddress)
+    {
+        $record = $this->getRecord($ipAddress);
+
+        $record['traits']['ip_address'] = $ipAddress;
+        $class = "GeoIp2\\Model\\" . $class;
+
+        return new $class($record, $this->locales);
+    }
+
+    private function flatModelFor($class, $ipAddress)
+    {
+        $record = $this->getRecord($ipAddress);
+
+        $record['ip_address'] = $ipAddress;
+        $class = "GeoIp2\\Model\\" . $class;
+
+        return new $class($record);
+    }
+
+    private function getRecord($ipAddress)
     {
         $record = $this->dbReader->get($ipAddress);
         if ($record === null) {
@@ -133,10 +172,7 @@ class Reader implements ProviderInterface
                 "The address $ipAddress is not in the database."
             );
         }
-        $record['traits']['ip_address'] = $ipAddress;
-        $class = "GeoIp2\\Model\\" . $class;
-
-        return new $class($record, $this->locales);
+        return $record;
     }
 
     /**
