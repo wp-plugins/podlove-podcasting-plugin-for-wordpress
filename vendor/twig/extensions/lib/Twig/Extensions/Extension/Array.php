@@ -22,7 +22,7 @@ class Twig_Extensions_Extension_Array extends Twig_Extension
     public function getFilters()
     {
         $filters = array(
-             new Twig_SimpleFilter('shuffle', 'twig_shuffle_filter'),
+            'shuffle' => new Twig_Filter_Function('twig_shuffle_filter'),
         );
 
         return $filters;

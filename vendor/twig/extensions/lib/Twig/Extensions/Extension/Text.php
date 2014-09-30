@@ -21,10 +21,16 @@ class Twig_Extensions_Extension_Text extends Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new Twig_SimpleFilter('truncate', 'twig_truncate_filter', array('needs_environment' => true)),
-            new Twig_SimpleFilter('wordwrap', 'twig_wordwrap_filter', array('needs_environment' => true)),
+        $filters = array(
+            'truncate' => new Twig_Filter_Function('twig_truncate_filter', array('needs_environment' => true)),
+            'wordwrap' => new Twig_Filter_Function('twig_wordwrap_filter', array('needs_environment' => true)),
         );
+
+        if (version_compare(Twig_Environment::VERSION, '1.5.0-DEV', '<')) {
+            $filters['nl2br'] = new Twig_Filter_Function('twig_nl2br_filter', array('pre_escape' => 'html', 'is_safe' => array('html')));
+        }
+
+        return $filters;
     }
 
     /**
@@ -38,17 +44,19 @@ class Twig_Extensions_Extension_Text extends Twig_Extension
     }
 }
 
+function twig_nl2br_filter($value, $sep = '<br />')
+{
+    return str_replace("\n", $sep."\n", $value);
+}
+
 if (function_exists('mb_get_info')) {
     function twig_truncate_filter(Twig_Environment $env, $value, $length = 30, $preserve = false, $separator = '...')
     {
         if (mb_strlen($value, $env->getCharset()) > $length) {
             if ($preserve) {
-                // If breakpoint is on the last word, return the value without separator.
-                if (false === ($breakpoint = mb_strpos($value, ' ', $length, $env->getCharset()))) {
-                    return $value;
+                if (false !== ($breakpoint = mb_strpos($value, ' ', $length, $env->getCharset()))) {
+                    $length = $breakpoint;
                 }
-
-                $length = $breakpoint;
             }
 
             return rtrim(mb_substr($value, 0, $length, $env->getCharset())) . $separator;
