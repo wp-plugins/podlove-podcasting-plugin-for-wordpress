@@ -26,7 +26,7 @@ You should now have the file `composer.phar` in your project directory.
 Run in your project root:
 
 ```
-php composer.phar require geoip2/geoip2:~0.8.0
+php composer.phar require geoip2/geoip2:~2.0
 ```
 
 You should now have the files `composer.json` and `composer.lock` as well as
@@ -237,9 +237,6 @@ for details on what data each end point may return.
 
 The only piece of data which is always returned is the `ipAddress`
 attribute in the `GeoIp2\Record\Traits` record.
-
-Every record class attribute has a corresponding predicate method so you can
-check to see if the attribute is set.
 
 ## Integration with GeoNames ##
 

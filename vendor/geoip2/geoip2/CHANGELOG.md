@@ -1,11 +1,35 @@
 CHANGELOG
 =========
 
+2.0.1 (2014-09-XX)
+------------------
+
+* Update ApiGen dependency to version that isn't broken on case sensitive
+  file systems.
+
+2.0.0 (2014-09-22)
+------------------
+
+* First production release.
+
+0.9.0 (2014-09-15)
+------------------
+
+* IMPORTANT: The deprecated `omni()` and `cityIspOrg()` methods have been
+  removed from `GeoIp2\WebService\Client`.
+
+0.8.1 (2014-09-12)
+------------------
+
+* The check added to the `GeoIP2\Database\Reader` lookup methods in 0.8.0 did
+  not work with the GeoIP2 City Database Subset by Continent with World
+  Countries. This has been fixed. Fixes GitHub issue #23.
+
 0.8.0 (2014-09-10)
 ------------------
 
-* The `GeoIP2\Database\Reader` lookup methods (e.g., `city()`, `isp()`) now
-  throw an `BadMethodCallException` if they are used with a database that
+* The `GeoIp2\Database\Reader` lookup methods (e.g., `city()`, `isp()`) now
+  throw a `BadMethodCallException` if they are used with a database that
   does not match the method. In particular, doing a `city()` lookup on a
   GeoIP2 Country database will result in an exception, and vice versa.
 * A `metadata()` method has been added to the `GeoIP2\Database\Reader` class.
@@ -18,7 +42,7 @@ CHANGELOG
 
 * The web service client API has been updated for the v2.1 release of the web
   service. In particular, the `cityIspOrg` and `omni` methods on
-  `GeoIP2\WebService\Client` should be considered deprecated. The `city`
+  `GeoIp2\WebService\Client` should be considered deprecated. The `city`
   method now provides all of the data formerly provided by `cityIspOrg`, and
   the `omni` method has been replaced by the `insights` method.
 * Support was added for GeoIP2 Connection Type, Domain and ISP databases.
