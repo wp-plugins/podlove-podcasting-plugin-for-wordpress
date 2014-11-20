@@ -211,6 +211,9 @@
   name: 'iOS'
   version:
 
+- regex: 'iTunes-(iPod|iPad|iPhone)/(?:[\d\.]+)'
+  name: 'iOS'
+  version:
 
 
 ##########

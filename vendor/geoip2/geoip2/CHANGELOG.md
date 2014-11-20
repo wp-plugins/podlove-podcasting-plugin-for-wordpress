@@ -1,11 +1,16 @@
 CHANGELOG
 =========
 
-2.0.1 (2014-09-XX)
+2.1.0 (2014-10-29)
 ------------------
 
 * Update ApiGen dependency to version that isn't broken on case sensitive
   file systems.
+* Added support for the GeoIP2 Anonymous IP database. The
+  `GeoIP2\Database\Reader` class now has an `anonymousIp` method which returns
+  a `GeoIP2\Model\AnonymousIp` object.
+* Boolean attributes like those in the `GeoIP2\Record\Traits` class now return
+ `false` instead of `null` when they were not true.
 
 2.0.0 (2014-09-22)
 ------------------
