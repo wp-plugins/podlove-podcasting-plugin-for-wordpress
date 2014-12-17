@@ -26,11 +26,18 @@ php composer.phar self-update
 php composer.phar update --no-dev
 
 if [ ! -f box.phar ]; then
-    wget -O box.phar "https://github.com/kherge-archive/Box/releases/download/2.4.4/box-2.4.4.phar"
+    wget -O box.phar "https://github.com/box-project/box2/releases/download/2.5.0/box-2.5.0.phar"
 fi
 
 php box.phar build
 
+PHAR_TEST=$(./dev-bin/phar-test.php)
+if [[ -n $PHAR_TEST ]]; then
+    echo "Phar test outputed non-empty string: $PHAR_TEST"
+    exit 1
+fi
+
+# Download test deps
 php composer.phar update
 
 ./vendor/bin/phpunit

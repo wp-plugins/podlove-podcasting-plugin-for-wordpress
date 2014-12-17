@@ -14,7 +14,6 @@ return array(
     'Podlove\\NormalPlayTime' => array($vendorDir . '/podlove/normalplaytime/src'),
     'Podlove\\Comment' => array($vendorDir . '/podlove/comment-introspection/lib'),
     'Podlove\\Chapters' => array($vendorDir . '/podlove/podlove-timeline/lib'),
-    'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Monolog' => array($vendorDir . '/monolog/monolog/src'),
     'MaxMind' => array($vendorDir . '/maxmind-db/reader/src'),
     'Leth\\IPAddress' => array($vendorDir . '/leth/ip-address/classes'),
@@ -22,5 +21,4 @@ return array(
     'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
     'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
     'GeoIp2' => array($vendorDir . '/geoip2/geoip2/src'),
-    'Console' => array($vendorDir . '/pear/console_commandline'),
 );
