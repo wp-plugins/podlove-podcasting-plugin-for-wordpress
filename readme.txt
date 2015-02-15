@@ -105,6 +105,12 @@ This product includes GeoLite2 data created by MaxMind, available from http://ww
 
 == Changelog ==
 
+= 2.0.2 =
+
+* fix: include missing YAML library
+* fix: namespacing issue in uninstall procedure
+* fix: debug tracking example file must be downloadable
+
 = 2.0.1 =
 
 **Bugfixes**
