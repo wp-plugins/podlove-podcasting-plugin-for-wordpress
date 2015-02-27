@@ -55,6 +55,7 @@ jQuery(document).ready(function($) {
 			data.forEach(function(d, index) {
 				var row = chart.select('g.row._' + index);
 				var label = chart.select('g.row._' + index + ' text');
+				var text = '';
 				
 				if (!row.select('.subLabel').size()) {
 					row.append('text')
@@ -72,8 +73,11 @@ jQuery(document).ready(function($) {
 					row.select('.subLabel').style({'display': 'inherit'});
 				};
 
-				row.select('.subLabel')
-					.text(Math.round(d.value.downloads / all.value().downloads * 100) + '%');
+				if (all.value().downloads > 0) {
+					text = Math.round(d.value.downloads / all.value().downloads * 100) + '%';
+				}
+
+				row.select('.subLabel').text(text);
 			});
 	    };
 
@@ -224,12 +228,16 @@ jQuery(document).ready(function($) {
 			.renderArea(true)
 		;
 
+		var rangeChartXAxisLength = downloadsGroup.all().reduce(function(prev, cur) {
+			return Math.max(prev, cur.key);
+		}, 0);
+
 		var rangeChart = dc.barChart('#episode-range-chart')
 			.width(chart_width)
 			.height(80)
 			.dimension(hoursDimension)
 			.group(downloadsGroup)
-			.x(d3.scale.linear().domain([0, downloadsGroup.all().length]))
+			.x(d3.scale.linear().domain([0, rangeChartXAxisLength]))
 			.valueAccessor(function (v) {
 				return v.value.downloads;
 			})
@@ -437,7 +445,7 @@ jQuery(document).ready(function($) {
 				.extent([
 					brush.min / hours_per_unit,
 					Math.min(
-						chart.xUnitCount(),
+						rangeChartXAxisLength,
 						brush.max / hours_per_unit
 					)
 				])
@@ -448,7 +456,7 @@ jQuery(document).ready(function($) {
 		// set range from 0 to 'one week' or 'everything' if the episode is younger than a week
 		if (!brush.min && !brush.max) {
 			brush.min = 0;
-			brush.max = 7*24 - 1;
+			brush.max = 7*24;
 			$('#chart-zoom-selection .button:eq(1)').addClass('active');
 		}
 

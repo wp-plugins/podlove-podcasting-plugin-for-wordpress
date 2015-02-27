@@ -3,7 +3,7 @@ Contributors: eteubert, chemiker
 Donate link: http://podlove.org/donations/
 Tags: podlove, podcast, publishing, blubrry, podpress, powerpress, feed, audio, video, player
 Requires at least: 3.0
-Tested up to: 4.1
+Tested up to: 4.1.1
 Stable tag: trunk
 License: MIT
 
@@ -104,6 +104,18 @@ This product includes GeoLite2 data created by MaxMind, available from http://ww
 6. Includes the Podlove Web Player. One more thing: you can manage and present all contributors easily.
 
 == Changelog ==
+
+= 2.0.4 =
+
+* fix: missing flattr attribute for contributors
+* fix: subscribe button description is properly wrapped in p-tags
+* fix: faulty valid file if check returns "unreachable" but includes a Content-Length header
+* fix: more thoughtful handling of ETags when validating files prevents failing updates
+* fix: "NaN" analytics should display properly now
+* fix: off-by-one display in analytics
+* fix: don't HTML-encode quotes in episode title/subtitle/summary since it leads to invalid feeds
+* add trakt.tv to the services list
+* add support for RSS channel image tag
 
 = 2.0.3 =
 
