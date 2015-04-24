@@ -64,7 +64,7 @@ class Open_Graph extends \Podlove\Modules\Base {
 			if ( ! $episode )
 				return;
 
-			$podcast = Model\Podcast::get_instance();
+			$podcast = Model\Podcast::get();
 
 			// determine image
 			$cover_art_url = $episode->get_cover_art();
@@ -80,6 +80,15 @@ class Open_Graph extends \Podlove\Modules\Base {
 					list( $thumbnail, $width, $height ) = $thumbnailInfo;
 			}
 
+			$description = NULL;
+			if ($episode->summary && $episode->subtitle) {
+				$description = $episode->subtitle . "\n" . $episode->summary;
+			} elseif ($episode->summary) {
+				$description = $episode->summary;
+			} elseif ($episode->subtitle) {
+				$description = $episode->subtitle;
+			}
+
 			// define meta tags
 			$data = array(
 				array(
@@ -92,17 +101,20 @@ class Open_Graph extends \Podlove\Modules\Base {
 				),
 				array(
 					'property' => 'og:title',
-					'content'  => $episode->full_title()
+					'content'  => get_the_title()
 				),
 				array(
 					'property' => 'og:url',
 					'content'  => get_permalink()
-				),
-				array(
-					'property' => 'og:description',
-					'content'  => $episode->description()
 				)
 			);
+
+			if ($description) {
+				$data[] = array(
+					'property' => 'og:description',
+					'content'  => $description
+				);
+			}
 			
 			if ($cover_art_url) {
 				$data[] = array(

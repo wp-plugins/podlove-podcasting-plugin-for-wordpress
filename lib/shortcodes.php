@@ -38,11 +38,8 @@ add_shortcode( 'podlove-episode-downloads', '\Podlove\episode_downloads_shortcod
  * Right now there is only audio support.
  *
  * Usage:
- * 	[podlove-web-player]
- *
- * @deprecated since 1.10.0 use {{ episode.player }} instead
- * @param  array $options
- * @return string
+ * 	[podlove-episode-web-player]
+ * 
  */
 function webplayer_shortcode( $options ) {
 	global $post;
@@ -54,18 +51,25 @@ function webplayer_shortcode( $options ) {
 	$printer = new \Podlove\Modules\PodloveWebPlayer\Printer( $episode );
 	return $printer->render();
 }
-add_shortcode( 'podlove-web-player', '\Podlove\webplayer_shortcode' );
+add_action('plugins_loaded', function() {
+
+	// backward compatible, but only load if no other plugin has registered this shortcode
+	if (!shortcode_exists('podlove-web-player'))
+		add_shortcode('podlove-web-player', '\Podlove\webplayer_shortcode');
+
+	add_shortcode('podlove-episode-web-player', '\Podlove\webplayer_shortcode');
+});
 
 /**
  * Provides shortcode to display episode template.
  *
  * Usage:
  * 	
- * 	[podlove-template id="Template Title"]
+ * 	[podlove-template template="Template Title"]
  *
  * 	Parameters:
- * 		title: (required) Title of template to render.
- * 		autop: (optional) Wraps blocks of text in p tags. 'yes' or 'no'. Default: 'yes'
+ * 		template: (required) Title of template to render.
+ * 		autop:    (optional) Wraps blocks of text in p tags. 'yes' or 'no'. Default: 'yes'
  * 	
  * @param  array $attributes
  * @return string
@@ -73,9 +77,10 @@ add_shortcode( 'podlove-web-player', '\Podlove\webplayer_shortcode' );
 function template_shortcode( $attributes ) {
 
 	$defaults = array(
-		'title' => '',
-		'id' => '',
-		'autop' => false
+		'title'    => '', // deprecated
+		'id'       => '', // deprecated
+		'template' => '',
+		'autop'    => false
 	);
 
 	$attributes = array_merge( $defaults, $attributes );
@@ -83,9 +88,19 @@ function template_shortcode( $attributes ) {
 	if ( $attributes['title'] !== '' )
 		_deprecated_argument( __FUNCTION__, '1.3.14-alpha', 'The "title" attribute for [podlove-template] shortcode is deprecated. Use "id" instead.' );
 
+	if ( $attributes['id'] !== '' )
+		_deprecated_argument( __FUNCTION__, '2.1.0', 'The "id" attribute for [podlove-template] shortcode is deprecated. Use "template" instead.' );
+
 	// backward compatibility
-	$template_id = $attributes['id'] ? $attributes['id'] : $attributes['title'];
-	$permalink   = get_permalink();
+	if ($attributes['template']) {
+		$template_id = $attributes['template'];
+	} elseif ($attributes['id']) {
+		$template_id = $attributes['id'];
+	} else {
+		$template_id = $attributes['title'];
+	}
+	
+	$permalink = get_permalink();
 
 	/**
 	 * Cache key must be unique for *every permutation* of the content.
@@ -95,13 +110,18 @@ function template_shortcode( $attributes ) {
 		return $tag() ? "1" : "0";
 	}, \Podlove\Template\TwigFilter::$template_tags));
 
-	$cache_key = $template_id . $permalink . $tag_permutation;
+	/**
+	 * Cache key must change for any custom parameters.
+	 */
+	$attr_permutation = implode('', array_map(function($a) { return (string) $a; }, array_values($attributes)));
+
+	$cache_key = $template_id . $permalink . $tag_permutation . $attr_permutation;
 	$cache_key = apply_filters( 'podlove_template_shortcode_cache_key', $cache_key, $template_id );
 
 	$cache = \Podlove\Cache\TemplateCache::get_instance();
 	return $cache->cache_for($cache_key, function() use ($template_id, $attributes) {
 
-		if (!$template = Model\Template::find_one_by_title($template_id))
+		if (!$template = Model\Template::find_one_by_title_with_fallback($template_id))
 			return sprintf( __( 'Podlove Error: Whoops, there is no template with id "%s"', 'podlove' ), $template_id );
 
 		$html = apply_filters('podlove_template_raw', $template->title, $attributes);

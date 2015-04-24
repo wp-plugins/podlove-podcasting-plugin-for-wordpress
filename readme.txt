@@ -3,7 +3,7 @@ Contributors: eteubert, chemiker
 Donate link: http://podlove.org/donations/
 Tags: podlove, podcast, publishing, blubrry, podpress, powerpress, feed, audio, video, player
 Requires at least: 3.0
-Tested up to: 4.1.1
+Tested up to: 4.2
 Stable tag: trunk
 License: MIT
 
@@ -104,6 +104,70 @@ This product includes GeoLite2 data created by MaxMind, available from http://ww
 6. Includes the Podlove Web Player. One more thing: you can manage and present all contributors easily.
 
 == Changelog ==
+
+= 2.1.0 =
+
+**Networks: WordPress Multisite Support is Here**
+
+- dedicated WordPress Multisite support
+- "My Sites" menu features podcast covers and menus include often used pages like "Podlove Dashboard" and episodes
+- Network Dashboard provides a birds-eye view over your podcast empire
+- Network-Templates that are accessible in every podcast
+- Podcast lists: give templates access to multiple podcasts at once, allowing you to automatically list all podcasts in your network, the 10 last episode releases in your network and much more
+
+**Widgets**
+
+We added a happy bunch of widgets to make your life easy. 
+
+* Podcast Information: Display cover, subtitle and summary of your podcast
+* Recent Episodes: Display a list of recent episodes, with cover art and duration if you like
+* Template: Display any Publisher template in a widget area
+* Podcast License
+
+The Subscribe Button Widget now defaults to "Big with Logo" and auto-width. It has also been renamed to "Podlove Publisher Subscribe Button" to be distinguishable from the new standalone plugin.
+
+**Templates**
+
+* add accessors `{{ podcast.landingPageUrl }}`, `{{ podcast.subscribe_button }}` (see http://docs.podlove.org/reference/template-tags/#podcast)
+* add accessor `{{ flattr.button }}` (see http://docs.podlove.org/reference/template-tags/#flattr)
+* add accessor `{{ episode.podcast }}`
+* add query parameters to ``{{ contributor.episodes }}`:
+
+    - group: Filter by contribution group. Default: ''.
+    - role: Filter by contribution role. Default: ''.
+    - post_status: Publication status of the post. Defaults to 'publish'
+    - order: Designates the ascending or descending order of the 'orderby' parameter. Defaults to 'DESC'.
+      - 'ASC' - ascending order from lowest to highest values (1, 2, 3; a, b, c).
+      - 'DESC' - descending order from highest to lowest values (3, 2, 1; c, b, a).
+    - orderby: Sort retrieved episodes by parameter. Defaults to 'publicationDate'.
+      - 'publicationDate' - Order by publication date.
+      - 'recordingDate' - Order by recording date.
+      - 'title' - Order by title.
+      - 'slug' - Order by episode slug.
+      - 'limit' - Limit the number of returned episodes.
+
+**Other**
+
+* add gender contribution statistics to dashboard
+* add expert setting "Allow to skip feed redirects"
+* add warning in tracking settings when default permalink structure is used
+* add support for Auphonic cover art
+* add support for Jetpack "Publicize" module to podcast post type
+* add warning when open_basedir is set to system report
+* add daily cleanup of logging table (only keep entries of previous 4 weeks)
+* contributor editing has a tabbed interface
+* improved Podlove Dashboard performance
+* Open Graph title does not include episode subtitle any more. If a subtitle is available, it is put in front of the summary in the description tag.
+* fix: remove Jetpack "Site Icon" from podcast feeds
+* fix: empty template editor when last template is deleted
+* fix: empty caches when a scheduled episode gets published
+* fix analytics episode average calculation for ancient episodes
+
+**API changes**
+
+* Flattr parameter in `[podlove-episode-contributor-list]` now defaults to "no". If you need to reactivate it, use `[podlove-episode-contributor-list flattr="yes"]`
+* `[podlove-web-player]` was renamed to `[podlove-episode-web-player]` to avoid clashes with the standalone web player plugin. For now, the old shortcode still works.
+* `[podlove-subscribe-button]` was renamed to `[podlove-podcast-subscribe-button]` to avoid clashes with the standalone button plugin. For now, the old shortcode still works.
 
 = 2.0.5 =
 

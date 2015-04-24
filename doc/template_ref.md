@@ -145,6 +145,21 @@
         <tr>
             <td valign="top">
                 <code>
+                    podcast.landingPageUrl
+                </code>
+            </td>
+            <td>
+                <strong>
+                    Podcast Home URL
+                </strong>
+                
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <td valign="top">
+                <code>
                     podcast.episodes
                 </code>
             </td>
@@ -168,6 +183,7 @@
   - 'recordingDate' - Order by recording date.
   - 'title' - Order by title.
   - 'slug' - Order by episode slug.
+ - 'limit' - Limit the number of returned episodes.
 
 **Examples**
 
@@ -295,20 +311,23 @@ Fetch one episode by slug.
                 <strong>
                     List of podcast contributors.
                 </strong>
-                {% capture tmp %}Examples:
+                {% capture tmp %}**Examples**
 
-```
+Iterating over a list of contributors
+
+```jinja
 {% raw %}
-{# iterating over a list of contributors #}
 {% for contributor in podcast.contributors({scope: "podcast"}) %}
 	{{ contributor.name }}
 	{% if not loop.last %}, {% endif %}
 {% endfor %}
 {% endraw %}
 ```
-```
+
+Iterating over a grouped list of contributors
+
+```jinja
 {% raw %}
-{# iterating over a grouped list of contributors #}
 {% for contributorGroup in podcast.contributors({scope: "podcast", groupby: "group"}) %}
 	<strong>{{ contributorGroup.group.title }}:</strong> 
 	{% for contributor in contributorGroup.contributors %}
@@ -319,7 +338,7 @@ Fetch one episode by slug.
 {% endraw %}
 ```
 
-Options:
+**Parameters**
 
 - **id:**      Fetch one contributor by its id. Ignores all other parameters.
                Example:`{% raw %}podcast.contributors({id: 'james'}).name{% endraw %}`
@@ -358,7 +377,7 @@ Options:
                 {% capture tmp %}Parameters:
 
 - **category:** (optional) "social", "donation" or "all". Default: "all"
-- **type:**     (optional) Filter services by type. List of all service types: 500px, amazon wishlist, app.net, bandcamp, bitbucket, bitcoin, deviantart, diaspora, dogecoin, dribbble, facebook, flattr, flickr, generic wishlist, github, google+, instagram, jabber, last.fm, linkedin, litecoin, openstreetmap, paypal, miiverse, pinboard, pinterest, playstation network, skype, soundcloud, soup, steam, steam wishlist, thomann wishlist, tumblr, twitter, website, xbox live, xing, youtube
+- **type:**     (optional) Filter services by type. List of all service types: 500px, amazon wishlist, app.net, bandcamp, bitbucket, bitcoin, deviantart, diaspora, dogecoin, dribbble, facebook, flattr, flickr, generic wishlist, github, google+, instagram, jabber, last.fm, linkedin, litecoin, openstreetmap, paypal, miiverse, pinboard, pinterest, playstation network, skype, soundcloud, soup, steam, steam wishlist, thomann wishlist, twitch, tumblr, twitter, website, xbox live, xing, youtube
 
 Example:
 
@@ -371,6 +390,63 @@ Example:
 {% endfor %}
 {% endraw %}
 ```
+{% endcapture %}
+{{ tmp | markdownify }}
+                
+            </td>
+        </tr>
+    
+        <tr>
+            <td valign="top">
+                <code>
+                    podcast.subscribeButton
+                </code>
+            </td>
+            <td>
+                <strong>
+                    Podcast Subscribe Button
+                </strong>
+                {% capture tmp %}**Examples**
+
+```jinja
+{% raw %}
+{{ podcast.subscribe_button }}
+{% endraw %}
+```
+
+```jinja
+{% raw %}
+{{ podcast.subscribe_button({size: 'small', width: '', colors: 'black;;;#ffffff'}) }}
+{% endraw %}
+```
+
+**Parameters**
+
+- **language:** 'de', 'en' or 'ja'. Defaults to podcast language setting.
+- **size:** Size and style of the button ('small', 'medium', 'big', 'big-logo'). Default: 'big-logo'
+- **buttonid:** Use this if you want to trigger the button by clicking an element controlled by you. 
+If you set the buttonid to "example123", your element must have the class "podlove-subscribe-button-example123".
+- **hide:** Set to`{% raw %}true{% endraw %}` if you want to hide the default button element. Useful if you provide your own button via the`{% raw %}buttonid{% endraw %}` setting.
+- **colors:** 9 colors, separated by semocolon, can be configured. Any blank color uses the default.
+
+The colors are:
+
+1. buttonBackgroundColor
+2. buttonHoverBackgroundColor
+3. buttonActiveBackgroundColor
+4. buttonTextColor
+5. buttonHoverTextColor
+6. buttonActiveTextColor
+7. buttonBorderColor
+8. listHighlightBackgroundColor
+9. listHighlightTextColor
+
+**Please Note:** It is not possible to style multiple buttons/popups on the same page differently.
+
+Example color configurations:
+
+- Complete:`{% raw %}#75ad91;#75c39d;#61937b;#ffffff;#ffffff;#ffffff;#456757;#328398;#ffffff{% endraw %}`
+- Idle button background and text color:`{% raw %}#75ad91;;;#ffffff{% endraw %}`
 {% endcapture %}
 {{ tmp | markdownify }}
                 
@@ -754,20 +830,23 @@ for the episode license only.
                 <strong>
                     List of episode contributors
                 </strong>
-                {% capture tmp %}Examples:
+                {% capture tmp %}**Examples**
 
-```
+Iterating over a list of contributors
+
+```jinja
 {% raw %}
-{# iterating over a list of contributors #}
 {% for contributor in episode.contributors %}
 	{{ contributor.name }}
 	{% if not loop.last %}, {% endif %}
 {% endfor %}
 {% endraw %}
 ```
-```
+
+Iterating over a grouped list of contributors
+
+```jinja
 {% raw %}
-{# iterating over a grouped list of contributors #}
 {% for contributorGroup in episode.contributors({groupby: "group"}) %}
 	<strong>{{ contributorGroup.group.title }}:</strong> 
 	{% for contributor in contributorGroup.contributors %}
@@ -778,7 +857,7 @@ for the episode license only.
 {% endraw %}
 ```
 
-Options:
+**Parameters**
 
 - **id:**      Fetch one contributor by its id. Ignores all other parameters. 
                Returns null if the id belongs to an existing contributor which is not part of the episode. 
@@ -1102,7 +1181,27 @@ Options:
                 <strong>
                     URL
                 </strong>
+                {% capture tmp %}The real file URL. For public facing URLs, use`{% raw %}.publicUrl{% endraw %}`.
+{% endcapture %}
+{{ tmp | markdownify }}
                 
+            </td>
+        </tr>
+    
+        <tr>
+            <td valign="top">
+                <code>
+                    file.publicUrl
+                </code>
+            </td>
+            <td>
+                <strong>
+                    Public URL
+                </strong>
+                {% capture tmp %}If tracking is active, this generates the tracking URL.
+Otherwise, it's identical to`{% raw %}.url{% endraw %}`.
+{% endcapture %}
+{{ tmp | markdownify }}
                 
             </td>
         </tr>
@@ -1534,7 +1633,7 @@ URL for that person _in this specific episode_ is generated.
                 {% capture tmp %}Parameters:
 
 - **category:** (optional) "social", "donation" or "all". Default: "all"
-- **type:**     (optional) Filter services by type. List of all service types: 500px, about.me, amazon wishlist, app.net, auphonic credits, bandcamp, bitbucket, bitcoin, deviantart, diaspora, dogecoin, dribbble, email, facebook, flattr, flickr, foursquare, generic wishlist, github, gittip, google+, instagram, jabber, last.fm, linkedin, litecoin, openstreetmap, orcid, paypal, miiverse, pinboard, pinterest, playstation network, researchgate, scous, skype, soundcloud, soup, steam, steam wishlist, thomann wishtlist, tumblr, twitter, vimeo, website, xbox live, xing, youtube
+- **type:**     (optional) Filter services by type. List of all service types: 500px, about.me, amazon wishlist, app.net, auphonic credits, bandcamp, bitbucket, bitcoin, deviantart, diaspora, dogecoin, dribbble, email, facebook, flattr, flickr, foursquare, generic wishlist, github, gittip, google+, instagram, jabber, last.fm, linkedin, litecoin, openstreetmap, orcid, paypal, miiverse, pinboard, pinterest, playstation network, researchgate, scous, skype, soundcloud, soup, steam, steam wishlist, thomann wishlist, tumblr, twitch, twitter, vimeo, website, xbox live, xing, youtube
 
 Example:
 
@@ -1786,6 +1885,63 @@ But in case you need the raw user value, use this method.
                     Is the license valid? Is all required data available?
                 </strong>
                 
+                
+            </td>
+        </tr>
+    
+</table> 
+
+<a id="podlove-class-flattr"></a>
+
+#### Flattr
+
+
+
+<table>
+    
+        <tr>
+            <td valign="top">
+                <code>
+                    flattr.button
+                </code>
+            </td>
+            <td>
+                <strong>
+                    Flattr Button
+                </strong>
+                {% capture tmp %}**Parameters**
+
+- **url:** URL of thing to flattr. Defaults to WordPress permalink.
+- **style:** Button style."large", "compact" or "static". Default: "compact".
+- **user:** Flattr user id. Defaults to Flattr account in podcast settings.
+
+**Examples**
+
+Simple button with defaults
+
+```jinja
+{% raw %}
+{{ flattr.button }}
+{% endraw %}
+```
+
+Large button
+
+```jinja
+{% raw %}
+{{ flattr.button({ style: 'large' }) }}
+{% endraw %}
+```
+
+Button for the Podlove Publisher plugin
+
+```jinja
+{% raw %}
+{{ flattr.button({ user: 'ericteubert', url: 'http://wordpress.org/extend/plugins/podlove-podcasting-plugin-for-wordpress/' }) }}
+{% endraw %}
+```
+{% endcapture %}
+{{ tmp | markdownify }}
                 
             </td>
         </tr>

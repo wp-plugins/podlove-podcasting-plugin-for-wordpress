@@ -32,7 +32,8 @@ class Contributors extends \Podlove\Modules\Base {
 		add_action('rss2_head', array($this, 'feed_head_contributors'));
 		add_action('podlove_append_to_feed_entry', array($this, 'feed_item_contributors'), 10, 4);
 
-		add_action('podlove_dashboard_statistics', array($this, 'dashboard_statistics_row'));
+		add_action('podlove_dashboard_meta_boxes', array($this, 'dashboard_gender_statistics'));
+		add_filter('podlove_dashboard_statistics_network', array($this, 'dashboard_network_statistics_row'));
 
 		add_action('podlove_xml_export', array($this, 'expandExportFile'));
 		add_action('podlove_xml_import', array($this, 'expandImport'));
@@ -56,6 +57,8 @@ class Contributors extends \Podlove\Modules\Base {
 
 		add_filter('podlove_cache_tainting_classes', array($this, 'cache_tainting_classes'));
 
+		add_action('podlove_network_admin_bar_podcast', array($this, 'add_to_admin_bar_podcast'), 10, 2);
+
 		\Podlove\Template\Episode::add_accessor(
 			'contributors', array('\Podlove\Modules\Contributors\TemplateExtensions', 'accessorEpisodeContributors'), 5
 		);
@@ -78,7 +81,7 @@ class Contributors extends \Podlove\Modules\Base {
 		// register settings page
 		add_action('podlove_register_settings_pages', function($settings_parent) {
 			new Settings\Contributors($settings_parent);
-			new Settings\ContributorSettings($settings_parent);
+			new Settings\ContributorSettings( \Podlove\Podcast_Post_Type::SETTINGS_PAGE_HANDLE );
 		});
 
 		// filter contributions in feeds
@@ -86,6 +89,19 @@ class Contributors extends \Podlove\Modules\Base {
 		add_filter('podlove_feed_contributions', array($this, 'must_match_feed_role_and_group'), 10, 2);
 
 		ContributorRepair::init();
+	}
+
+	public function add_to_admin_bar_podcast($wp_admin_bar, $podcast)
+	{
+		$podcast_toolbar_id = 'podlove_toolbar_' . $podcast;
+
+		$args = array(
+			'id'     => $podcast_toolbar_id . '_contributors',
+			'title'  => __( 'Podlove Contributors', 'podlove' ),
+			'parent' => "blog-" . $podcast,
+			'href'   => get_admin_url(get_current_blog_id(), 'edit.php?post_type=podcast&page=podlove_contributors_settings_handle')
+		);
+		$wp_admin_bar->add_node( $args );
 	}
 
 	public function must_have_uri($contributions, $feed)
@@ -254,21 +270,113 @@ class Contributors extends \Podlove\Modules\Base {
 		Modules\ImportExport\Import\PodcastImporter::importTable($xml, 'contributor-show-contribution', '\Podlove\Modules\Contributors\Model\ShowContribution');
 	}
 
-	public function dashboard_statistics_row() {
-		$contributions = EpisodeContribution::all();
-		$contributions_count = count($contributions);
+	private function fetch_contributors_for_dashboard_statistics() {
+		return \Podlove\cache_for('podlove_dashboard_stats_contributors', function() {
+			return (new Model\ContributionGenderStatistics)->get();
+		}, 3600);
+	}
 
-		$absolute_gender_numbers = array(
-			'female' => count(array_filter($contributions, function($c) { return (is_object($c->getContributor()) && $c->getContributor()->gender == 'female'); })),
-			'male'   => count(array_filter($contributions, function($c) { return (is_object($c->getContributor()) && $c->getContributor()->gender == 'male'); }))
+	public function dashboard_gender_statistics() {
+		add_meta_box(
+			\Podlove\Settings\Dashboard::$pagehook . '_gender',
+			__( 'Gender Statistics', 'podlove' ),
+			[$this, 'dashboard_gender_statistics_widget'],
+			\Podlove\Settings\Dashboard::$pagehook,
+			'normal', 
+			'default'
+		);
+	}
+
+	public function dashboard_gender_statistics_widget($post) {
+		$gender_distribution = $this->fetch_contributors_for_dashboard_statistics();
+		?>
+		<div class="podlove_gender_widget_column">
+			<h4><?php _e('Total', 'podlove'); ?></h4>
+			<table cellspacing="0" cellspadding="0">
+				<thead>
+					<tr>
+						<th><?php _e('Female', 'podlove'); ?></th>
+						<th><?php _e('Male', 'podlove'); ?></th>
+						<th><?php _e('Not Attributed', 'podlove'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><?php echo self::get_percentage($gender_distribution['global']['by_gender']['female'], $gender_distribution['global']['total']) ?>%</td>
+						<td><?php echo self::get_percentage($gender_distribution['global']['by_gender']['male'], $gender_distribution['global']['total']) ?>%</td>
+						<td><?php echo self::get_percentage($gender_distribution['global']['by_gender']['none'], $gender_distribution['global']['total']) ?>%</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="podlove_gender_widget_column">
+			<h4><?php _e('By Group', 'podlove'); ?></h4>
+			<?php self::group_or_role_stats_table('group', $gender_distribution['by_group']); ?>
+		</div>
+		<div class="podlove_gender_widget_column">
+			<h4><?php _e('By Role', 'podlove'); ?></h4>
+			<?php self::group_or_role_stats_table('role', $gender_distribution['by_role']); ?>
+		</div>
+		<?php
+	}
+
+	private static function get_percentage($value, $relative_to) {
+		return round($value / $relative_to * 100);
+	}
+
+	private static function group_or_role_stats_table($context, $numbers) {
+		?>
+		<table cellspacing="0" cellspadding="0">
+			<thead>
+				<tr>
+					<th><?php echo ( $context == 'group' ? __('Group', 'podlove') : __('Role', 'podlove') ); ?></th>
+					<th><?php _e('Female', 'podlove'); ?></th>
+					<th><?php _e('Male', 'podlove'); ?></th>
+					<th><?php _e('Not Attributed', 'podlove'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach ($numbers as $group_or_role_id => $group_or_role_numbers) {
+				$group_or_role = ( $context == 'group' ? ContributorGroup::find_one_by_id($group_or_role_id) : ContributorRole::find_one_by_id($group_or_role_id) ); // This return either a group or a role object	
+
+				if ( !$group_or_role )
+					continue;
+				?>
+					<tr>
+						<td><?php echo $group_or_role->title; ?></td>
+						<td><?php echo self::get_percentage($group_or_role_numbers['by_gender']['female'], $group_or_role_numbers['total']); ?>%</td>
+						<td><?php echo self::get_percentage($group_or_role_numbers['by_gender']['male'],   $group_or_role_numbers['total']); ?>%</td>
+						<td><?php echo self::get_percentage($group_or_role_numbers['by_gender']['none'],   $group_or_role_numbers['total']); ?>%</td>
+					</tr>
+				<?php
+			}
+			?>
+			</tbody>
+		</table>
+		<?php
+	}
+
+	public function dashboard_network_statistics_row( $genders ) {
+		$podcasts = \Podlove\Modules\Networks\Model\Network::podcast_blog_ids();
+		$podcasts_with_contributors_active = 0;
+		$relative_gender_numbers = array( 
+			'male'   => 0,
+			'female' => 0,
+			'none'   => 0
 		);
 
-		$relative_gender_numbers = array_map(function($abs) use ($contributions_count) {
-			return $contributions_count > 0 ? $abs / $contributions_count * 100 : 0;
-		}, $absolute_gender_numbers);
-
-		// sort by percentage (high to low)
-		arsort( $relative_gender_numbers );
+		foreach ( $podcasts as $podcast ) {
+			switch_to_blog( $podcast );
+			if ( \Podlove\Modules\Base::is_active('contributors') ) {
+				$global_gender_numbers = $this->fetch_contributors_for_dashboard_statistics();
+				foreach ( $global_gender_numbers['global']['by_gender'] as $gender => $number_of_contributions ) {
+				 	$relative_gender_numbers[$gender] += $number_of_contributions / $global_gender_numbers['global']['total'] * 100;
+				 }
+				$podcasts_with_contributors_active++;
+			}
+			restore_current_blog();
+		}
 		?>
 		<tr>
 			<td class="podlove-dashboard-number-column">
@@ -276,8 +384,8 @@ class Contributors extends \Podlove\Modules\Base {
 			</td>
 			<td>
 				<?php
-				echo implode(', ', array_map(function($percent, $gender) {
-					return round($percent) . "% " . $gender;
+				echo implode(', ', array_map(function($percent, $gender) use ( $podcasts_with_contributors_active ) {
+					return round($percent/$podcasts_with_contributors_active) . "% " . ( $gender == 'none' ? 'not attributed' : $gender );
 				}, $relative_gender_numbers, array_keys($relative_gender_numbers)));
 				?>
 			</td>
@@ -318,9 +426,14 @@ class Contributors extends \Podlove\Modules\Base {
 	function feed_head_contributors() {
 		global $wp_query;
 
+		$feed = \Podlove\Model\Feed::find_one_by_slug( $wp_query->query_vars['feed'] );
+
+		if (!$feed)
+			return;
+
 		$contributor_xml = $this->prepare_contributions_for_feed(
 			\Podlove\Modules\Contributors\Model\ShowContribution::all(),
-			\Podlove\Model\Feed::find_one_by_slug( $wp_query->query_vars['feed'] )
+			$feed
 		);
 
 		echo apply_filters( 'podlove_feed_head_contributors', $contributor_xml );
@@ -838,7 +951,7 @@ class Contributors extends \Podlove\Modules\Base {
 								o.row = o.row.replace(/\{\{id\}\}/g, i);
 								i++;
 							},
-							onRowAdd: function(o) {
+							onRowAdd: function(o, init) {
 								var row = $("#contributors_table_body tr:last");
 
 								row.find('td.podlove-avatar-column').html(o.object.avatar);
@@ -856,7 +969,9 @@ class Contributors extends \Podlove\Modules\Base {
 								var new_row_id = row.find('select.podlove-contributor-dropdown').last().attr('id');	
 								
 								// Focus new contributor
-								$("#" + new_row_id + "_chzn").find("a").focus();
+								if (!init) {
+									$("#" + new_row_id + "_chzn").find("a").focus();
+								}
 							},
 							onRowDelete: function(tr) {
 								var object_id = tr.data("object-id"),

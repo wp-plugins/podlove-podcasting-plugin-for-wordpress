@@ -70,6 +70,12 @@ class AppDotNet {
 		if (!is_admin())
 			return;
 
+		if (!\Podlove\Modules\Base::is_module_settings_page())
+			return;
+
+		if (!\Podlove\Modules\Base::is_active('app_dot_net'))
+			return;
+
 		$adn = \Podlove\Modules\AppDotNet\App_Dot_Net::instance();
 
 		$roles  = \Podlove\Modules\Contributors\Model\ContributorRole::all();

@@ -62,7 +62,8 @@ function get_setting( $namespace, $name ) {
 			'episode_archive_slug' => '/podcast/',
 			'url_template' => '%media_file_base_url%%episode_slug%%suffix%.%format_extension%',
 			'ssl_verify_peer' => 'on',
-			'landing_page' => 'homepage'
+			'landing_page' => 'homepage',
+			'feeds_skip_redirect' => 'off'
 		),
 		'metadata' => array(
 			'enable_episode_recording_date' => 0,
@@ -87,12 +88,19 @@ function save_setting( $namespace, $name, $values ) {
 	update_option( 'podlove_' . $namespace, array( $name => $values ) );
 }
 
+/**
+ * Podcast Landing Page URL
+ * 
+ * @todo  move to Model\Podcast->get_landing_page_url()
+ * 
+ * @return string
+ */
 function get_landing_page_url() {
 	$landing_page = \Podlove\get_setting('website', 'landing_page');
 
 	switch ($landing_page) {
 		case 'homepage':
-			return get_bloginfo_rss('url');
+			return home_url();
 			break;
 		case 'archive':
 			if ( 'on' == \Podlove\get_setting( 'website', 'episode_archive' ) ) {
@@ -114,7 +122,7 @@ function get_landing_page_url() {
 	}
 
 	// always default to home page
-	return get_bloginfo_rss('url');
+	return home_url();
 }
 
 function get_webplayer_setting( $name ) {
@@ -151,6 +159,39 @@ function cache_for($cache_key, $callback, $duration = 31536000 /* 1 year */)
 			set_transient($cache_key, $value, $duration);
 
 		return $value;
+	}
+}
+
+function with_blog_scope($blog_id, $callback) {
+	$result = NULL;
+
+	if ($blog_id != get_current_blog_id()) {
+		switch_to_blog($blog_id);
+		$result = $callback();
+		restore_current_blog();
+	} else {
+		$result = $callback();
+	}
+
+	return $result;
+}
+
+function relative_time_steps($time) {
+	$time_diff = time() - $time;
+	$formated_time_string = date('Y-m-d h:i:s', $time);
+
+	if ($time_diff == 0) {
+		return __('Now', 'podlove');
+	} else {
+		$time_text = $formated_time_string;
+
+		if     ($time_diff < 60)	$time_text = __( 'Just now', 'podlove' );
+		elseif ($time_diff < 120)	$time_text = __( '1 minute ago', 'podlove' );
+		elseif ($time_diff < 3600)	$time_text = floor($time_diff / 60) . __( ' minutes ago', 'podlove' );
+		elseif ($time_diff < 7200)	$time_text = __( '1 hour ago', 'podlove' );
+ 		elseif ($time_diff < 86400)	$time_text = floor($time_diff / 3600) . __( ' hours ago', 'podlove' );
+
+		return sprintf('<span title="%s">%s</span>', $formated_time_string, $time_text);
 	}
 }
 

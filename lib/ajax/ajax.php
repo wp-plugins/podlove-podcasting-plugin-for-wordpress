@@ -12,6 +12,12 @@ class Ajax {
 	 */
 	public function __construct() {
 
+		// workaround to make is_network_admin() work in ajax requests
+		// @see https://core.trac.wordpress.org/ticket/22589
+		if (!defined('WP_NETWORK_ADMIN') && defined('DOING_AJAX') && DOING_AJAX && is_multisite() && preg_match('#^' . network_admin_url() . '#i', $_SERVER['HTTP_REFERER'])) {
+			define('WP_NETWORK_ADMIN',true);
+		}
+
 		$actions = array(
 			'get-new-guid',
 			'validate-url',
@@ -52,6 +58,8 @@ class Ajax {
 			WHERE
 				pm.meta_key = '_podlove_eda_downloads'
 				AND p.post_status IN ('publish', 'private')
+			GROUP BY
+				pm.post_id
 		");
 
 		$downloads = array_reduce($downloads, function($agg, $item) {
@@ -92,6 +100,7 @@ class Ajax {
 
 		\Podlove\Feeds\check_for_and_do_compression('text/plain');
 		echo $csv;
+		ob_end_flush();
 		exit;
 	}
 
@@ -144,8 +153,6 @@ class Ajax {
 
 	public function analytics_episode_downloads_per_hour() {
 
-		\Podlove\Feeds\check_for_and_do_compression('text/plain');
-
 		$episode_id = isset($_GET['episode']) ? (int) $_GET['episode'] : 0;
 		$cache_key = 'podlove_analytics_dphx_' . $episode_id;
 
@@ -193,14 +200,13 @@ class Ajax {
 			exit;
 		}
 
+		\Podlove\Feeds\check_for_and_do_compression('text/plain');
 		echo $content;
-
+		ob_end_flush();
 		exit;
 	}
 
 	public function analytics_total_downloads_per_day() {
-
-		\Podlove\Feeds\check_for_and_do_compression('text/plain');
 
 		$cache_key = 'podlove_analytics_tdphx';
 
@@ -248,8 +254,9 @@ class Ajax {
 			exit;
 		}
 
+		\Podlove\Feeds\check_for_and_do_compression('text/plain');
 		echo $content;
-
+		ob_end_flush();
 		exit;
 	}
 
@@ -271,7 +278,7 @@ class Ajax {
 	}
 
 	public function podcast() {
-		$podcast = Model\Podcast::get_instance();
+		$podcast = Model\Podcast::get();
 		$podcast_data = array();
 		foreach ( $podcast->property_names() as $property ) {
 			$podcast_data[ $property ] = $podcast->$property;
