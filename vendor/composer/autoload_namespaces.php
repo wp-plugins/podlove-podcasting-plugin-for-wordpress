@@ -6,20 +6,22 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Podlove\\NormalPlayTime' => array($vendorDir . '/podlove/normalplaytime/src'),
     'Podlove\\Comment' => array($vendorDir . '/podlove/comment-introspection/lib'),
     'Podlove\\Chapters' => array($vendorDir . '/podlove/podlove-timeline/lib'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
-    'Monolog' => array($vendorDir . '/monolog/monolog/src'),
     'MaxMind' => array($vendorDir . '/maxmind-db/reader/src'),
     'Leth\\IPAddress' => array($vendorDir . '/leth/ip-address/classes'),
     'JsonSerializable' => array($vendorDir . '/geoip2/geoip2/compat'),
     'Guzzle\\Tests' => array($vendorDir . '/guzzle/guzzle/tests'),
     'Guzzle' => array($vendorDir . '/guzzle/guzzle/src'),
     'GeoIp2' => array($vendorDir . '/geoip2/geoip2/src'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src'),
     'Console' => array($vendorDir . '/pear/console_commandline'),
 );

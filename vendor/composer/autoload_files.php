@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     $vendorDir . '/mustangostang/spyc/Spyc.php',
-    $vendorDir . '/rhumsaa/array_column/src/array_column.php',
+    $vendorDir . '/ramsey/array_column/src/array_column.php',
 );

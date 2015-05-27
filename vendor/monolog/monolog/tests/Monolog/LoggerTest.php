@@ -34,6 +34,21 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Monolog\Logger::toMonologLevel
+     */
+    public function testConvertPSR3ToMonologLevel()
+    {
+        $this->assertEquals(Logger::toMonologLevel('debug'), 100);
+        $this->assertEquals(Logger::toMonologLevel('info'), 200);
+        $this->assertEquals(Logger::toMonologLevel('notice'), 250);
+        $this->assertEquals(Logger::toMonologLevel('warning'), 300);
+        $this->assertEquals(Logger::toMonologLevel('error'), 400);
+        $this->assertEquals(Logger::toMonologLevel('critical'), 500);
+        $this->assertEquals(Logger::toMonologLevel('alert'), 550);
+        $this->assertEquals(Logger::toMonologLevel('emergency'), 600);
+    }
+
+    /**
      * @covers Monolog\Logger::getLevelName
      * @expectedException InvalidArgumentException
      */
@@ -162,7 +177,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $logger = new Logger(__METHOD__);
         $handler = new TestHandler;
         $logger->pushHandler($handler);
-        $logger->pushProcessor(function($record) {
+        $logger->pushProcessor(function ($record) {
             $record['extra']['win'] = true;
 
             return $record;
@@ -216,7 +231,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         ;
         $logger->pushHandler($handler);
         $that = $this;
-        $logger->pushProcessor(function($record) use ($that) {
+        $logger->pushProcessor(function ($record) use ($that) {
             $that->fail('The processor should not be called');
         });
         $logger->addAlert('test');

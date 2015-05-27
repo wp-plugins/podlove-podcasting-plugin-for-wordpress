@@ -8,4 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     $vendorDir . '/pear/pear_exception',
     $vendorDir . '/pear/console_commandline',
+    $vendorDir . '/phpunit/php-timer',
+    $vendorDir . '/phpunit/php-text-template',
 );
