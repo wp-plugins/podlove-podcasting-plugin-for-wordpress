@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
+    'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'DeviceDetector\\' => array($vendorDir . '/piwik/device-detector'),
 );
